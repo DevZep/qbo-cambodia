@@ -15,6 +15,7 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'devise', '~> 4.0'
 gem 'factory_girl_rails', '~> 4.0'
+gem 'activerecord-session_store'
 
 group :development, :test do
   gem 'byebug', platform: :mri
