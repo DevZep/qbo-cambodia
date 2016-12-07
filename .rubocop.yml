@@ -1,0 +1,20 @@
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  Exclude:
+    - config/**/*
+    - db/**/*
+    - spec/spec_helper.rb
+    - spec/rails_helper.rb
+  Include:
+    - app/models/*.rb
+    - app/controllers/*.rb
+    - app/workers/*.rb
+    - app/services/*.rb
+    - app/mailers/*.rb
+    - app/helpers/*.rb
+    - spec/*.rb
+    - lib/*.rb
+
+Style/Documentation:
+  Enabled: false
