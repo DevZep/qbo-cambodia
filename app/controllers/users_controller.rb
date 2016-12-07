@@ -23,16 +23,5 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 
-class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable
-
-  has_many :qbo_credentials, dependent: :destroy
-
-
-  def qbo_credential
-    qbo_credentials.first
-  end
+class UsersController < ApplicationController
 end

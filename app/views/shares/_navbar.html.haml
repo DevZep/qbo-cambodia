@@ -1,0 +1,21 @@
+%nav.navbar.navbar-inverse.navbar-fixed-top
+  .container
+    .navbar-header
+      %button.navbar-toggle.collapsed{"aria-controls" => "navbar", "aria-expanded" => "false", "data-target" => "#navbar", "data-toggle" => "collapse", :type => "button"}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      %a.navbar-brand{:href => "#"} QBO Cambodia
+    #navbar.navbar-collapse.collapse
+      .navbar-form.navbar-right
+        - if user_signed_in?
+          .navbar-right
+            = link_to 'Logout', destroy_user_session_path, method: :delete, class: 'btn'
+        - else
+          = form_tag session_path(:user) do
+            .form-group
+              = text_field_tag 'user[email]', nil, placeholder: 'Email', class: 'form-control'
+            .form-group
+              = password_field_tag 'user[password]', nil, placeholder: 'Password', class: 'form-control'
+            %button.btn.btn-success{:type => "submit"} Sign in
