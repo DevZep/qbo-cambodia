@@ -12,6 +12,7 @@
         - if user_signed_in?
           .navbar-right
             = link_to 'Logout', destroy_user_session_path, method: :delete, class: 'btn'
+            %ipp:connecttointuit
         - else
           = form_tag session_path(:user) do
             .form-group

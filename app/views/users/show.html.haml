@@ -3,6 +3,5 @@
 / configure the Intuit object: 'grantUrl' is a URL in your application which kicks off the flow, see below
 = render 'quickbook_script'
 .container
-  %ipp:connecttointuit{ class: 'btn' }
-  - if current_user.qbo_credential.present?
-    %ipp:blueDot{ class: 'btn' }
+  .row
+    = render partial: 'company', collection: @companies

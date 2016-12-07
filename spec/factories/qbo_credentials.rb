@@ -5,6 +5,7 @@
 #  access_secret      :string
 #  access_token       :string
 #  company_id         :string
+#  company_name       :string
 #  created_at         :datetime         not null
 #  id                 :integer          not null, primary key
 #  reconnect_token_at :datetime
