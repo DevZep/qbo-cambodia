@@ -23,6 +23,7 @@ gem 'activerecord-session_store'
 gem 'quickbooks-ruby'
 
 gem 'wicked_pdf', '~> 1.1.0'
+gem 'wkhtmltopdf-binary'
 
 group :development, :test do
   gem 'pry-rails'

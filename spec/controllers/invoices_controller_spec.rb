@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CompaniesController, type: :controller do
+RSpec.describe InvoicesController, type: :controller do
 
   describe "GET #show" do
     it "returns http success" do

@@ -1,12 +1,13 @@
-class CompaniesController < ApplicationController
+# frozen_string_literal: true
+class InvoicesController < ApplicationController
   before_action :set_company
-  before_action :set_invoices
+  before_action :set_invoices, except: :show
+
+  def index
+
+  end
 
   def show;end
-
-  def search
-    render 'show'
-  end
 
   private
 
