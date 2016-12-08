@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Route Map
 #
 #                          Prefix Verb   URI Pattern                                Controller#Action
@@ -22,15 +23,17 @@
 # quickbooks_oauth_oauth_callback GET    /quickbooks_oauth/oauth_callback(.:format) quickbooks_oauth#oauth_callback
 #        quickbooks_oauth_bluedot GET    /quickbooks_oauth/bluedot(.:format)        quickbooks_oauth#bluedot
 #
-
-# frozen_string_literal: true
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root to: 'home#index'
 
   devise_for :users
 
-  resources :users, only: [:show]
+  resources :users, only: [:show] do
+    resources :qbo_credentials, only: [:show], path: 'companies', controller: 'companies', as: :companies do
+      get :search, on: :member
+    end
+  end
 
   get 'quickbooks_oauth/authenticate',   to: 'quickbooks_oauth#authenticate'
   get 'quickbooks_oauth/oauth_callback', to: 'quickbooks_oauth#oauth_callback'

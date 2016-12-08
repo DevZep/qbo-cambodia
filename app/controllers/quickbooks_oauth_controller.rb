@@ -22,7 +22,7 @@ class QuickbooksOauthController < ApplicationController
       token_expires_at: 6.months.from_now.utc
     )
 
-    if true#credential.new_record?
+    if credential.new_record?
       auth = OAuth::AccessToken.new(QB_OAUTH_CONSUMER, credential.access_token, credential.access_secret)
       service  = Quickbooks::Service::CompanyInfo.new(access_token: auth, realm_id: realm_id)
       response = service.query()

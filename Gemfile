@@ -22,6 +22,8 @@ gem 'factory_girl_rails', '~> 4.0'
 gem 'activerecord-session_store'
 gem 'quickbooks-ruby'
 
+gem 'wicked_pdf', '~> 1.1.0'
+
 group :development, :test do
   gem 'pry-rails'
   gem 'byebug', platform: :mri

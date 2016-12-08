@@ -35,4 +35,7 @@ class User < ApplicationRecord
   def qbo_credential
     qbo_credentials.first
   end
+
+  alias_method :companies, :qbo_credentials
+  alias_method :company,   :qbo_credential
 end
