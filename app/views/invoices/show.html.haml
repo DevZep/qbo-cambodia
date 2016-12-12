@@ -35,8 +35,9 @@
                 %p= "Customer: #{@invoice.customer_name}"
               .billing-address
                 %p= "Add: #{@invoice.full_billing_address}"
-              .tel
-                %p= "Tel: #{@invoice.customer_tel}"
+              - if @invoice.customer_tel
+                .tel
+                  %p= "Tel: #{@invoice.customer_tel}"
             .col-xs-6.text-right
               .invoice-number
                 %p.km= "លលខលរៀងវកិាយបតត: #{@invoice.doc_number}"

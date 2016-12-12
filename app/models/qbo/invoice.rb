@@ -18,11 +18,11 @@ class Qbo::Invoice < Qbo::Base
   end
 
   def customer_email
-    customer.primary_email_address.address
+    customer.primary_email_address.try(:address)
   end
 
   def customer_tel
-    customer.primary_phone.free_form_number
+    customer.primary_phone.try(:free_form_number)
   end
 
   def created_date
