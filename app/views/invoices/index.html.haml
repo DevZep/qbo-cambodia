@@ -3,9 +3,9 @@
     .panel-heading
       %span Invoices
 
-      = form_tag invoices_path(@company), method: 'get', class: 'navbar-form navbar-right' do
+      = form_tag company_invoices_path(@credential), method: 'get', class: 'navbar-form navbar-right' do
         .form-group
-          = text_field_tag :invoice_id, params[:invoice_id], class: 'form-control', placeholder: 'Invoice Id'
+          = text_field_tag :id, params[:id], class: 'form-control', placeholder: 'Invoice Id'
         = submit_tag 'Search', class: 'btn btn-default'
     .panel-body
       %table.table

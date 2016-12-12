@@ -1,5 +1,5 @@
-%tr
-  %th{ scope: 'row'}= invoice.id
+%tr{ class: 'clickable-row', 'data-href' => "#{company_invoice_path(@credential, invoice.id)}" }
+  %th{ scope: 'row'}= link_to invoice.doc_number, company_invoice_path(@credential, invoice.doc_number, format: :pdf), target: '_blank'
   %td= invoice.customer_ref.name
   %td= invoice.total
   %td= invoice.due_date

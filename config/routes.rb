@@ -5,16 +5,7 @@ Rails.application.routes.draw do
   get '/dashboard', to: 'users#show'
 
   resources :companies, only: [] do
-    member do
-      resources :invoices, only: [] do
-        get :show
-
-        collection do
-          get :search
-          get :index
-        end
-      end
-    end
+    resources :invoices, only: [:show, :index]
   end
 
   get 'quickbooks_oauth/authenticate',   to: 'quickbooks_oauth#authenticate'

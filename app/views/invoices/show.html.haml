@@ -1,2 +1,114 @@
-%h1 Invoices#show
-%p Find me in app/views/invoices/show.html.haml
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}
+    %meta{:charset => "utf-8"}
+    = wicked_pdf_stylesheet_link_tag 'invoice.pdf'
+  %body{id:"#{css_class}"}
+    .container
+      .row
+        .col-xs-12
+          .invoice-title
+            = image_tag 'https://cms-production-assets.s3-ap-southeast-1.amazonaws.com/1/New_Logo/rotati_logo_not_blur.png', height: 70
+            .pull-right.text-right
+              .company-name
+                %h3.km= 'រូតាទី'
+                %h3= @company.name
+              %p.vattin= 'លលខអតតសញាណកមមអតប (VATTIN) K002-901504677'
+              .company-address
+                %p.km= 'ផទះលលខ#​ ១១ ផលូវ​ ៤៩២ ភូមិ​ ២​ សងាត់ ផារល ើមថាូវ ខ័ណឌ ចំករមន ភំនលពញ'
+                %p= @company.full_address
+                - if @company.tel
+                  %p.tel= "Tel: #{@company.tel}"
+                - if @company.email
+                  %p.email= "Email: #{@company.email}"
+        .col-xs-12.text-center
+          .row.title
+            %h4.km= 'បតតអករ'
+            %h4= 'Invoice'
+
+
+          .row
+            .col-xs-6.text-left
+              .customer
+                %p.km= "អតិថិជន: ទាវ វិបុល"
+                %p= "Customer: #{@invoice.customer_name}"
+              .billing-address
+                %p= "Add: #{@invoice.full_billing_address}"
+              .tel
+                %p= "Tel: #{@invoice.customer_tel}"
+            .col-xs-6.text-right
+              .invoice-number
+                %p.km= "លលខលរៀងវកិាយបតត: #{@invoice.doc_number}"
+                %p= "Invoice no: #{@invoice.doc_number}"
+              .invoicing-date
+                %p.km= "កលបរលិចេទ : ១៩-កកាដ-២០១៦"
+                %p= "Date: #{@invoice.created_date}"
+      .row
+        .col-md-12
+          .table-responsive.items
+            %table.table.table-bordered
+              %thead
+                %tr.strong
+                  %td
+                    %p.km លរ
+                    %p No
+                  %td
+                    %p.km បរយិ យមុខទំនិញ
+                    %p Description
+                  %td
+                    %p.km បរិមាណ
+                    %p QTY
+                  %td
+                    %p.km តមមលឯកត
+                    %p Unit Price
+                  %td.text-right
+                    %p.km មថលទំនិញ
+                    %p Total Amount
+              %tbody
+                - subtotal = @invoice.line_items.find(&:sub_total_item?)
+                - @invoice.line_items.select(&:sales_item?).each_with_index do |item, index|
+                  %tr
+                    %td= index + 1
+                    %td= item.sales_line_item_detail.item_ref.name
+                    %td= item.sales_line_item_detail.unit_price
+                    %td= item.sales_line_item_detail.quantity.to_i
+                    %td.text-right= item.amount
+                %tr
+                  %td.thick-line{ colspan: "1" }
+                  %td.thick-line{ colspan: "1" }
+                  %td.thick-line.text-right{ colspan: "2" } សរបុ Subtotal
+                  %td.thick-line.text-right{ colspan: "1" }
+                    = subtotal.amount
+
+                %tr
+                  %td.no-line{ colspan: "1" }
+                  %td.no-line{ colspan: "1" }
+                  %td.no-line.text-right{ colspan: "2" } អករលលើតមមលបបនែម VAT ( 10%)
+                  %td.no-line.text-right{ colspan: "1" }
+                    = @invoice.txn_tax_detail.total_tax
+
+                %tr
+                  %td.no-line{ colspan: "1" }
+                  %td.no-line{ colspan: "1" }
+                  %td.no-line.text-right{ colspan: "2" } សរបុ រម  Total
+                  %td.no-line.text-right{ colspan: "1" }
+                    = @invoice.total_amount
+
+      .row.memo
+        .col-xs-6.text-left
+          %p= @invoice.customer_memo
+      .row
+        .col-xs-6.text-left
+          .customer-signature
+            %p.km ហតែលលខ និង ល្មះអនកទិញ
+            %p Customer's Signature & Name
+          .dotdot
+            %p ...................................
+
+        .col-xs-6.text-right
+          .seller-signature
+            %p.km ហតែលលខ និង ល្មះអ្នកលក់
+            %p Seller's Signature & Name
+          .dotdot
+            %p ...................................

@@ -1,30 +1,47 @@
 # frozen_string_literal: true
 class InvoicesController < ApplicationController
+  layout false, only: :show
+
+  before_action :set_qbo_credential
   before_action :set_company
-  before_action :set_invoices, except: :show
+  before_action :set_invoices
+  # before_action :set_qbo_company, only: :show
 
   def index
 
   end
 
-  def show;end
+  def show
+    @invoice = @invoices.first
+
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "#{@company.name.parameterize}_invoice_#{@invoice.doc_number}", template: 'invoices/show.html.haml'
+      end
+    end
+  end
 
   private
 
+  def set_qbo_credential
+    @credential = current_user.qbo_credentials.find(params[:company_id])
+  end
+
   def set_company
-    @company = current_user.companies.find(params[:id])
+    @company = Qbo::Company.new(@credential)
   end
 
   def set_invoices
-    auth = OAuth::AccessToken.new(QB_OAUTH_CONSUMER, @company.access_token, @company.access_secret)
-    service  = Quickbooks::Service::Invoice.new(access_token: auth, realm_id: @company.company_id)
+    auth     = OAuth::AccessToken.new(QB_OAUTH_CONSUMER, @credential.access_token, @credential.access_secret)
+    service  = Quickbooks::Service::Invoice.new(access_token: auth, realm_id: @credential.company_id)
 
-    response = if params[:invoice_id].present?
-      service.query("SELECT * FROM Invoice WHERE Id = '#{params[:invoice_id]}' ORDERBY MetaData.CreateTime DESC")
+    if params[:id].present?
+      @invoices = [Qbo::Invoice.new(params[:id], @credential)]
     else
-      service.query('SELECT * FROM Invoice ORDERBY MetaData.CreateTime DESC')
+      @invoices = service.query('SELECT * FROM Invoice ORDERBY MetaData.CreateTime DESC').entries.map do |raw_invoice|
+        Qbo::Invoice.new(raw_invoice)
+      end
     end
-
-    @invoices = response.entries
   end
 end
