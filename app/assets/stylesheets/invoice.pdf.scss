@@ -1,6 +1,17 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+@font-face {
+  font-family: 'Hanuman';
+  font-style: normal;
+  font-weight: 300;
+  src: font-url('Hanuman.ttf') format('truetype')
+}
+
+.km {
+  font-family: 'Hanuman';
+}
+
 h1, .h1, h2, .h2, h3, .h3 {
   margin-top: 10px;
   margin-bottom: 10px;
