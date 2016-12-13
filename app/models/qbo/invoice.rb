@@ -26,7 +26,7 @@ class Qbo::Invoice < Qbo::Base
   end
 
   def created_date
-    meta_data.create_time.to_date.strftime('%m-%b-%Y')
+    meta_data.create_time.to_date.strftime('%d-%b-%Y')
   end
 
   def created_date_km
