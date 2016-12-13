@@ -3,47 +3,54 @@
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}
     %meta{:charset => "utf-8"}
+    = render 'font.html.erb'
     = wicked_pdf_stylesheet_link_tag 'invoice.pdf'
   %body{id:"#{css_class}"}
     .container
       .row
         .col-xs-12
-          .invoice-title
-            = image_tag 'https://cms-production-assets.s3-ap-southeast-1.amazonaws.com/1/New_Logo/rotati_logo_not_blur.png', height: 70
-            .pull-right.text-right
+          .col-xs-4.zeo-padding
+            .text-left
+              = wicked_pdf_image_tag 'logo.png', height: 90
+          .col-xs-8
+            .text-left
               .company-name
-                %h3.km= 'រូតាទី'
-                %h3= @company.name
-              %p.vattin= 'លលខអតតសញាណកមមអតប (VATTIN) K002-901504677'
-              .company-address
-                %p.km= 'ផទះលលខ#​ ១១ ផលូវ​ ៤៩២ ភូមិ​ ២​ សងាត់ ផារល ើមថាូវ ខ័ណឌ ចំករមន ភំនលពញ'
-                %p= @company.full_address
-                - if @company.tel
-                  %p.tel= "Tel: #{@company.tel}"
-                - if @company.email
-                  %p.email= "Email: #{@company.email}"
+                %h3.km
+                  %strong រូតាទី
+                %h3 ROTATI Co.Ltd
+              %p.km លេខអត្តសញ្ញាណកម្ម អបត (VATTIN) K002-901504677
+              %p.km ផ្ទះលេខ #​១១ ផ្លូវ​ ៤៩២ ភូមិ​ ២​ សង្កាត់ ផ្សារដើមថ្កូវ ខ័ណ្ឌ ចំការមន ភ្នំពេញ
+        .col-xs-12
+          .text-center
+            %p.contact លេខទូរស័ព្ទ (Tel) 012 223 348: , Fax: (855/......................សារអេឡិចត្រូនិច (E-mail) :info@rotati.com
+            %p #11,Street 496, Sangkat Phsar Deum Thkov, Khan Chamkarmon,Phnom Penh, Kingdom of Cambodia.
         .col-xs-12.text-center
           .row.title
-            %h4.km= 'បតតអករ'
-            %h4= 'Invoice'
-
+            %h4.km
+              %strong វិក្កយបត្រអាករ
+            %h4 TAX INVOICE
 
           .row
-            .col-xs-6.text-left
+            .col-xs-8.text-left
               .customer
-                %p.km= "អតិថិជន: ទាវ វិបុល"
-                %p= "Customer: #{@invoice.customer_name}"
+                %p.km
+                  %strong= "អតិថិជន: #{@invoice.customer_name}"
+                %p
+                  %strong= "Customer: #{@invoice.customer_name}"
               .billing-address
+                %p.km
+                  %span អាសយដ្ឋាន:
+                  %span= " ##{@invoice.full_billing_address}"
                 %p= "Add: #{@invoice.full_billing_address}"
               - if @invoice.customer_tel
                 .tel
                   %p= "Tel: #{@invoice.customer_tel}"
-            .col-xs-6.text-right
+            .col-xs-4.text-right
               .invoice-number
-                %p.km= "លលខលរៀងវកិាយបតត: #{@invoice.doc_number}"
-                %p= "Invoice no: #{@invoice.doc_number}"
+                %p.km= "លេខរៀងវិក័យបត្រ: #{@invoice.doc_number}"
+                %p= "Invoice No: #{@invoice.doc_number}"
               .invoicing-date
-                %p.km= "កលបរលិចេទ : ១៩-កកាដ-២០១៦"
+                %p.km= "កាលបរិច្ឆេទ : #{@invoice.created_date_km}"
                 %p= "Date: #{@invoice.created_date}"
       .row
         .col-md-12
@@ -52,19 +59,19 @@
               %thead
                 %tr.strong
                   %td
-                    %p.km លរ
-                    %p No
+                    %p.km ល.រ
+                    %p No.
                   %td
-                    %p.km បរយិ យមុខទំនិញ
+                    %p.km បរិយាយមុខទំនិញ
                     %p Description
                   %td
                     %p.km បរិមាណ
                     %p QTY
                   %td
-                    %p.km តមមលឯកត
+                    %p.km តម្លៃឯកតា
                     %p Unit Price
                   %td.text-right
-                    %p.km មថលទំនិញ
+                    %p.km ថ្លៃទំនិញទំនិញ
                     %p Total Amount
               %tbody
                 - subtotal = @invoice.line_items.find(&:sub_total_item?)
@@ -78,21 +85,21 @@
                 %tr
                   %td.thick-line{ colspan: "1" }
                   %td.thick-line{ colspan: "1" }
-                  %td.thick-line.text-right{ colspan: "2" } សរបុ Subtotal
+                  %td.thick-line.text-right{ colspan: "2" } សរុប Subtotal
                   %td.thick-line.text-right{ colspan: "1" }
                     = subtotal.amount
 
                 %tr
                   %td.no-line{ colspan: "1" }
                   %td.no-line{ colspan: "1" }
-                  %td.no-line.text-right{ colspan: "2" } អករលលើតមមលបបនែម VAT ( 10%)
+                  %td.no-line.text-right{ colspan: "2" } អាករលើតម្លៃបន្ថែម VAT ( 10%)
                   %td.no-line.text-right{ colspan: "1" }
                     = @invoice.txn_tax_detail.total_tax
 
                 %tr
                   %td.no-line{ colspan: "1" }
                   %td.no-line{ colspan: "1" }
-                  %td.no-line.text-right{ colspan: "2" } សរបុ រម  Total
+                  %td.no-line.text-right{ colspan: "2" } សរុបរួម  Total
                   %td.no-line.text-right{ colspan: "1" }
                     = @invoice.total_amount
 
@@ -102,14 +109,14 @@
       .row
         .col-xs-6.text-left
           .customer-signature
-            %p.km ហតែលលខ និង ល្មះអនកទិញ
+            %p.km ហត្ថលេខា និង ឈ្មោះអ្នកទិញ
             %p Customer's Signature & Name
           .dotdot
             %p ...................................
 
         .col-xs-6.text-right
           .seller-signature
-            %p.km ហតែលលខ និង ល្មះអ្នកលក់
+            %p.km ហត្ថលេខា និង ឈ្មោះអ្នកលក់
             %p Seller's Signature & Name
           .dotdot
             %p ...................................

@@ -1,13 +1,6 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-@font-face {
-  font-family: 'Hanuman';
-  font-style: normal;
-  font-weight: 300;
-  src: font-url('Hanuman.ttf') format('truetype')
-}
-
 .km {
   font-family: 'Hanuman';
 }
@@ -19,28 +12,36 @@ h1, .h1, h2, .h2, h3, .h3 {
 
 h3 {
   font-weight: bold;
-  font-size: 19px;
+  font-size: 18px;
 
-  &.km { font-size: 24px; }
+  &.km { font-size: 32px; }
 }
 
 h4 {
   font-weight: bold;
-  font-size: 18px;
+  font-size: 16px;
 
-  &.km { font-size: 22px; }
+  &.km { font-size: 25px; }
 }
 
 p {
-  font-size: 14px;
+  font-size: 12px;
 
   &.km {
-    font-size: 15px;
+    font-size: 13px;
   }
 }
 
+.zeo-padding {
+  padding: 0px !important;
+}
+
 .company-name {
-  margin: 25px 0;
+  padding: 5px;
+}
+
+.billing-address {
+  margin-left: 60px;
 }
 
 
