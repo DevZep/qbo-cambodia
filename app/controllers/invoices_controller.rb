@@ -17,7 +17,14 @@ class InvoicesController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: "#{@company.name.parameterize}_invoice_#{@invoice.doc_number}", template: 'invoices/show.html.haml'
+        render(
+          pdf: "#{@company.name.parameterize}_invoice_#{@invoice.doc_number}",
+          template: 'invoices/show.html.haml',
+          margin:  {
+            left: 0,
+            right: 0
+          }
+        )
       end
     end
   end

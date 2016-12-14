@@ -129,10 +129,10 @@
                 %td.line{ colspan: "1" }
                   %span.pull-left= @invoice.currency.symbol
                   %span.pull-right= format('%.2f', @invoice.total_amount)
-
-      .row.memo
-        .col-xs-6.text-left
-          %p= @invoice.customer_memo
+      - if @invoice.customer_memo
+        .row.memo
+          .col-xs-6.text-left
+            %p= @invoice.customer_memo
       .row.signatures
         .col-xs-6.text-left
           .customer-signature

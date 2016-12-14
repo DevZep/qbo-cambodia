@@ -29,10 +29,10 @@ h4 {
 }
 
 p {
-  font-size: 12px;
+  font-size: 13px;
 
   &.km {
-    font-size: 13px;
+    font-size: 14px;
   }
 }
 
@@ -113,9 +113,13 @@ p {
 
 .memo {
   margin-top: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 30px;
 }
 
 .items, .title {
   margin: 20px 0;
+}
+
+.dotdot {
+  margin-top: 30px;
 }
