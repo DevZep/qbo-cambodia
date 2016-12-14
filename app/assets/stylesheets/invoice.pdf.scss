@@ -5,6 +5,10 @@
   font-family: 'Hanuman';
 }
 
+.strong {
+  font-weight: bold;
+}
+
 h1, .h1, h2, .h2, h3, .h3 {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -40,10 +44,25 @@ p {
   padding: 5px;
 }
 
-.billing-address {
-  margin-left: 60px;
+.left-25 {
+  margin-left: -25px;
 }
 
+.left-10 {
+  margin-left: -10px;
+}
+
+.pad-right-0 {
+  padding-right: 0;
+}
+
+.pad-left-0 {
+  padding-left: 0;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
 
 .text-right {
   text-align: right;
@@ -57,21 +76,44 @@ p {
   text-align: center;
 }
 
-.table > tbody > tr > .no-line {
-  border-top: none;
-}
+.table {
+  border: 1px solid;
 
-.table > thead > tr > .no-line {
-  border-bottom: none;
-}
+  td {
+    border: 1px solid;
+    border-top: none;
+    border-bottom: none;
+  }
 
-.table > tbody > tr > .thick-line {
-  // border-top: 2px solid;
+  tbody > tr > td {
+    border-top: none;
+  }
+
+  tbody > tr > .no-line {
+    border-top: none;
+  }
+
+  thead > tr > .no-line {
+    border-bottom: none;
+  }
+
+  thead > tr > td {
+    padding-bottom: 0;
+  }
+
+  tbody > tr > .item > p {
+    width: 250px;
+    word-wrap:break-word;
+  }
+
+  tbody > tr > .line {
+    border-top: 1px solid;
+  }
 }
 
 .memo {
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .items, .title {

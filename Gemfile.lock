@@ -94,6 +94,7 @@ GEM
       execjs
     coffee-script-source (1.11.1)
     concurrent-ruby (1.0.2)
+    currencies (0.4.2)
     debug_inspector (0.0.2)
     devise (4.2.0)
       bcrypt (~> 3.0)
@@ -301,6 +302,7 @@ DEPENDENCIES
   capistrano-rails (~> 1.2)
   capistrano-rvm
   coffee-rails (~> 4.2)
+  currencies
   devise (~> 4.0)
   dotenv-rails
   factory_girl_rails (~> 4.0)

@@ -9,114 +9,141 @@
     .container
       .row
         .col-xs-12
-          .col-xs-4.zeo-padding
+          .col-xs-4.zeo-padding.left-25
             .text-left
               = wicked_pdf_image_tag 'logo.png', height: 90
           .col-xs-8
             .text-left
-              .company-name
-                %h3.km
-                  %strong រូតាទី
+              .company-name.strong
+                %h3.km រ៉ូតាទី
                 %h3 ROTATI Co.Ltd
               %p.km លេខអត្តសញ្ញាណកម្ម អបត (VATTIN) K002-901504677
               %p.km ផ្ទះលេខ #​១១ ផ្លូវ​ ៤៩២ ភូមិ​ ២​ សង្កាត់ ផ្សារដើមថ្កូវ ខ័ណ្ឌ ចំការមន ភ្នំពេញ
         .col-xs-12
           .text-center
-            %p.contact លេខទូរស័ព្ទ (Tel) 012 223 348: , Fax: (855/......................សារអេឡិចត្រូនិច (E-mail) :info@rotati.com
-            %p #11,Street 496, Sangkat Phsar Deum Thkov, Khan Chamkarmon,Phnom Penh, Kingdom of Cambodia.
+            %p.contact លេខទូរស័ព្ទ (Tel) 012 223 348: , Fax: (855/............................សារអេឡិចត្រូនិច (E-mail) :info@rotati.com
+            %p #11, Street 496, Sangkat Phsar Deum Thkov, Khan Chamkarmon, Phnom Penh, Kingdom of Cambodia.
         .col-xs-12.text-center
-          .row.title
-            %h4.km
-              %strong វិក្កយបត្រអាករ
+          .row.title.strong
+            %h4.km វិក្កយបត្រអាករ
             %h4 TAX INVOICE
 
           .row
-            .col-xs-8.text-left
-              .customer
-                %p.km
-                  %strong= "អតិថិជន: #{@invoice.customer_name}"
-                %p
-                  %strong= "Customer: #{@invoice.customer_name}"
+            .col-xs-8.text-left.left-10
+              .customer.strong
+                .row
+                  .col-xs-3.text-right
+                    %p.km អតិថិជន:
+                  .col-xs-9.text-left.left-25
+                    %p.km= " #{@invoice.customer_name}"
+                .row
+                  .col-xs-3.text-right
+                    %p Customer:
+                  .col-xs-9.text-left.left-25
+                    %p= " #{@invoice.customer_name}"
               .billing-address
-                %p.km
-                  %span អាសយដ្ឋាន:
-                  %span= " ##{@invoice.full_billing_address}"
-                %p= "Add: #{@invoice.full_billing_address}"
-              - if @invoice.customer_tel
-                .tel
-                  %p= "Tel: #{@invoice.customer_tel}"
+                .row
+                  .col-xs-3
+                  .col-xs-9.text-left.left-25
+                    %p.km= "អាសយដ្ឋាន: ##{@invoice.full_billing_address}"
+                    %p= "Add: ##{@invoice.full_billing_address}"
+                    - if @invoice.customer_tel
+                      %p= "Tel: #{@invoice.customer_tel}"
             .col-xs-4.text-right
               .invoice-number
-                %p.km= "លេខរៀងវិក័យបត្រ: #{@invoice.doc_number}"
-                %p= "Invoice No: #{@invoice.doc_number}"
+                .row
+                  .col-xs-6.text-right.pad-left-0
+                    %p.km លេខរៀងវិក័យបត្រ:
+                  .col-xs-6.text-left.left-25.pad-right-0
+                    %p.strong= " #{@invoice.doc_number}"
+                .row
+                  .col-xs-6.text-right.pad-left-0
+                    %p Invoice No:
+                  .col-xs-6.text-left.left-25.pad-right-0
+                    %p.strong= " #{@invoice.doc_number}"
               .invoicing-date
-                %p.km= "កាលបរិច្ឆេទ : #{@invoice.created_date_km}"
-                %p= "Date: #{@invoice.created_date}"
+                .row
+                  .col-xs-6.text-right.pad-left-0
+                    %p.km កាលបរិច្ឆេទ:
+                  .col-xs-6.text-left.left-25.pad-right-0
+                    %p.km.strong= " #{@invoice.created_date_km}"
+                .row
+                  .col-xs-6.text-right.pad-left-0
+                    %p Date:
+                  .col-xs-6.text-left.left-25.pad-right-0
+                    %p.strong= " #{@invoice.created_date}"
       .row
         .col-md-12
-          .table-responsive.items
-            %table.table.table-bordered
-              %thead
-                %tr.strong
-                  %td
-                    %p.km ល.រ
-                    %p No.
-                  %td
-                    %p.km បរិយាយមុខទំនិញ
-                    %p Description
-                  %td
-                    %p.km បរិមាណ
-                    %p QTY
-                  %td
-                    %p.km តម្លៃឯកតា
-                    %p Unit Price
-                  %td.text-right
-                    %p.km ថ្លៃទំនិញទំនិញ
-                    %p Total Amount
-              %tbody
-                - subtotal = @invoice.line_items.find(&:sub_total_item?)
-                - @invoice.line_items.select(&:sales_item?).each_with_index do |item, index|
-                  %tr
-                    %td= index + 1
-                    %td= item.sales_line_item_detail.item_ref.name
-                    %td= item.sales_line_item_detail.unit_price
-                    %td= item.sales_line_item_detail.quantity.to_i
-                    %td.text-right= item.amount
+          %table.table
+            %thead
+              %tr.strong.text-center
+                %td.text-left
+                  %p.km ល.រ
+                  %p No.
+                %td
+                  %p.km បរិយាយមុខទំនិញ
+                  %p.uppercase Description
+                %td
+                  %p.km បរិមាណ
+                  %p.uppercase QTY
+                %td
+                  %p.km តម្លៃឯកតា
+                  %p.uppercase Unit Price
+                %td
+                  %p.km ថ្លៃទំនិញទំនិញ
+                  %p.uppercase Total Amount
+            %tbody
+              - @invoice.line_items.select(&:sales_item?).each_with_index do |item, index|
                 %tr
-                  %td.thick-line{ colspan: "1" }
-                  %td.thick-line{ colspan: "1" }
-                  %td.thick-line.text-right{ colspan: "2" } សរុប Subtotal
-                  %td.thick-line.text-right{ colspan: "1" }
-                    = subtotal.amount
+                  %td.line= index + 1
+                  %td.line.item
+                    %p= item.sales_line_item_detail.item_ref.name
+                  %td.text-center.line
+                    = item.sales_line_item_detail.quantity.to_i
+                  %td.line
+                    %span.pull-left= @invoice.currency.symbol
+                    %span.pull-right= format('%.2f', item.sales_line_item_detail.unit_price)
+                  %td.line
+                    %span.pull-left= @invoice.currency.symbol
+                    %span.pull-right= format('%.2f', item.amount)
+              %tr.uppercase
+                %td.line{ colspan: "1" }
+                %td.line{ colspan: "1" }
+                %td.line.text-right{ colspan: "2" } សរុប Subtotal
+                %td.line{ colspan: "1" }
+                  %span.pull-left= @invoice.currency.symbol
+                  %span.pull-right= format('%.2f', @invoice.sub_total.amount)
 
-                %tr
-                  %td.no-line{ colspan: "1" }
-                  %td.no-line{ colspan: "1" }
-                  %td.no-line.text-right{ colspan: "2" } អាករលើតម្លៃបន្ថែម VAT ( 10%)
-                  %td.no-line.text-right{ colspan: "1" }
-                    = @invoice.txn_tax_detail.total_tax
+              %tr.uppercase
+                %td{ colspan: "1" }
+                %td{ colspan: "1" }
+                %td.line.text-right{ colspan: "2" }= "#{@invoice.tax_rate.name} ( #{@invoice.tax_rate.rate_value.to_i}% )"
+                %td.line{ colspan: "1" }
+                  %span.pull-left= @invoice.currency.symbol
+                  %span.pull-right= format('%.2f', @invoice.txn_tax_detail.total_tax)
 
-                %tr
-                  %td.no-line{ colspan: "1" }
-                  %td.no-line{ colspan: "1" }
-                  %td.no-line.text-right{ colspan: "2" } សរុបរួម  Total
-                  %td.no-line.text-right{ colspan: "1" }
-                    = @invoice.total_amount
+              %tr.uppercase
+                %td{ colspan: "1" }
+                %td{ colspan: "1" }
+                %td.line.text-right{ colspan: "2" } សរុបរួម  Total
+                %td.line{ colspan: "1" }
+                  %span.pull-left= @invoice.currency.symbol
+                  %span.pull-right= format('%.2f', @invoice.total_amount)
 
       .row.memo
         .col-xs-6.text-left
           %p= @invoice.customer_memo
-      .row
+      .row.signatures
         .col-xs-6.text-left
           .customer-signature
             %p.km ហត្ថលេខា និង ឈ្មោះអ្នកទិញ
             %p Customer's Signature & Name
           .dotdot
-            %p ...................................
+            %p .............................................
 
         .col-xs-6.text-right
           .seller-signature
             %p.km ហត្ថលេខា និង ឈ្មោះអ្នកលក់
             %p Seller's Signature & Name
           .dotdot
-            %p ...................................
+            %p .............................................

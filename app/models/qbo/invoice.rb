@@ -39,12 +39,30 @@ class Qbo::Invoice < Qbo::Base
     [day_km, month_km, year_km].join('-')
   end
 
+  def currency
+    @currency ||= ::ISO4217::Currency.from_code(currency_ref.value)
+  end
+
+  def sub_total
+    @sub_total ||= line_items.find(&:sub_total_item?)
+  end
+
+  def tax_rate
+    return @tax_rate if @tax_rate
+    tax_id = txn_tax_detail.lines.first.tax_line_detail.tax_rate_ref.value
+    @tax_rate ||= Qbo::TaxRate.new(tax_id, credential)
+  end
+
   def customer
     return @customer if @customer.present?
 
     @customer = Qbo::Customer.new(@record.customer_ref.value, credential)
 
     @customer
+  end
+
+  def line_item
+    line_items.first
   end
 
   private
