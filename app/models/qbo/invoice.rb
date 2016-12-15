@@ -47,22 +47,24 @@ class Qbo::Invoice < Qbo::Base
     @sub_total ||= line_items.find(&:sub_total_item?)
   end
 
-  def tax_rate
-    return @tax_rate if @tax_rate
-    tax_id = txn_tax_detail.lines.first.tax_line_detail.tax_rate_ref.value
-    @tax_rate ||= Qbo::TaxRate.new(tax_id, credential)
-  end
-
   def customer
     return @customer if @customer.present?
 
-    @customer = Qbo::Customer.new(@record.customer_ref.value, credential)
+    @customer = Qbo::Customer.new(customer_ref.value, credential)
 
     @customer
   end
 
   def line_item
     line_items.first
+  end
+
+  def translation
+    Translation::Customer.find_by(qbo_customer_id: customer_ref.value)
+  end
+
+  def translated?
+    translation.present?
   end
 
   private

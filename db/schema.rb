@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161207103625) do
+ActiveRecord::Schema.define(version: 20161214090058) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,16 @@ ActiveRecord::Schema.define(version: 20161207103625) do
     t.datetime "updated_at"
     t.index ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
     t.index ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
+  end
+
+  create_table "translation_customers", force: :cascade do |t|
+    t.integer  "qbo_customer_id"
+    t.string   "language_code",   default: "km"
+    t.string   "name"
+    t.string   "billing_address"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.index ["qbo_customer_id", "language_code"], name: "index_customers_id_and_code", unique: true, using: :btree
   end
 
   create_table "users", force: :cascade do |t|

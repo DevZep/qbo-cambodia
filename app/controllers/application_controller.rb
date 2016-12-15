@@ -8,7 +8,18 @@ class ApplicationController < ActionController::Base
     "#{controller_name}-#{action_name}"
   end
 
-  helper_method :css_class
+  def js_class
+    action =
+      case modified_action_name
+      when 'create' then 'New'
+      when 'update' then 'Edit'
+      else modified_action_name
+      end
+
+    "Views.#{self.class.name.gsub('::', '.').gsub(/Controller$/, '')}.#{action.camelize}View"
+  end
+
+  helper_method :css_class, :js_class
 
   protected
 
@@ -18,5 +29,13 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource_or_scope)
     dashboard_path
+  end
+
+  def modified_action_name
+    case action_name
+    when 'create' then 'new'
+    when 'update' then 'edit'
+    else action_name
+    end
   end
 end

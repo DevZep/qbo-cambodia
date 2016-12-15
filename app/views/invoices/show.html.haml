@@ -18,7 +18,7 @@
                 %h3.km រ៉ូតាទី
                 %h3 ROTATI Co.Ltd
               %p.km លេខអត្តសញ្ញាណកម្ម អបត (VATTIN) K002-901504677
-              %p.km ផ្ទះលេខ #​១១ ផ្លូវ​ ៤៩២ ភូមិ​ ២​ សង្កាត់ ផ្សារដើមថ្កូវ ខ័ណ្ឌ ចំការមន ភ្នំពេញ
+              %p.km ផ្ទះលេខ #​១១ ផ្លូវ​ ៤៩៦ ភូមិ​ ២​ សង្កាត់ ផ្សារដើមថ្កូវ ខ័ណ្ឌ ចំការមន ភ្នំពេញ
         .col-xs-12
           .text-center
             %p.contact លេខទូរស័ព្ទ (Tel) 012 223 348: , Fax: (855/............................សារអេឡិចត្រូនិច (E-mail) :info@rotati.com
@@ -35,7 +35,7 @@
                   .col-xs-3.text-right
                     %p.km អតិថិជន:
                   .col-xs-9.text-left.left-25
-                    %p.km= " #{@invoice.customer_name}"
+                    %p.km= " #{@invoice.translation.name}"
                 .row
                   .col-xs-3.text-right
                     %p Customer:
@@ -45,7 +45,7 @@
                 .row
                   .col-xs-3
                   .col-xs-9.text-left.left-25
-                    %p.km= "អាសយដ្ឋាន: ##{@invoice.full_billing_address}"
+                    %p.km= "អាសយដ្ឋាន: ##{@invoice.translation.billing_address}"
                     %p= "Add: ##{@invoice.full_billing_address}"
                     - if @invoice.customer_tel
                       %p= "Tel: #{@invoice.customer_tel}"
@@ -114,13 +114,14 @@
                   %span.pull-left= @invoice.currency.symbol
                   %span.pull-right= format('%.2f', @invoice.sub_total.amount)
 
-              %tr.uppercase
-                %td{ colspan: "1" }
-                %td{ colspan: "1" }
-                %td.line.text-right{ colspan: "2" }= "#{@invoice.tax_rate.name} ( #{@invoice.tax_rate.rate_value.to_i}% )"
-                %td.line{ colspan: "1" }
-                  %span.pull-left= @invoice.currency.symbol
-                  %span.pull-right= format('%.2f', @invoice.txn_tax_detail.total_tax)
+              - if @invoice.txn_tax_detail.total_tax > 0.0
+                %tr.uppercase
+                  %td{ colspan: "1" }
+                  %td{ colspan: "1" }
+                  %td.line.text-right{ colspan: "2" } អាករលើតម្លៃបន្ថែម VAT ( 10%)
+                  %td.line{ colspan: "1" }
+                    %span.pull-left= @invoice.currency.symbol
+                    %span.pull-right= format('%.2f', @invoice.txn_tax_detail.total_tax)
 
               %tr.uppercase
                 %td{ colspan: "1" }

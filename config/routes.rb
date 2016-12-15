@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 Rails.application.routes.draw do
+
   root to: 'home#index'
   devise_for :users
   get '/dashboard', to: 'users#show'
@@ -7,6 +8,10 @@ Rails.application.routes.draw do
   resources :companies, only: [] do
     resources :invoices, only: [:show, :index]
   end
+
+  # Translation
+  post 'translattions/:customer_id', to: 'translation_customers#create', as: :create_customer_translation
+  put  'translattions/:customer_id', to: 'translation_customers#update', as: :edit_customer_translation
 
   get 'quickbooks_oauth/authenticate',   to: 'quickbooks_oauth#authenticate'
   get 'quickbooks_oauth/oauth_callback', to: 'quickbooks_oauth#oauth_callback'

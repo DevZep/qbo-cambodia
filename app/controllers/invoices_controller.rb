@@ -47,7 +47,7 @@ class InvoicesController < ApplicationController
       @invoices = [Qbo::Invoice.new(params[:id], @credential)]
     else
       @invoices = service.query('SELECT * FROM Invoice ORDERBY MetaData.CreateTime DESC').entries.map do |raw_invoice|
-        Qbo::Invoice.new(raw_invoice)
+        Qbo::Invoice.new(raw_invoice, @credential)
       end
     end
   end
