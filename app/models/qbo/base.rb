@@ -1,5 +1,4 @@
 class Qbo::Base
-  attr_reader :credential
   attr_reader :record
 
   NUMBER_EN_KM = {
@@ -30,21 +29,11 @@ class Qbo::Base
     '12' => 'ធ្នូ'
   }
 
-  def service
-    service_class.new(access_token: auth, realm_id: credential.company_id)
+  def initialize(qbo_record)
+    @record = qbo_record
   end
 
   def method_missing(method, *args)
     record.send(method, *args)
-  end
-
-  private
-
-  def auth
-    OAuth::AccessToken.new(QB_OAUTH_CONSUMER, credential.access_token, credential.access_secret)
-  end
-
-  def service_class
-
   end
 end

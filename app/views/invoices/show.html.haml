@@ -22,7 +22,7 @@
         .col-xs-12
           .text-center
             %p.contact លេខទូរស័ព្ទ (Tel) 012 223 348: , Fax: (855/............................សារអេឡិចត្រូនិច (E-mail) :info@rotati.com
-            %p #11, Street 496, Sangkat Phsar Deum Thkov, Khan Chamkarmon, Phnom Penh, Kingdom of Cambodia.
+            %p #11, Street 496, Sangkat Phsar Daeum Thkov, Khan Chamkar Mon, Phnom Penh, Kingdom of Cambodia.
         .col-xs-12.text-center
           .row.title.strong
             %h4.km វិក្កយបត្រអាករ
@@ -35,7 +35,7 @@
                   .col-xs-3.text-right
                     %p.km អតិថិជន:
                   .col-xs-9.text-left.left-25
-                    %p.km= " #{@invoice.translation.name}"
+                    %p.km= " #{@invoice.customer_translation.name}"
                 .row
                   .col-xs-3.text-right
                     %p Customer:
@@ -45,8 +45,8 @@
                 .row
                   .col-xs-3
                   .col-xs-9.text-left.left-25
-                    %p.km= "អាសយដ្ឋាន: ##{@invoice.translation.billing_address}"
-                    %p= "Add: ##{@invoice.full_billing_address}"
+                    %p.km= "អាសយដ្ឋាន: #{@invoice.customer_translation.billing_address}"
+                    %p= "Add: #{@invoice.full_billing_address}"
                     - if @invoice.customer_tel
                       %p= "Tel: #{@invoice.customer_tel}"
             .col-xs-4.text-right

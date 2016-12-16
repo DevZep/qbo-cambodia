@@ -1,6 +1,8 @@
 class TranslationCustomersController < ApplicationController
+  before_action :set_qbo_credential
+
   def create
-    @translation = Translation::Customer.new(qbo_customer_id: params[:customer_id])
+    @translation = Translation::Customer.new(qbo_customer_id: params[:customer_id], company_id: @qbo_credential.company_id)
     @translation.assign_attributes(customer_translation_params)
 
     respond_to do |format|
@@ -19,6 +21,10 @@ class TranslationCustomersController < ApplicationController
   end
 
   private
+
+  def set_qbo_credential
+    @qbo_credential = QboCredential.find(params[:company_id])
+  end
 
   def customer_translation_params
     params.require(:translation_customer).permit(:name, :billing_address)

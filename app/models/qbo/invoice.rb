@@ -1,13 +1,5 @@
 class Qbo::Invoice < Qbo::Base
-  def initialize(invoice_or_invoice_doc_number, credential = nil)
-    @credential = credential
-
-    @record = if invoice_or_invoice_doc_number.is_a?(Quickbooks::Model::Invoice)
-      invoice_or_invoice_doc_number
-    else
-      service.find_by(:doc_number, invoice_or_invoice_doc_number).entries.first
-    end
-  end
+  attr_writer :customer, :customer_translation
 
   def customer_name
     customer.full_name
@@ -47,29 +39,27 @@ class Qbo::Invoice < Qbo::Base
     @sub_total ||= line_items.find(&:sub_total_item?)
   end
 
-  def customer
-    return @customer if @customer.present?
+  def customer_id
+    customer_ref.value
+  end
 
-    @customer = Qbo::Customer.new(customer_ref.value, credential)
+  def customer
+    # return @customer if @customer.present?
+    #
+    # customer_service = CustomerService.new(qbo_credential)
+    # customer_service.find_by_ids(customer_ids)
+    #
+    # @customer = Qbo::Customer.new(customer_ref.value, credential)
 
     @customer
   end
 
-  def line_item
-    line_items.first
-  end
-
-  def translation
-    Translation::Customer.find_by(qbo_customer_id: customer_ref.value)
+  def customer_translation
+    @customer_translation
+    # @customer_translation ||= Translation::Customer.find_by(qbo_customer_id: customer_ref.value)
   end
 
   def translated?
-    translation.present?
-  end
-
-  private
-
-  def service_class
-    Quickbooks::Service::Invoice
+    customer_translation.present?
   end
 end

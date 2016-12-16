@@ -5,7 +5,6 @@ class InvoicesController < ApplicationController
   before_action :set_qbo_credential
   before_action :set_company
   before_action :set_invoices
-  # before_action :set_qbo_company, only: :show
 
   def index
 
@@ -36,19 +35,16 @@ class InvoicesController < ApplicationController
   end
 
   def set_company
-    @company = Qbo::Company.new(@credential)
+    company_service = ::CompanyService.new(@credential)
+    @company = company_service.find(@credential.company_id)
   end
 
   def set_invoices
-    auth     = OAuth::AccessToken.new(QB_OAUTH_CONSUMER, @credential.access_token, @credential.access_secret)
-    service  = Quickbooks::Service::Invoice.new(access_token: auth, realm_id: @credential.company_id)
-
-    if params[:id].present?
-      @invoices = [Qbo::Invoice.new(params[:id], @credential)]
+    invoice_service = ::InvoiceService.new(@credential)
+    @invoices = if params[:id].present?
+      invoice_service.find_by_doc_ids([params[:id]])
     else
-      @invoices = service.query('SELECT * FROM Invoice ORDERBY MetaData.CreateTime DESC').entries.map do |raw_invoice|
-        Qbo::Invoice.new(raw_invoice, @credential)
-      end
+      invoice_service.all
     end
   end
 end

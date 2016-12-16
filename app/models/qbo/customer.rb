@@ -1,9 +1,4 @@
 class Qbo::Customer < Qbo::Base
-  def initialize(customer_id, credential)
-    @credential = credential
-    @record     = service.fetch_by_id(customer_id)
-  end
-
   def full_name
     @record.fully_qualified_name
   end
@@ -20,9 +15,5 @@ class Qbo::Customer < Qbo::Base
 
   def billing_address
     @record.billing_address
-  end
-
-  def service_class
-    Quickbooks::Service::Customer
   end
 end

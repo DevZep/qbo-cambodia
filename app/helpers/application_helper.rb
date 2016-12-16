@@ -10,7 +10,7 @@ module ApplicationHelper
 
   def invoice_link(invoice, credential)
     if invoice.translated?
-      link_to invoice.doc_number, company_invoice_path(invoice.credential, invoice.doc_number, format: :pdf), target: '_blank'
+      link_to invoice.doc_number, company_invoice_path(credential, invoice.doc_number, format: :pdf), target: '_blank'
     else
       link_to(
         invoice.doc_number, '!#',
