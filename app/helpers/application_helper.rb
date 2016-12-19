@@ -14,13 +14,27 @@ module ApplicationHelper
     else
       link_to(
         invoice.doc_number, '!#',
-        class: 'translation',
+        class: 'translation new',
         data: {
           toggle: 'modal',
           next: company_invoice_path(credential, invoice.doc_number),
           target: '#translation-modal'
         }
       )
+    end
+  end
+
+  def edit_translation(invoice, credential)
+    if invoice.translated?
+      link_to('!#', class: 'translation edit',
+        data: {
+          toggle: 'modal',
+          next: company_invoice_path(credential, invoice.doc_number),
+          target: '#translation-modal'
+        }
+      ) do
+        content_tag :span, '', class: 'glyphicon glyphicon-edit',  aria: { hidden: true }
+      end
     end
   end
 end

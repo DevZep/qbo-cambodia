@@ -1,6 +1,8 @@
-%tr{ class: 'clickable-row', data: { translation_url: create_customer_translation_path(invoice.customer_ref.value), customer_name: invoice.customer_name, billing_address: invoice.full_billing_address, invoice_id: invoice.doc_number  } }
+%tr{ class: 'clickable-row', data: { translation_url: create_customer_translation_path(invoice.customer_ref.value), customer_name: invoice.customer_name, billing_address: invoice.full_billing_address, invoice_id: invoice.doc_number, translation: { name: invoice.customer_translation.try(:name), billing_address: invoice.customer_translation.try(:billing_address) }  } }
   %th{ scope: 'row'}= invoice_link(invoice, @credential)
   %td= invoice.customer_name
   %td= invoice.total
   %td= invoice.due_date
-  %td= invoice.meta_data.create_time
+  %td= invoice.meta_data.create_time.to_date
+  %td
+    = edit_translation(invoice, @credential)

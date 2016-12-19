@@ -20,14 +20,14 @@
                 = text_field_tag 'customer_name_en', nil, disabled: true, class: 'form-control', id: 'customer-name-en'
             .col-xs-6
               .form-group
-                = text_field_tag 'translation_customer[name]', nil, placeholder: 'Customer Name', class: 'form-control'
+                = text_field_tag 'translation_customer[name]', nil, placeholder: 'Customer Name', class: 'form-control', required: true
           .row
             .col-xs-6
               .form-group
                 = text_area_tag 'billing_address_en', nil, disabled: true, class: 'form-control', id: 'billing-address-en'
             .col-xs-6
               .form-group
-                = text_area_tag 'translation_customer[billing_address]', nil, placeholder: 'Billing Address', class: 'form-control'
+                = text_area_tag 'translation_customer[billing_address]', nil, placeholder: 'Billing Address', class: 'form-control', required: true
           .row
             .col-xs-12.text-center
               %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Cancel

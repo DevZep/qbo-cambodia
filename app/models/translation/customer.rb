@@ -17,4 +17,11 @@
 #
 
 class Translation::Customer < ApplicationRecord
+
+  validates :company_id,
+            :language_code,
+            :name,
+            :billing_address,
+            :qbo_customer_id,
+            presence: true
 end

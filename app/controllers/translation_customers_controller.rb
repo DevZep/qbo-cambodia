@@ -17,7 +17,15 @@ class TranslationCustomersController < ApplicationController
   def update
     @translation = Translation::Customer.find_by!(qbo_customer_id: params[:customer_id])
 
+    @translation.assign_attributes(customer_translation_params)
 
+    respond_to do |format|
+      if @translation.save
+        format.js { render inline: "window.open('#{pdf_path}', '_blank'); location.reload();", status: :ok }
+      else
+        format.js { render json: @translation.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   private
