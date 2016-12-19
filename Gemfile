@@ -19,6 +19,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'haml-rails', '~> 0.9'
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'currencies', require: 'iso4217'
+gem 'asset_sync', '~> 1.3.0'
 
 gem 'devise', '~> 4.0'
 gem 'factory_girl_rails', '~> 4.0'
