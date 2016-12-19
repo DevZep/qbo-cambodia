@@ -2,12 +2,14 @@
   = render 'translation_modal'
   .panel.panel-default
     .panel-heading
-      %span Invoices
-
-      = form_tag company_invoices_path(@credential), method: 'get', class: 'navbar-form navbar-right' do
-        .form-group
-          = text_field_tag :id, params[:id], class: 'form-control', placeholder: 'Invoice Id'
-        = submit_tag 'Search', class: 'btn btn-default'
+      .row
+        .col-xs-5
+          %h4 Invoices
+        .col-xs-7
+          = form_tag company_invoices_path(@credential), method: 'get', class: 'navbar-form navbar-right' do
+            .form-group
+              = text_field_tag :id, params[:id], class: 'form-control', placeholder: 'Invoice Id'
+            = submit_tag 'Search', class: 'btn btn-default'
     .panel-body
       %table.table
         %thead
