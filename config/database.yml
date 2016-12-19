@@ -19,4 +19,5 @@ production:
   <<: *default
   password: <%= ENV['DATABASE_PASSWORD'] %>
   host:     <%= ENV['DATABASE_HOST']%>
+  username: <%= ENV['DATABASE_USER']%>
   port:     <%= ENV['DATABASE_PORT']%>
