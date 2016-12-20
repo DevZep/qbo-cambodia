@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   get '/privacy',     to: 'home#privacy'
-  get '/term_of_use', to: 'home#term_of_use'
+  get '/end_user_agreement', to: 'home#end_user_agreement'
 
   get '/dashboard', to: 'users#show'
 

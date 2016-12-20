@@ -7,5 +7,5 @@ class HomeController < ApplicationController
   end
 
   def privacy;end
-  def term_of_use;end
+  def end_user_agreement;end
 end
