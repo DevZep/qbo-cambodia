@@ -41,10 +41,10 @@ class InvoicesController < ApplicationController
 
   def set_invoices
     invoice_service = ::InvoiceService.new(@credential)
-    @invoices = params[:id] ? invoice_service.find_by_doc_ids([params[:id]]) : []
-    #   invoice_service.find_by_doc_ids([params[:id]])
-    # else
-    #   invoice_service.all
-    # end
+    @invoices = if params[:id].present?
+      invoice_service.find_by_doc_ids([params[:id]])
+    else
+      invoice_service.all
+    end
   end
 end

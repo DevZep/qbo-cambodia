@@ -2,7 +2,12 @@
 Rails.application.routes.draw do
 
   root to: 'home#index'
+
   devise_for :users
+
+  get '/privacy',     to: 'home#privacy'
+  get '/end_user_agreement', to: 'home#end_user_agreement'
+
   get '/dashboard', to: 'users#show'
 
   resources :companies, only: [] do

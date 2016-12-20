@@ -5,4 +5,7 @@ class HomeController < ApplicationController
   def index
     redirect_to dashboard_path and return if user_signed_in?
   end
+
+  def privacy;end
+  def end_user_agreement;end
 end

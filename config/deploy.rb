@@ -2,7 +2,7 @@
 lock '3.7.0'
 
 set :application, "qbo-cambodia"
-set :repo_url, "git@github.com-qbo-cambodia:rotati/#{fetch(:application)}.git"
+set :repo_url, "git@github.com-qbo:rotati/#{fetch(:application)}.git"
 
 # Default branch is :master
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
