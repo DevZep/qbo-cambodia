@@ -4,6 +4,8 @@ class Qbo::Customer < Qbo::Base
   end
 
   def full_billing_address
+    billing_address.present? or return
+
     [
       billing_address.line1,
       billing_address.city,
