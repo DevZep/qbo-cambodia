@@ -1,7 +1,8 @@
-if Rails.env.staging? || Rails.env.production?
+if Rails.env.production?
   QboCambodia::Application.config.action_mailer.delivery_method = :smtp
+  QboCambodia::Application.config.action_mailer.default_url_options = { host: ENV['HOST'] }
   QboCambodia::Application.config.action_mailer.smtp_settings = {
-    address:               'email-smtp.eu-west-1.amazonaws.com',
+    address:               'email-smtp.us-east-1.amazonaws.com',
     authentication:        :login,
     user_name:             ENV['AWS_SES_USER_NAME'],
     password:              ENV['AWS_SES_PASSWORD'],

@@ -2,6 +2,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
+  before_action :redirect_devise_action
   before_action :authenticate_user!
 
   def css_class
@@ -29,6 +30,10 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource_or_scope)
     dashboard_path
+  end
+
+  def redirect_devise_action
+    redirect_to root_path and return if controller_name == 'sessions' && action_name == 'new'
   end
 
   def modified_action_name
