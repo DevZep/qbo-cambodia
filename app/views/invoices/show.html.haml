@@ -114,7 +114,7 @@
                   %span.pull-left= @invoice.currency.symbol
                   %span.pull-right= format('%.2f', @invoice.sub_total.amount)
 
-              - if @invoice.txn_tax_detail.total_tax > 0.0
+              - if @invoice.txn_tax_detail.present? && @invoice.txn_tax_detail.total_tax > 0.0
                 %tr.uppercase
                   %td{ colspan: "1" }
                   %td{ colspan: "1" }
