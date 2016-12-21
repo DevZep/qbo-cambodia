@@ -3,7 +3,9 @@ Rails.application.routes.draw do
 
   root to: 'home#index'
 
-  devise_for :users, controllers: { sessions: 'sessions' }
+  devise_for :users, controllers: {
+    sessions: 'sessions'
+  }
 
   get '/privacy',     to: 'home#privacy'
   get '/end_user_agreement', to: 'home#end_user_agreement'

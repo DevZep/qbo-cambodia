@@ -1,0 +1,22 @@
+.container
+  .row.centered-form
+    .col-xs-12.col-sm-8.col-md-4.col-sm-offset-2.col-md-offset-4
+      .panel.panel-default
+        .panel-heading
+          %h3.panel-title
+            Please sign up for QBO Cambodia
+        .panel-body
+          = form_tag user_registration_path, method: :post, role: 'form' do
+            .form-group
+              %input#email.form-control{ name: 'user[email]', required: true, placeholder: 'Email Address', type: 'email' }
+            .row
+              .col-xs-6.col-sm-6.col-md-6
+                .form-group
+                  %input#password.form-control{ name: 'user[password]', required: true, placeholder: 'Password', type: 'password'}
+              .col-xs-6.col-sm-6.col-md-6
+                .form-group
+                  %input#password_confirmation.form-control{ name: 'user[password_confirmation]', required: true, placeholder: 'Confirm Password', type: 'password'}
+            %input.btn.btn-success.btn-block{ type: 'submit', value: 'Register'}
+
+        .panel-footer.text-right
+          = link_to 'Sing In', root_path

@@ -13,10 +13,12 @@
           .navbar-right
             = link_to 'Logout', destroy_user_session_path, method: :delete, class: 'btn'
             %ipp:connecttointuit
-        - else
+        - elsif controller_name == 'home'
           = form_tag session_path(:user) do
             .form-group
-              = text_field_tag 'user[email]', nil, placeholder: 'Email', class: 'form-control'
+              = text_field_tag 'user[email]', nil, placeholder: 'Email', type: 'email', class: 'form-control', required: true
             .form-group
-              = password_field_tag 'user[password]', nil, placeholder: 'Password', class: 'form-control'
+              = password_field_tag 'user[password]', nil, placeholder: 'Password', class: 'form-control', required: true
             %button.btn.btn-success{:type => "submit"} Sign in
+          = link_to 'Sing Up', new_user_registration_path
+          = link_to 'Forget Password', new_user_password_path

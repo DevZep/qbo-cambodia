@@ -1,6 +1,8 @@
 class SessionsController < Devise::SessionsController
 
-  def create
-    super
+  protected
+
+  def auth_options
+    { recall: 'home#index', scope: :user }
   end
 end

@@ -1,0 +1,18 @@
+.container
+  .row
+    .row
+      .col-md-4.col-md-offset-4
+        .panel.panel-default
+          .panel-heading
+            %h2.text-center Forgot Password?
+          .panel-body
+            %p You can reset your password here.
+            = form_tag user_password_path, method: :post do
+              %fieldset
+                .form-group
+                  %input#emailInput.form-control{ name: 'user[email]', placeholder: 'Email Address', required: true, type: 'email' }
+                .form-group
+                  %input.btn.btn-success.btn-block{ type: 'submit', value: 'Send reset password instructions' }
+          .panel-footer.text-right
+            = link_to 'Sing In', root_path
+            = link_to 'Sing Up', new_user_registration_path
