@@ -36,21 +36,20 @@
                     %p.km អតិថិជន:
                   .col-xs-9.text-left.left-25
                     %p.km= " #{@invoice.customer_translation.name}"
+              .billing-address
                 .row
                   .col-xs-3.text-right
                     %p Customer:
                   .col-xs-9.text-left.left-25
-                    %p= " #{@invoice.customer_name}"
-              .billing-address
-                .row
-                  .col-xs-3
-                  .col-xs-9.text-left.left-25
-                    %p.km= "អាសយដ្ឋាន: #{@invoice.customer_translation.billing_address}"
-                    %p= "Add: #{@invoice.full_billing_address}"
-                    - if @invoice.customer_tel
-                      %p= "Tel: #{@invoice.customer_tel}"
-                    - if @invoice.customer.resale_num.present?
-                      %p= "VAT: #{@invoice.customer.resale_num}"
+                    .customer-border-box
+                      %p.strong= "Name: #{@invoice.customer_name}"
+                      %p.km= "អាសយដ្ឋាន: #{@invoice.customer_translation.billing_address}"
+                      %p= "Add: #{@invoice.full_billing_address}"
+                      - if @invoice.customer_tel
+                        %p= "Tel: #{@invoice.customer_tel}"
+                      - if @invoice.customer.resale_num.present?
+                        %p= "VAT: #{@invoice.customer.resale_num}"
+                    
             .col-xs-4.text-right
               .invoice-number
                 .row
