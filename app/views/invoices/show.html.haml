@@ -68,12 +68,12 @@
                   .col-xs-6.text-right.pad-left-0
                     %p.km កាលបរិច្ឆេទ:
                   .col-xs-6.text-left.left-25.pad-right-0
-                    %p.km.strong= " #{@invoice.created_date_km}"
+                    %p.km.strong= " #{@invoice.txn_date_formated_km}"
                 .row
                   .col-xs-6.text-right.pad-left-0
                     %p Date:
                   .col-xs-6.text-left.left-25.pad-right-0
-                    %p.strong= " #{@invoice.created_date}"
+                    %p.strong= " #{@invoice.txn_date_formated}"
       .row
         .col-md-12
           %table.table
