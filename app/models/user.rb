@@ -42,4 +42,9 @@ class User < ApplicationRecord
 
   alias_method :companies, :qbo_credentials
   alias_method :company,   :qbo_credential
+
+  protected
+    def confirmation_required?
+      false
+    end
 end
