@@ -8,6 +8,7 @@
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   %body{ id: css_class, data: { js_class: js_class } }
     = render 'shares/navbar'
+    = render 'layouts/flash'
     .full-bg
       = yield
     = render 'shares/footer'
