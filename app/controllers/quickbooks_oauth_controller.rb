@@ -33,7 +33,7 @@ class QuickbooksOauthController < ApplicationController
     end
 
     credential.save
-    @success= true
+    @success = true
   end
 
   def bluedot
