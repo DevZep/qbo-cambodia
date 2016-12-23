@@ -62,4 +62,17 @@ class Qbo::Invoice < Qbo::Base
   def translated?
     customer_translation.present?
   end
+
+  def title
+    debit_note? ? 'DEBIT NOTE' : 'TAX INVOICE'
+  end
+
+  def title_kh
+    debit_note? ? '': 'វិក្ក័យបត្រអាករ'
+  end
+
+  def debit_note?
+    private_note.present? && private_note.include?('debit_note')
+  end
+
 end
