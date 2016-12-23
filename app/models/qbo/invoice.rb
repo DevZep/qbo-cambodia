@@ -17,12 +17,12 @@ class Qbo::Invoice < Qbo::Base
     customer.primary_phone.try(:free_form_number)
   end
 
-  def created_date
-    meta_data.create_time.to_date.strftime('%d-%b-%Y')
+  def txn_date_formated
+    txn_date.strftime('%d-%b-%Y')
   end
 
-  def created_date_km
-    date = meta_data.create_time.to_date
+  def txn_date_formated_km
+    date = txn_date
 
     day_km = date.day.to_s.split('').map { |num| NUMBER_EN_KM[num] }.join('')
     month_km = MONTH_EN_KM[date.month.to_s]
@@ -62,4 +62,17 @@ class Qbo::Invoice < Qbo::Base
   def translated?
     customer_translation.present?
   end
+
+  def title
+    debit_note? ? 'DEBIT NOTE' : 'TAX INVOICE'
+  end
+
+  def title_kh
+    debit_note? ? '': 'វិក្ក័យបត្រអាករ'
+  end
+
+  def debit_note?
+    private_note.present? && private_note.include?('debit_note')
+  end
+
 end

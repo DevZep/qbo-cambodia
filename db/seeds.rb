@@ -3,3 +3,4 @@ FactoryGirl.create(:user, email: 'darren@rotati.com', password: 'z2uxb5', passwo
 FactoryGirl.create(:user, email: 'vibol@rotati.com', password: 'z2uxb6', password_confirmation: 'z2uxb6')       if User.find_by(email: 'vibol@rotati.com').nil?
 FactoryGirl.create(:user, email: 'yoan@rotati.com', password: 'z2uxb8', password_confirmation: 'z2uxb8')       if User.find_by(email: 'yoan@rotati.com').nil?
 FactoryGirl.create(:user, email: 'ainglorchhan@gmail.com', password: 'z2uxb7', password_confirmation: 'z2uxb7') if User.find_by(email: 'ainglorchhan@gmail.com').nil?
+FactoryGirl.create(:user, email: 'sophal@gmail.com', password: 'raizer', password_confirmation: 'raizer') if User.find_by(email: 'sophal@gmail.com').nil?

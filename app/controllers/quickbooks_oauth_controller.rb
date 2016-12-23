@@ -33,7 +33,7 @@ class QuickbooksOauthController < ApplicationController
     end
 
     credential.save
-    redirect_to root_path, notice: 'Successfully authenticate with you QBO account!'
+    @success = true
   end
 
   def bluedot

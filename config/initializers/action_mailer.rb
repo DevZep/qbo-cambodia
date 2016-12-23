@@ -1,6 +1,6 @@
-if Rails.env.production?
-  QboCambodia::Application.config.action_mailer.delivery_method = :smtp
+if Rails.env.production? || Rails.env.staging?
   QboCambodia::Application.config.action_mailer.default_url_options = { host: ENV['HOST'] }
+  QboCambodia::Application.config.action_mailer.delivery_method = :smtp
   QboCambodia::Application.config.action_mailer.smtp_settings = {
     address:               'email-smtp.us-east-1.amazonaws.com',
     authentication:        :login,

@@ -25,9 +25,8 @@
             %p #11, Street 496, Sangkat Phsar Daeum Thkov, Khan Chamkar Mon, Phnom Penh, Kingdom of Cambodia.
         .col-xs-12.text-center
           .row.title.strong
-            %h4.km វិក្កយបត្រអាករ
-            %h4 TAX INVOICE
-
+            %h4.km=@invoice.title_kh
+            %h4= @invoice.title
           .row
             .col-xs-8.text-left.left-10
               .customer.strong
@@ -36,19 +35,20 @@
                     %p.km អតិថិជន:
                   .col-xs-9.text-left.left-25
                     %p.km= " #{@invoice.customer_translation.name}"
+              .billing-address
                 .row
                   .col-xs-3.text-right
                     %p Customer:
                   .col-xs-9.text-left.left-25
-                    %p= " #{@invoice.customer_name}"
-              .billing-address
-                .row
-                  .col-xs-3
-                  .col-xs-9.text-left.left-25
-                    %p.km= "អាសយដ្ឋាន: #{@invoice.customer_translation.billing_address}"
-                    %p= "Add: #{@invoice.full_billing_address}"
-                    - if @invoice.customer_tel
-                      %p= "Tel: #{@invoice.customer_tel}"
+                    .customer-border-box
+                      %p.strong= "Name: #{@invoice.customer_name}"
+                      %p.km= "អាសយដ្ឋាន: #{@invoice.customer_translation.billing_address}"
+                      %p= "Add: #{@invoice.full_billing_address}"
+                      - if @invoice.customer_tel
+                        %p= "Tel: #{@invoice.customer_tel}"
+                      - if @invoice.customer.resale_num.present?
+                        %p= "VAT: #{@invoice.customer.resale_num}"
+                    
             .col-xs-4.text-right
               .invoice-number
                 .row
@@ -66,12 +66,12 @@
                   .col-xs-6.text-right.pad-left-0
                     %p.km កាលបរិច្ឆេទ:
                   .col-xs-6.text-left.left-25.pad-right-0
-                    %p.km.strong= " #{@invoice.created_date_km}"
+                    %p.km.strong= " #{@invoice.txn_date_formated_km}"
                 .row
                   .col-xs-6.text-right.pad-left-0
                     %p Date:
                   .col-xs-6.text-left.left-25.pad-right-0
-                    %p.strong= " #{@invoice.created_date}"
+                    %p.strong= " #{@invoice.txn_date_formated}"
       .row
         .col-md-12
           %table.table
