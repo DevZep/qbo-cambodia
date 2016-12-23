@@ -1,0 +1,6 @@
+- if @success
+  %h3 You have successfully connected to Intuit
+  %p This window will close automatically.
+  %script
+    = "opener.parent.location.reload(true);"
+    = "setInterval(function() {window.close()}, 2000);"
