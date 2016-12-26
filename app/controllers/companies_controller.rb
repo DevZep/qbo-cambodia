@@ -7,5 +7,5 @@ class CompaniesController < ApplicationController
   def show
     @company = current_user.qbo_credentials.find(params[:id])
   end
-  
+
 end
