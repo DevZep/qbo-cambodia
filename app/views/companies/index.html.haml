@@ -4,6 +4,10 @@
 = render 'quickbook_script'
 .container
   - if @companies.present?
-    %h3 Company List
+    %h3 Companies
     %hr
-  #{authenticated?(@companies)}
+    = render partial: 'company', collection: @companies
+  - else
+    .text-center
+      %h3= "To Start: Please Connect to QuickBooks by clicking the button below"
+      %ipp:connecttointuit
