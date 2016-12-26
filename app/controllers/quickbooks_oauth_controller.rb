@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 class QuickbooksOauthController < ApplicationController
+  layout false
 
   def authenticate
     token = QB_OAUTH_CONSUMER.get_request_token(oauth_callback: quickbooks_oauth_oauth_callback_url)
@@ -34,6 +35,7 @@ class QuickbooksOauthController < ApplicationController
 
     credential.save
     @success = true
+    flash.notice = "You have successfully authenticated from QBO"
   end
 
   def bluedot
