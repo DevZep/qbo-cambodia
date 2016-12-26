@@ -72,7 +72,7 @@ class Qbo::Invoice < Qbo::Base
   end
 
   def debit_note?
-    private_note.present? && private_note.include?('debit_note')
+    private_note.present? && private_note.include?('debitnote')
   end
 
 end
