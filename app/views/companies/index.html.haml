@@ -3,6 +3,9 @@
 / configure the Intuit object: 'grantUrl' is a URL in your application which kicks off the flow, see below
 = render 'quickbook_script'
 .container
-  %h1 Welcome to your dashboard	
-  .row
-    = render partial: 'company', collection: @companies
+  - if @companies.present?
+    %h1 Company List
+  - else
+    %h1 Welcome to Dashboard
+  %hr
+  #{authenticated?(@companies)}
