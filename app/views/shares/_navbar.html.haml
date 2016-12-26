@@ -12,7 +12,8 @@
         - if user_signed_in?
           .navbar-right
             = link_to 'Logout', destroy_user_session_path, method: :delete, class: 'btn'
-            %ipp:connecttointuit
+            - if current_user.companies.present?
+              %ipp:connecttointuit
         - elsif controller_name == 'home'
           = form_tag session_path(:user) do
             .form-group
@@ -20,5 +21,5 @@
             .form-group
               = password_field_tag 'user[password]', nil, placeholder: 'Password', class: 'form-control', required: true
             %button.btn.btn-success{:type => "submit"} Sign in
-          = link_to 'Sing Up', new_user_registration_path
+          = link_to 'Sign Up', new_user_registration_path
           = link_to 'Forget Password', new_user_password_path

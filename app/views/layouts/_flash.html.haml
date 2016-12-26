@@ -1,4 +1,5 @@
-- flash.each do |type, message|
-  .alert.fade.in.pull-right{ class: bootstrap_class_for(type) }
-    %button.close{ data: { dismiss: 'alert' } } x
-    = message
+.overlay
+  - flash.each do |type, message| 
+    .alert.fade.in.pull-right.overlay{ class: bootstrap_class_for(type) }
+      %button.close{ data: { dismiss: 'alert' } } x
+      = message
