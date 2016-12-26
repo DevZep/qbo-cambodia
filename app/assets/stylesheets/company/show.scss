@@ -1,5 +1,9 @@
 #companies-show{
-	h4.margin-top{
-		margin-top: 15px;
-	}
+	.panel-heading {
+    height: 55px;
+
+    .navbar-form {
+      margin: 0;
+    }
+  }
 }

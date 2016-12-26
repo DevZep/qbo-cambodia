@@ -1,0 +1,8 @@
+/ somewhere in your document include the Javascript
+%script{ src: 'https://js.appcenter.intuit.com/Content/IA/intuit.ipp.anywhere-1.3.3.js', type: 'text/javascript' }
+/ configure the Intuit object: 'grantUrl' is a URL in your application which kicks off the flow, see below
+= render 'quickbook_script'
+.container
+  %h1 Welcome to your dashboard
+  .row
+    = render partial: 'company', collection: @companies
