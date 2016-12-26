@@ -17,6 +17,14 @@ body#home-index {
   background-size: cover;
 }
 
+.alert {
+  margin-top: 20px;
+
+  .close {
+    margin-left: 10px;
+  }
+}
+
 footer#stick-bottom {
   position: absolute;
   bottom: 0;
