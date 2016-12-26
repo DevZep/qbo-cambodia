@@ -27,7 +27,7 @@ gem 'quickbooks-ruby'
 
 gem 'wicked_pdf', '~> 1.1.0'
 gem 'wkhtmltopdf-binary'
-gem 'mail_interceptor', group: [:development, :staging]
+gem 'mail_interceptor'
 
 group :production do
   gem 'asset_sync', '~> 1.3.0'
