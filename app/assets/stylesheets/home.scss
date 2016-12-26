@@ -26,6 +26,9 @@ body#home-index {
 }
 
 .overlay{
+  position: absolute;
+  min-width: 200px;
+  right: 0;
   z-index: 10;
 }
 
