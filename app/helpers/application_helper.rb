@@ -56,12 +56,4 @@ module ApplicationHelper
   def toggle_class(condition, class_name)
     class_name if condition
   end
-
-  def authenticated?(company)
-    if company.present?
-      render partial: 'company', collection: company
-    else
-      render 'homepage'
-    end
-  end
 end
