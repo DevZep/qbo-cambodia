@@ -4,8 +4,6 @@
 = render 'quickbook_script'
 .container
   - if @companies.present?
-    %h1 Company List
-  - else
-    %h1 Welcome to Dashboard
-  %hr
+    %h3 Company List
+    %hr
   #{authenticated?(@companies)}
