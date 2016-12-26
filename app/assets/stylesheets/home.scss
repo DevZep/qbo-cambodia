@@ -25,6 +25,14 @@ body#home-index {
   }
 }
 
+.overlay{
+  position: absolute;
+  top: 50px;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+
 footer#stick-bottom {
   position: absolute;
   bottom: 0;
