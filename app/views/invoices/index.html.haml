@@ -4,11 +4,12 @@
     .panel-heading
       .row
         .col-xs-5
-          %h4 Invoices
+          = link_to company_invoices_path(@credential)do
+            %h4.margin-top Invoices
         .col-xs-7
           = form_tag company_invoices_path(@credential), method: 'get', class: 'navbar-form navbar-right' do
             .form-group
-              = text_field_tag :id, params[:id], class: 'form-control', placeholder: 'Invoice Id'
+              = text_field_tag :id, params[:id], class: 'form-control', placeholder: 'Invoice Id',required: true
             = submit_tag 'Search', class: 'btn btn-default'
     .panel-body
       %table.table

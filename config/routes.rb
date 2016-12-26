@@ -10,7 +10,8 @@ Rails.application.routes.draw do
   get '/privacy',     to: 'home#privacy'
   get '/end_user_agreement', to: 'home#end_user_agreement'
 
-  get '/dashboard', to: 'users#show'
+  get '/dashboard', to: 'companies#index'
+  get '/companies/:id', to: 'companies#show', as: :company
 
   resources :companies, only: [] do
     resources :invoices, only: [:show, :index]
