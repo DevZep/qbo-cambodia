@@ -14,5 +14,4 @@
                 .form-group
                   %input.btn.btn-success.btn-block{ type: 'submit', value: 'Send reset password instructions' }
           .panel-footer.text-right
-            = link_to 'Sing In', root_path
-            = link_to 'Sing Up', new_user_registration_path
+            = render "users/shared/links"
