@@ -5,63 +5,90 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <style>
   body {
-    background-color: #EFEFEF;
+    background-color: #fff;
     color: #2E2F30;
     text-align: center;
-    font-family: arial, sans-serif;
+    font-family: rockwel;
     margin: 0;
   }
 
-  div.dialog {
-    width: 95%;
-    max-width: 33em;
-    margin: 4em auto 0;
+  .container-fluid{
+    width: 700px;
+    margin: 0 auto;
+    margin-top: 100px;
+    text-align: center;
   }
 
-  div.dialog > div {
-    border: 1px solid #CCC;
-    border-right-color: #999;
-    border-left-color: #999;
-    border-bottom-color: #BBB;
-    border-top: #B00100 solid 4px;
-    border-top-left-radius: 9px;
-    border-top-right-radius: 9px;
-    background-color: white;
-    padding: 7px 12% 0;
-    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
+  .div{
+    display: block;
   }
 
-  h1 {
-    font-size: 100%;
-    color: #730E15;
-    line-height: 1.5em;
+  .panel{
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid transparent;
+    border-radius: 4px;
   }
 
-  div.dialog > p {
-    margin: 0 0 1em;
-    padding: 1em;
-    background-color: #F7F7F7;
-    border: 1px solid #CCC;
-    border-right-color: #999;
-    border-left-color: #999;
-    border-bottom-color: #999;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    border-top-color: #DADADA;
-    color: #666;
-    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
+  .panel-default{
+    border-color: #ddd 
+  }
+
+  .panel-default > .panel-heading {
+    color: #333333;
+    background-color: #f5f5f5;
+    border-color: #ddd;
+  }
+
+  .panel-heading{
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+  }
+
+  .panel-body{
+    padding: 15px;
+  }
+
+  .panel-footer{
+    padding: 10px 15px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #ddd;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+  }
+
+  .panel-body > h1{
+    font-size: 50px;
+  }
+
+  a{
+    color: #337ab7;
+    text-decoration: none;
   }
   </style>
 </head>
 
 <body>
   <!-- This file lives in public/422.html -->
-  <div class="dialog">
-    <div>
-      <h1>The change you wanted was rejected.</h1>
-      <p>Maybe you tried to change something you didn't have access to.</p>
+  <div class="container-fluid">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h1>No Permission</h1>
+      </div>
+      <div class="panel-body">
+        <h1>422</h1>
+        <h2>The change you wanted was rejected.</h2>
+        <h2>Maybe you tried to change something you didn't have access to.</h2>
+        <p>Visit our homepage at 
+          <a href="http://qbocambodia.com/">QBO Cambodia</a>
+        </p>
+      </div>
+      <div class="panel-footer">
+        <p>If you are the application owner check the logs for more information.</p>
+      </div>
     </div>
-    <p>If you are the application owner check the logs for more information.</p>
   </div>
 </body>
 </html>
