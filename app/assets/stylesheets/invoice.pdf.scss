@@ -78,6 +78,8 @@ p {
 
 .table {
   border: 1px solid;
+  position: relative;
+  margin-bottom: -1px;
 
   td {
     border: 1px solid;
@@ -106,8 +108,31 @@ p {
     word-wrap:break-word;
   }
 
+  tbody > tr > .item-no {
+    width: 50px;
+  }
+
   tbody > tr > .line {
     border-top: 1px solid;
+  }
+
+  tbody > tr > .col-130 {
+    width: 140px;
+  }
+
+  tbody > tr > .col-50 {
+    width: 50px;
+  }
+
+  tbody > tr > .col-182 {
+    width: 201px;
+  }
+}
+
+table.break {
+  tbody > tr > .item > p {
+    width: 318px;
+    word-wrap:break-word;
   }
 }
 
@@ -124,8 +149,18 @@ p {
   margin-top: 30px;
 }
 
-.signatures {
+.signatures, .memo, .break{
   page-break-inside: avoid;
+}
+
+.alwaysbreak { page-break-before: always; }
+.nobreak:before { clear:both; }
+.nobreak { page-break-inside: avoid !important; }
+
+table {
+  thead {
+    display: table-row-group;
+  }
 }
 
 .customer-border-box{
