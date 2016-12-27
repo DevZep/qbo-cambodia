@@ -24,10 +24,10 @@
           .row
             .col-xs-6
               .form-group
-                = text_area_tag 'billing_address_en', nil, disabled: true, class: 'form-control', id: 'billing-address-en'
+                = text_area_tag 'billing_address_en', nil, disabled: true, class: 'form-control', id: 'billing-address-en', rows: "10"
             .col-xs-6
               .form-group
-                = text_area_tag 'translation_customer[billing_address]', nil, placeholder: 'Billing Address', class: 'form-control', required: true
+                = text_area_tag 'translation_customer[billing_address]', nil, placeholder: 'Billing Address', class: 'form-control', required: true, rows: "10"
           .row
             .col-xs-12.text-center
               %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Cancel
