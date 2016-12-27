@@ -26,16 +26,14 @@ module ApplicationHelper
 
   def edit_translation(invoice, credential)
     if invoice.translated?
-      link_to('!#', class: 'translation edit',
-        data: {
-          toggle: 'modal',
-          next: company_invoice_path(credential, invoice.doc_number),
-          target: '#translation-modal'
-        }
-      ) do
-        content_tag :span, '', class: 'glyphicon glyphicon-edit',  aria: { hidden: true }
+      content_tag :div do
+        english_name(invoice) + khmer_name(invoice) + edit_name(invoice, credential)
       end
-    end
+    else
+      content_tag :div do
+        english_name(invoice) + require_translation + edit_name(invoice, credential)
+      end
+    end.html_safe
   end
 
   def bootstrap_class_for(flash_type)
@@ -55,5 +53,30 @@ module ApplicationHelper
 
   def toggle_class(condition, class_name)
     class_name if condition
+  end
+
+  private
+
+  def english_name(invoice)
+    content_tag :p, invoice.customer_name
+  end
+
+  def khmer_name(invoice)
+    content_tag :span, "#{invoice.customer_translation.name} " 
+  end
+
+  def edit_name(invoice, credential)
+    content_tag :a, href: '!#', class: 'translation edit',
+      data: {
+        toggle: 'modal',
+        next: company_invoice_path(credential, invoice.doc_number),
+        target: '#translation-modal'
+      } do
+      content_tag :span, '', class: 'glyphicon glyphicon-edit',  aria: { hidden: true }
+    end
+  end
+
+  def require_translation
+    content_tag :span, 'Requires Translating ', class: 'text-danger'
   end
 end

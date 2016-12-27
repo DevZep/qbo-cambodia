@@ -1,7 +1,5 @@
 class Views.Invoices.IndexView extends Views.ApplicationView
   render: ->
-    _editTranslation()
-    _newTranslation()
     _onOpenModal()
 
   _onOpenModal= ->
@@ -28,17 +26,3 @@ class Views.Invoices.IndexView extends Views.ApplicationView
       # From action
       submitUrl = $invoice.data('translation-url')
       $modal.find('form:first').attr('action', submitUrl)
-
-  _newTranslation = ->
-    $modal = $('#translation-modal')
-
-    $('#invoices-index').on 'click', 'a.translation.new', ->
-      $modal.find('form .btn-success:first').text('Translate and View Invoice')
-      $modal.find('form:first').attr('method', 'POST')
-
-  _editTranslation = ->
-    $modal = $('#translation-modal')
-
-    $('#invoices-index').on 'click', 'a.translation.edit', ->
-      $modal.find('form .btn-success:first').text('Save and View Invoice')
-      $modal.find('form:first').attr('method', 'PUT')

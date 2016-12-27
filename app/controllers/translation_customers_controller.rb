@@ -1,21 +1,8 @@
 class TranslationCustomersController < ApplicationController
   before_action :set_qbo_credential
 
-  def create
-    @translation = Translation::Customer.new(qbo_customer_id: params[:customer_id], company_id: @qbo_credential.company_id)
-    @translation.assign_attributes(customer_translation_params)
-
-    respond_to do |format|
-      if @translation.save
-        format.js { render inline: "window.open('#{pdf_path}', '_blank'); location.reload();", status: :ok }
-      else
-        format.js { render json: @translation.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   def update
-    @translation = Translation::Customer.find_by!(qbo_customer_id: params[:customer_id])
+    @translation = Translation::Customer.find_or_initialize_by(qbo_customer_id: params[:customer_id], company_id: @qbo_credential.company_id)
 
     @translation.assign_attributes(customer_translation_params)
 

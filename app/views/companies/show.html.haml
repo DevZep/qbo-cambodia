@@ -4,10 +4,14 @@
       .row
         .col-xs-5
           = link_to company_invoices_path(@company)do
-            %h4.margin-top Invoices
+            %h4.margin-top 
+              =@company.company_name
         .col-xs-7
           = form_tag company_invoices_path(@company), method: 'get', class: 'navbar-form navbar-right' do
             .form-group
-              = text_field_tag :id, nil, class: 'form-control', placeholder: 'Invoice Id', required: true
-            = submit_tag 'Search', class: 'btn btn-default'
+              .row
+                .col-xs-8
+                  = text_field_tag :id, nil, class: 'form-control', placeholder: 'Invoice Id', required: true
+                .col-xs-4
+                  = submit_tag 'Search', class: 'btn btn-default'
   
