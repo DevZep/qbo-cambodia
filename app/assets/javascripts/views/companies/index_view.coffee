@@ -12,10 +12,8 @@ class Views.Companies.IndexView extends Views.ApplicationView
 
     $qboImg = $('#qboimg')
     $qboImg.mouseover ->
-      console.log 'mouseover'
       src = $(@).data('mouseover-src')
       $(@).attr('src', src)
     $qboImg.mouseout ->
-      console.log 'mouseout'
       src = $(@).data('origin-src')
       $(@).attr('src', src)
