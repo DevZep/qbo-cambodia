@@ -27,6 +27,17 @@ class InvoicesController < ApplicationController
     end
   end
 
+  def debit
+    invoice_service = ::InvoiceService.new(@credential)
+    @invoices = invoice_service.all_debit
+  end
+
+  def invoice
+    invoice_service = ::InvoiceService.new(@credential)
+    @invoices = invoice_service.all_invoice
+    
+  end
+
   private
 
   def set_qbo_credential
