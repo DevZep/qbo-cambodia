@@ -68,7 +68,7 @@ class Qbo::Invoice < Qbo::Base
   end
 
   def title_kh
-    debit_note? ? '': 'វិក្ក័យបត្រអាករ'
+    debit_note? ? 'ការទូទាត់សងវិញ': 'វិក្ក័យបត្រអាករ'
   end
 
   def debit_note?
