@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 class InvoicesController < ApplicationController
+
+  include Kaminari
+
   layout false, only: :show
 
   before_action :set_qbo_credential
@@ -29,13 +32,14 @@ class InvoicesController < ApplicationController
 
   def debit
     invoice_service = ::InvoiceService.new(@credential)
-    @invoices = invoice_service.all_debit
+    pageinate = invoice_service.all_debit
+    @invoices = Kaminari.paginate_array(pageinate).page(params[:page]).per(10)
   end
 
   def invoice
     invoice_service = ::InvoiceService.new(@credential)
-    @invoices = invoice_service.all_invoice
-    
+    pageinate = invoice_service.all_invoice
+    @invoices = Kaminari.paginate_array(pageinate).page(params[:page]).per(10)
   end
 
   private
@@ -47,9 +51,11 @@ class InvoicesController < ApplicationController
   def set_invoices
     invoice_service = ::InvoiceService.new(@credential)
     @invoices = if params[:id].present?
-      invoice_service.find_by_doc_ids([params[:id]])
+      pageinate = invoice_service.find_by_doc_ids([params[:id]])
+      Kaminari.paginate_array(pageinate).page(params[:page]).per(10)
     else
-      invoice_service.all
+      pageinate = invoice_service.all
+      Kaminari.paginate_array(pageinate).page(params[:page]).per(10)
     end
   end
 end

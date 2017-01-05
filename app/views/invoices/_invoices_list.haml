@@ -31,5 +31,7 @@
               %th Due Date
           %tbody
             = render partial: 'invoice', collection: invoices
+        .pageinate.text-center
+          = paginate invoices
       - else
         %h3.text-center No invoice with ID #{params[:id]} can be found
