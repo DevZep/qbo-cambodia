@@ -1,5 +1,21 @@
-#invoices-index {
+#invoices-index,
+#invoices-invoice,
+#invoices-debit {
+  
+  a.title-margin {
+    margin: 5px;
+  }
+
   .panel-heading {
+    padding-top: 0;
+    padding-bottom: 0;
+
+    .row {
+      #invoice, #search, #debit{
+        padding-bottom: 10px;
+        padding-top: 10px;
+      }
+    }
 
     .navbar-form {
       margin: 0;
@@ -9,5 +25,4 @@
   form textarea {
     resize: vertical;
   }
-
 }
