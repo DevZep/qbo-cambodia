@@ -11,7 +11,6 @@ class InvoicesController < ApplicationController
 
   def show
     @invoice = @invoices.first
-
     respond_to do |format|
       format.html
       format.pdf do

@@ -1,0 +1,37 @@
+.container
+  = render 'translation_modal'
+  = link_to company_invoices_path(credential), class: 'title-margin'do
+    %h4.margin-top 
+      =credential.company_name
+  .panel.panel-default
+    .panel-heading
+      .row         
+        .col-xs-2.text-center#invoice
+          = link_to invoices_invoices_path_url(credential) do
+            %h4.margin-top Inovices
+        .col-xs-2.text-center#debit
+          = link_to invoices_debits_path_url(credential) do
+            %h4.margin-top Debit Notes
+        .col-xs-8.text-right#search
+          = form_tag company_invoices_path(credential), method: 'get', class: 'navbar-form navbar-right' do
+            .form-group
+              .row
+                .col-xs-8
+                  = text_field_tag :id, nil, class: 'form-control', placeholder: 'Search by Id', required: true
+                .col-xs-4
+                  = submit_tag 'Search', class: 'btn btn-default'
+    .panel-body
+      - if invoices.present?
+        %table.table
+          %thead
+            %tr
+              %th ID
+              %th Customer
+              %th Total Amount
+              %th Due Date
+          %tbody
+            = render partial: 'invoice', collection: invoices
+        .pageinate.text-center
+          = paginate invoices
+      - else
+        %h3.text-center No invoice with ID #{params[:id]} can be found
