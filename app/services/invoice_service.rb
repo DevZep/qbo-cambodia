@@ -20,6 +20,36 @@ class InvoiceService < BaseService
     end
   end
 
+  def all_debit
+    invoices = []
+    query = "SELECT * FROM Invoice"
+    @items = service.query(query).entries
+    @items.map do |item|
+      if item.private_note == 'debitnote'
+        invoice = Qbo::Invoice.new(item)
+        invoice.customer = customers.find { |customer| customer.id == invoice.customer_id }
+        invoice.customer_translation = customer_translations.find { |ct| ct.qbo_customer_id == invoice.customer_id.to_i }
+        invoices << invoice
+      end
+    end
+    invoices
+  end
+
+  def all_invoice
+    invoices = []
+    query = "SELECT * FROM Invoice"
+    @items = service.query(query).entries
+    @items.map do |item|
+      if item.private_note != 'debitnote'
+        invoice = Qbo::Invoice.new(item)
+        invoice.customer = customers.find { |customer| customer.id == invoice.customer_id }
+        invoice.customer_translation = customer_translations.find { |ct| ct.qbo_customer_id == invoice.customer_id.to_i }
+        invoices << invoice
+      end
+    end
+    invoices
+  end
+
   private
 
   def customers

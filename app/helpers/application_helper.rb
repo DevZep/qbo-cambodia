@@ -9,7 +9,9 @@ module ApplicationHelper
   end
 
   def invoice_link(invoice, credential)
-    if invoice.translated?
+    if invoice.private_note.present? && invoice.private_note.include?('debitnote')
+      link_to invoice.doc_number, company_invoice_path(credential, invoice.doc_number, format: :pdf), target: '_blank'
+    elsif invoice.translated?
       link_to invoice.doc_number, company_invoice_path(credential, invoice.doc_number, format: :pdf), target: '_blank'
     else
       link_to(
@@ -25,7 +27,11 @@ module ApplicationHelper
   end
 
   def edit_translation(invoice, credential)
-    if invoice.translated?
+    if invoice.private_note.present? && invoice.private_note.include?('debitnote')
+      content_tag :div do
+        english_name(invoice)
+      end
+    elsif invoice.translated?
       content_tag :div do
         english_name(invoice) + khmer_name(invoice) + edit_name(invoice, credential)
       end

@@ -1,11 +1,11 @@
-class Views.Invoices.IndexView extends Views.ApplicationView
+class Views.Invoices.InvoiceView extends Views.ApplicationView
   render: ->
     _onOpenModal()
 
   _onOpenModal= ->
     $modal = $('#translation-modal')
 
-    $('#invoices-index').on 'click', 'a.translation', ->
+    $('#invoices-invoice').on 'click', 'a.translation', ->
       $invoice = $(@).parents('tr:first')
 
       # Customer info: En

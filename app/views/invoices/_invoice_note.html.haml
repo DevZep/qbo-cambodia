@@ -1,0 +1,153 @@
+.container
+  .row
+    .col-xs-12
+      .col-xs-4.zeo-padding.left-25
+        .text-left
+          = wicked_pdf_image_tag 'logo.png', height: 90
+      .col-xs-8
+        .text-left
+          .company-name.strong
+            %h3.km រ៉ូតាទី
+            %h3 ROTATI Co.Ltd
+          %p.km លេខអត្តសញ្ញាណកម្ម អបត (VATTIN) K002-901504677
+          %p.km ផ្ទះលេខ #​១១ ផ្លូវ​ ៤៩៦ ភូមិ​ ២​ សង្កាត់ ផ្សារដើមថ្កូវ ខ័ណ្ឌ ចំការមន ភ្នំពេញ
+    .col-xs-12
+      .text-center
+        %p.contact លេខទូរស័ព្ទ (Tel) 012 223 348: , Fax: (855/............................សារអេឡិចត្រូនិច (E-mail) :info@rotati.com
+        %p #11, Street 496, Sangkat Phsar Daeum Thkov, Khan Chamkar Mon, Phnom Penh, Kingdom of Cambodia.
+    .col-xs-12.text-center
+      .row.title.strong
+        %h4.km=@invoice.title_kh
+        %h4= @invoice.title
+      .row
+        .col-xs-8.text-left.left-10
+          .customer.strong
+            .row
+              .col-xs-3.text-right
+                %p.km អតិថិជន:
+              .col-xs-9.text-left.left-25
+                %p.km= " #{@invoice.customer_translation.name}"
+          .billing-address
+            .row
+              .col-xs-3.text-right
+                %p Customer:
+              .col-xs-9.text-left.left-25
+                .customer-border-box
+                  %p.strong= "Name: #{@invoice.customer_name}"
+                  %p.km= "អាសយដ្ឋាន: #{@invoice.customer_translation.billing_address}"
+                  %p= "Add: #{@invoice.full_billing_address}"
+                  - if @invoice.customer_tel
+                    %p= "Tel: #{@invoice.customer_tel}"
+                  - if @invoice.customer.resale_num.present?
+                    %p= "VAT: #{@invoice.customer.resale_num}"
+
+        .col-xs-4.text-right
+          .invoice-number
+            .row
+              .col-xs-6.text-right.pad-left-0
+                %p.km លេខរៀងវិក័យបត្រ:
+              .col-xs-6.text-left.left-25.pad-right-0
+                %p.strong= " #{@invoice.doc_number}"
+            .row
+              .col-xs-6.text-right.pad-left-0
+                %p Invoice No:
+              .col-xs-6.text-left.left-25.pad-right-0
+                %p.strong= " #{@invoice.doc_number}"
+          .invoicing-date
+            .row
+              .col-xs-6.text-right.pad-left-0
+                %p.km កាលបរិច្ឆេទ:
+              .col-xs-6.text-left.left-25.pad-right-0
+                %p.km.strong= " #{@invoice.txn_date_formated_km}"
+            .row
+              .col-xs-6.text-right.pad-left-0
+                %p Date:
+              .col-xs-6.text-left.left-25.pad-right-0
+                %p.strong= " #{@invoice.txn_date_formated}"
+  .row
+    .col-md-12
+      %table.table
+        %thead
+          %tr.strong.text-center
+            %td.text-left.item-no
+              %p.km ល.រ
+              %p No.
+            %td
+              %p.km បរិយាយមុខទំនិញ
+              %p.uppercase Description
+            %td.item-quantity.col-50
+              %p.km បរិមាណ
+              %p.uppercase QTY
+            %td.col-130
+              %p.km តម្លៃឯកតា
+              %p.uppercase Unit Price
+            %td.col-130
+              %p.km ថ្លៃទំនិញទំនិញ
+              %p.uppercase Total Amount
+        %tbody
+          - @invoice.line_items.select(&:sales_item?).each_with_index do |item, index|
+            %tr.break
+              %td.line.item-no= index + 1
+              %td.line.item
+                %p= item.description
+              %td.text-center.line.item-quantity.col-50
+                = item.sales_line_item_detail.quantity.to_i
+              %td.line.col-130
+                %span.pull-left= @invoice.currency.symbol
+                %span.pull-right= format('%.2f', item.sales_line_item_detail.unit_price)
+              %td.line.col-130
+                %span.pull-left= @invoice.currency.symbol
+                %span.pull-right= format('%.2f', item.amount)
+      %table.table.break
+        %tbody
+          %tr.uppercase
+            %td.line.item-no{ colspan: "1" }
+            %td.line.item{ colspan: "1" }
+              %p &nbsp;
+            %td.line.text-right.col-182{ colspan: "1" } សរុប Subtotal
+            %td.line.col-130{ colspan: "1" }
+              %span.pull-left= @invoice.currency.symbol
+              %span.pull-right= format('%.2f', @invoice.sub_total.amount)
+
+          - if @invoice.txn_tax_detail.present? && @invoice.txn_tax_detail.total_tax > 0.0
+            %tr.uppercase
+              %td.item-no{ colspan: "1" }
+              %td.item{ colspan: "1" }
+                %p &nbsp;
+              %td.line.text-right.col-182{ colspan: "1" } អាករលើតម្លៃបន្ថែម VAT ( 10%)
+              %td.line.col-130{ colspan: "1" }
+                %span.pull-left= @invoice.currency.symbol
+                %span.pull-right= format('%.2f', @invoice.txn_tax_detail.total_tax)
+
+          %tr.uppercase
+            %td.item-no{ colspan: "1" }
+            %td.item{ colspan: "1" }
+              %p &nbsp;
+            %td.line.text-right.col-182{ colspan: "1" } សរុបរួម  Total
+            %td.line.col-130{ colspan: "1" }
+              %span.pull-left= @invoice.currency.symbol
+              %span.pull-right= format('%.2f', @invoice.total_amount)
+  .row.memo.bank-info
+    .col-xs-6.text-left
+      %p
+        Note: All payment could be paid by Cash Or Bank,
+        %br
+        Or Cross Cheque to ABA Bank:
+        %br
+        Account Name: ROTATI CO.,LTD
+        %br
+        Account Number: 000240588
+  .row.signatures
+    .col-xs-6.text-left
+      .customer-signature
+        %p.km ហត្ថលេខា និង ឈ្មោះអ្នកទិញ
+        %p Customer's Signature & Name
+      .dotdot
+        %p .............................................
+
+    .col-xs-6.text-right
+      .seller-signature
+        %p.km ហត្ថលេខា និង ឈ្មោះអ្នកលក់
+        %p Seller's Signature & Name
+      .dotdot
+        %p .............................................

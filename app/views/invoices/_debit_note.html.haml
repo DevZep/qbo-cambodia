@@ -1,0 +1,111 @@
+.container
+  .row
+    .col-xs-4
+      = wicked_pdf_image_tag 'logo.png', height: 90
+    .col-xs-8.col-xs-push-1.title-padding
+      %h4.km=@invoice.title_kh
+      %h4= @invoice.title
+  %hr{style: "border-bottom: 1px solid black;"}
+  .row
+    .col-xs-8
+      .rotati-border-box
+        %p.strong Name :ROTATI
+        %p.km ផ្ទះលេខ #​១១ ផ្លូវ​ ៤៩៦ ភូមិ​ ២​ សង្កាត់ ផ្សារដើមថ្កូវ ខ័ណ្ឌ ចំការមន ភ្នំពេញ
+        %p.contact លេខទូរស័ព្ទ (Tel) 012 223 348: , Fax: (855/............................សារអេឡិចត្រូនិច
+        %p #11, Street 496, Sangkat Phsar Daeum Thkov, Khan Chamkar Mon, Phnom Penh, Kingdom of Cambodia.
+    .col-xs-4
+      .row
+        .col-xs-6
+          %p.km ការទូទាត់សងវិញ 
+        .col-xs-6
+          %p= ": #{@invoice.doc_number}"
+      .row
+        .col-xs-6
+          %p Debit Note No
+        .col-xs-6
+          %p= ": #{@invoice.doc_number}"
+      .row
+        .col-xs-6
+          %p.km កាលបរិច្ឆេទ 
+        .col-xs-6
+          %p= ": #{@invoice.txn_date_formated_km}"
+      .row  
+        .col-xs-6
+          %p Date 
+        .col-xs-6
+          %p= ": #{@invoice.txn_date_formated}"
+  .row
+    .col-xs-8
+      .rotati-border-box
+        %p.strong Name : Rotati Canada LTD
+        %p Add : 2948 Meyers Road South, Baltimore, Ontario, K0K 1C0, Canada
+        %p Tel : +1-416-309-8909
+        %p Email: donna@rotati.com
+  .row
+    .col-md-12
+      %table.table
+        %thead
+          %tr.strong.text-center
+            %td.text-left.item-no
+              %p.km ល.រ
+              %p No.
+            %td
+              %p.km បរិយាយមុខទំនិញ
+              %p.uppercase Description
+            %td.item-quantity.col-50
+              %p.km បរិមាណ
+              %p.uppercase QTY
+            %td.col-130
+              %p.km តម្លៃឯកតា
+              %p.uppercase Unit Price
+            %td.col-130
+              %p.km ថ្លៃទំនិញទំនិញ
+              %p.uppercase Total Amount
+        %tbody
+          - @invoice.line_items.select(&:sales_item?).each_with_index do |item, index|
+            %tr.break
+              %td.line.item-no= index + 1
+              %td.line.item
+                %p= item.description
+              %td.text-center.line.item-quantity.col-50
+                = item.sales_line_item_detail.quantity.to_i
+              %td.line.col-130
+                %span.pull-left= @invoice.currency.symbol
+                %span.pull-right= format('%.2f', item.sales_line_item_detail.unit_price)
+              %td.line.col-130
+                %span.pull-left= @invoice.currency.symbol
+                %span.pull-right= format('%.2f', item.amount)
+      %table.table.break
+        %tbody
+          %tr.uppercase
+            %td.item-no{ colspan: "1" }
+            %td.item{ colspan: "1" }
+              %p &nbsp;
+            %td.line.text-right.col-182{ colspan: "1" } សរុបរួម  Total
+            %td.line.col-130{ colspan: "1" }
+              %span.pull-left= @invoice.currency.symbol
+              %span.pull-right= format('%.2f', @invoice.total_amount)
+
+  .row.memo.bank-info
+    .col-xs-6.text-left
+      %p
+        Note: All payment could be paid by Cash Or Bank,
+        %br
+        Or Cross Cheque to ABA Bank:
+        %br
+        Account Name: ROTATI CO.,LTD
+        %br
+        Account Number: 000240588
+        %br
+        SWIFT Code : ABAAKHPP
+  .row.signatures
+    .col-xs-6.text-left
+      %p.km ហត្ថលេខា និង ឈ្មោះ
+      %p Signature & Name
+      .dotdot
+        %p .............................................
+    .col-xs-6.text-right
+      %p.km ហត្ថលេខា និង ឈ្មោះ
+      %p Signature & Name
+      .dotdot
+        %p .............................................
