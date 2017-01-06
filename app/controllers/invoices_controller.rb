@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 class InvoicesController < ApplicationController
 
+
   include Kaminari
 
   layout false, only: :show
