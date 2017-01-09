@@ -6,7 +6,7 @@
     = render 'font.html.erb'
     = wicked_pdf_stylesheet_link_tag 'invoice.pdf'
   %body{id:"#{css_class}"}
-    - if @invoice.private_note.present? && @invoice.private_note.include?('debitnote')
+    - if @invoice.doc_number.present? && @invoice.doc_number.start_with?('DNRTT')
       = render 'debit_note', collection: @invoice
-    - else
+    - elsif @invoice.doc_number.present? && @invoice.doc_number.start_with?('RTT')
       = render 'invoice_note', collection: @invoice

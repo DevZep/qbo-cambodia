@@ -1,5 +1,6 @@
 class InvoiceService < BaseService
   def all
+
     @items = service.query('SELECT * FROM Invoice ORDERBY MetaData.CreateTime DESC').entries
     @items.map do |item|
       invoice = Qbo::Invoice.new(item)
@@ -25,7 +26,7 @@ class InvoiceService < BaseService
     query = "SELECT * FROM Invoice"
     @items = service.query(query).entries
     @items.map do |item|
-      if item.private_note == 'debitnote'
+      if item.doc_number.start_with?('DNRTT')
         invoice = Qbo::Invoice.new(item)
         invoice.customer = customers.find { |customer| customer.id == invoice.customer_id }
         invoice.customer_translation = customer_translations.find { |ct| ct.qbo_customer_id == invoice.customer_id.to_i }
@@ -40,7 +41,7 @@ class InvoiceService < BaseService
     query = "SELECT * FROM Invoice"
     @items = service.query(query).entries
     @items.map do |item|
-      if item.private_note != 'debitnote'
+      if item.doc_number.start_with?('RTT')
         invoice = Qbo::Invoice.new(item)
         invoice.customer = customers.find { |customer| customer.id == invoice.customer_id }
         invoice.customer_translation = customer_translations.find { |ct| ct.qbo_customer_id == invoice.customer_id.to_i }

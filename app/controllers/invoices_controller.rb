@@ -20,7 +20,7 @@ class InvoicesController < ApplicationController
       format.html
       format.pdf do
         render(
-          pdf: "#{@credential.company_name.parameterize}_invoice_#{@invoice.doc_number}",
+          pdf: "#{@invoice.doc_number}-#{@credential.company_name.parameterize}-rotati-ltd",
           template: 'invoices/show.html.haml',
           margin:  {
             left: 0,
