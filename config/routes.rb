@@ -17,6 +17,8 @@ Rails.application.routes.draw do
   get '/companies/:company_id/invoices/debits', to: 'invoices#debit', as: :invoices_debits_path
   get '/companies/:company_id/invoices/invoices', to: 'invoices#invoice', as: :invoices_invoices_path
 
+  get '/companies/:company_id/invoices/:id/receipt', to: 'invoices#receipt', as: :invoices_invoices_receipt
+
   resources :companies, only: [] do
     resources :invoices, only: [:show, :index]
   end

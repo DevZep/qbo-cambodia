@@ -9,9 +9,7 @@ module ApplicationHelper
   end
 
   def invoice_link(invoice, credential)
-    if invoice.private_note.present? && invoice.private_note.include?('debitnote')
-      link_to invoice.doc_number, company_invoice_path(credential, invoice.doc_number, format: :pdf), target: '_blank'
-    elsif invoice.translated?
+    if invoice.translated?
       link_to invoice.doc_number, company_invoice_path(credential, invoice.doc_number, format: :pdf), target: '_blank'
     else
       link_to(
@@ -27,17 +25,17 @@ module ApplicationHelper
   end
 
   def edit_translation(invoice, credential)
-    if invoice.private_note.present? && invoice.private_note.include?('debitnote')
+    if invoice.doc_number.present? && invoice.doc_number.start_with?('DNRTT')
       content_tag :div do
         english_name(invoice)
       end
     elsif invoice.translated?
       content_tag :div do
-        english_name(invoice) + khmer_name(invoice) + edit_name(invoice, credential)
+        english_name(invoice) + khmer_name(invoice)
       end
     else
       content_tag :div do
-        english_name(invoice) + require_translation + edit_name(invoice, credential)
+        english_name(invoice) + require_translation
       end
     end.html_safe
   end
@@ -72,17 +70,25 @@ module ApplicationHelper
   end
 
   def edit_name(invoice, credential)
-    content_tag :a, href: '!#', class: 'translation edit',
+    content_tag :a, "Translate" , href: '!#', class: 'translation edit btn btn-info',
       data: {
         toggle: 'modal',
         next: company_invoice_path(credential, invoice.doc_number),
         target: '#translation-modal'
-      } do
-      content_tag :span, '', class: 'glyphicon glyphicon-edit',  aria: { hidden: true }
-    end
+      }
   end
 
   def require_translation
     content_tag :span, 'Requires Translating ', class: 'text-danger'
+  end
+
+  def nextid(prefix,doc_id)
+    if doc_id.present?
+      num = doc_id.gsub(prefix,'').to_i
+      num += 1
+      nextid = "#{prefix}#{num}"
+    else
+      nextid = "#{prefix}1"
+    end
   end
 end
