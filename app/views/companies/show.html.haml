@@ -1,4 +1,4 @@
-.container
+.container-fluid
   = link_to company_invoices_path(@company), class: 'title-margin'do
     %h4.margin-top 
       =@company.company_name
@@ -8,9 +8,15 @@
         .col-xs-2.text-center#invoice
           = link_to invoices_invoices_path_url(@company) do
             %h4.margin-top Invoices
+          %p 
+            Next ID:
+            =nextid("RTT",@invoice.last.doc_number)
         .col-xs-2.text-center#debit
           = link_to invoices_debits_path_url(@company) do
             %h4.margin-top Debit Notes
+          %p 
+            Next ID:
+            =nextid("DNRTT",@debit.last.doc_number)
         .col-xs-8.text-right#search
           = form_tag company_invoices_path(@company), method: 'get', class: 'navbar-form navbar-right' do
             .form-group
