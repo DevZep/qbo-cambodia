@@ -1,4 +1,4 @@
-.container
+.container-fluid
   = render 'translation_modal'
   = link_to company_invoices_path(credential), class: 'title-margin'do
     %h4.margin-top 
@@ -8,10 +8,16 @@
       .row         
         .col-xs-2.text-center#invoice
           = link_to invoices_invoices_path_url(credential) do
-            %h4.margin-top Inovices
+            %h4.margin-top Invoices
+          %p
+            Next ID:
+            =nextid('RTT-',invoices_no)
         .col-xs-2.text-center#debit
           = link_to invoices_debits_path_url(credential) do
             %h4.margin-top Debit Notes
+          %p
+            Next ID:
+            =nextid('DNRTT-',debit_no)
         .col-xs-8.text-right#search
           = form_tag company_invoices_path(credential), method: 'get', class: 'navbar-form navbar-right' do
             .form-group
@@ -26,9 +32,13 @@
           %thead
             %tr
               %th ID
+              - if invoices[0].doc_number.start_with?('RTT')
+                %th Receipt
               %th Customer
               %th Total Amount
               %th Due Date
+              - if invoices[0].doc_number.start_with?('RTT')
+                %th Action
           %tbody
             = render partial: 'invoice', collection: invoices
         .pageinate.text-center

@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   get '/companies/:company_id/invoices/invoices', to: 'invoices#invoice', as: :invoices_invoices_path
 
 
-  # get '/companies/:company_id/invoices/:id.pdf' => redirect 
+  get '/companies/:company_id/invoices/:id/receipt', to: 'invoices#receipt', as: :invoices_invoices_receipt
 
 
   resources :companies, only: [] do

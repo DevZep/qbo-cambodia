@@ -1,0 +1,76 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}
+    %meta{:charset => "utf-8"}
+    = render 'font.html.erb'
+    = wicked_pdf_stylesheet_link_tag 'invoice.pdf'
+  %body{id:"#{css_class}"}
+    .container
+      .row
+        .col-xs-4
+          = wicked_pdf_image_tag 'logo.png', height: 90
+      %br
+      .row
+        .col-xs-4
+          %p Mobile : 098 / 099 999 426
+          %p Email  : info@rotati.com
+          %p Website: www.rotati.com
+        .col-xs-5
+        .col-xs-3
+          %p="Receipt No: #{@invoice.doc_number.gsub('RTT-','')}"
+          %p="Date : #{Date.today.to_formatted_s(:custom_format)}"
+      %br
+      .row
+        .col-xs-12.text-center
+          %h3 PAYMENT RECEIPT
+      %br
+      .row.payment
+        .col-xs-4
+          %p
+            %b Received From:
+          %p
+            %b Amount:
+          %p
+            %b Description:
+        .col-xs-8
+          %p="#{@invoice.customer_name}"
+          %p="#{@invoice.currency.symbol} #{format('%.2f', @invoice.total_amount)}"
+          %p="Payment for Invoice #{@invoice.doc_number}"
+      %br
+      .row
+        .col-xs-4
+          = form_tag do
+            .row
+              .col-xs-6.text-right
+                .form-group
+                  = check_box_tag 'cash'
+              .col-xs-6.text-left
+                .form-group
+                  = label_tag 'Cash'
+        .col-xs-4
+          = form_tag do
+            .row
+              .col-xs-6.text-right
+                .form-group
+                  = check_box_tag 'cheque'
+              .col-xs-6.text-left
+                .form-group
+                  = label_tag 'Cheque'
+        .col-xs-4    
+          = form_tag do
+            .row
+              .col-xs-6.text-right
+                .form-group
+                  = check_box_tag 'wire'
+              .col-xs-6.text-left
+                .form-group
+                  = label_tag 'Wire'
+      %br
+      .row
+        .col-xs-6.text-center
+          %p _____________________
+          %p Authorized Signature
+        .col-xs-6.text-center
+          %p ____________________________
+          %p Customer's Signature & Name
