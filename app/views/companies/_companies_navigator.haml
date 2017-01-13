@@ -1,0 +1,19 @@
+.row
+  .col-xs-2.text-center#all
+    = link_to company_invoices_path(company), class: 'title-margin'do
+      %h4 All
+  .col-xs-2.text-center#invoice
+    = link_to invoices_invoices_path_url(company) do
+      %h4 Invoices
+    %p 
+      Next ID:
+      =nextid(invoice)
+  .col-xs-2.text-center#debit
+    = link_to invoices_debits_path_url(company) do
+      %h4 Debit Notes
+    %p 
+      Next ID:
+      =nextid(debit)
+  .col-xs-2.text-center#need_attention
+    = link_to invoices_need_attentions_path(company), class: 'title-margin'do
+      %h4 Need Attention    

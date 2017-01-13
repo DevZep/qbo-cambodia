@@ -14,35 +14,25 @@ class InvoicesController < ApplicationController
   end
 
   def show
-    @invoice = @invoices.first
+    @invoice = @all.first
+
     respond_to do |format|
       format.html
       format.pdf do
-        if @invoice.doc_number.start_with?('RTT') || @invoice.doc_number.start_with?('DNRTT')
-          render(
-            pdf: "#{@invoice.doc_number}-#{@credential.company_name.parameterize}-rotati-ltd",
-            template: 'invoices/show.html.haml',
-            margin:  {
-              left: 0,
-              right: 0
-            }
-          )
-        else
-          render(
-            pdf: "#{@invoice.doc_number}-#{@credential.company_name.parameterize}-rotati-ltd",
-            template: 'invoices/receipt.haml',
-            margin:  {
-              left: 0,
-              right: 0
-            }
-          )
-        end
+        render(
+          pdf: "#{@invoice.doc_number}-#{@credential.company_name.parameterize}-rotati-ltd",
+          template: 'invoices/show.html.haml',
+          margin:  {
+            left: 0,
+            right: 0
+          }
+        )
       end
     end
   end
 
   def receipt
-    @invoice = @invoices.first
+    @invoice = @all.first
     
     respond_to do |format|
       format.html
@@ -59,13 +49,27 @@ class InvoicesController < ApplicationController
     end
   end
 
+  def need_attention
+    invoice_service = ::InvoiceService.new(@credential)
+    get_all_invoices = invoice_service.get_all_invoices
+
+    paginate = invoice_service.need_attention
+    @need_attentions = Kaminari.paginate_array(paginate).page(params[:page]).per(10)
+
+    #show both next available ID
+    @invoice_no = doc_number_present(invoice_service.all_invoice())
+    @debit_no = doc_number_present(invoice_service.all_debit())
+
+  end
+
   def debit
     invoice_service = ::InvoiceService.new(@credential)
     get_all_invoices = invoice_service.get_all_invoices
 
-    pageinate = invoice_service.all_debit
-    @invoices = Kaminari.paginate_array(pageinate).page(params[:page]).per(10)
+    paginate = invoice_service.all_debit
+    @debits = Kaminari.paginate_array(paginate).page(params[:page]).per(10)
 
+    #show both next available ID
     @invoice_no = doc_number_present(invoice_service.all_invoice())
     @debit_no = doc_number_present(invoice_service.all_debit())
     
@@ -75,9 +79,10 @@ class InvoicesController < ApplicationController
     invoice_service = ::InvoiceService.new(@credential)
     get_all_invoices = invoice_service.get_all_invoices
 
-    pageinate = invoice_service.all_invoice
-    @invoices = Kaminari.paginate_array(pageinate).page(params[:page]).per(10)
+    paginate = invoice_service.all_invoice
+    @invoices = Kaminari.paginate_array(paginate).page(params[:page]).per(10)
 
+    #show both next available ID
     @invoice_no = doc_number_present(invoice_service.all_invoice())
     @debit_no = doc_number_present(invoice_service.all_debit())
   end
@@ -92,22 +97,21 @@ class InvoicesController < ApplicationController
     invoice_service = ::InvoiceService.new(@credential)
     get_all_invoices = invoice_service.get_all_invoices
 
-    @invoices = if params[:id].present?
-      pageinate = invoice_service.find_by_doc_ids([params[:id]])
-      Kaminari.paginate_array(pageinate).page(params[:page]).per(10)
+    @all = if params[:id].present?
+      paginate = invoice_service.find_by_doc_ids([params[:id]])
+      Kaminari.paginate_array(paginate).page(params[:page]).per(10)
 
     else
-      pageinate = invoice_service.all
-      Kaminari.paginate_array(pageinate).page(params[:page]).per(10)
+      paginate = invoice_service.all
+      Kaminari.paginate_array(paginate).page(params[:page]).per(10)
     end
 
+    #show both next available ID
     @invoice_no = doc_number_present(invoice_service.all_invoice())
     @debit_no = doc_number_present(invoice_service.all_debit())
   end
 
   def doc_number_present(values)
-    if values.present?
-      values.last.doc_number
-    end
+    values.present? ? values.last.doc_number : "0".rjust(9,'0')
   end
 end

@@ -4,12 +4,16 @@
     margin: 5px;
   }
 
+  .form-group{
+    margin-top: 15px;
+  }
+
   .panel-heading {
     padding-top: 0;
     padding-bottom: 0;
 
     .row {
-      #invoice, #search, #debit{
+      #all, #invoice, #search, #debit, #need_attention{
         padding-bottom: 10px;
         padding-top: 10px;
       }

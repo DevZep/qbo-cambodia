@@ -1,7 +1,7 @@
 .container
   .row
     .col-xs-12
-      .col-xs-4.zeo-padding.left-25
+      .col-xs-4.zeo-padding
         .text-left
           = wicked_pdf_image_tag 'logo.png', height: 90
       .col-xs-8
@@ -82,7 +82,7 @@
               %p.km តម្លៃឯកតា
               %p.uppercase Unit Price
             %td.col-130
-              %p.km ថ្លៃទំនិញទំនិញ
+              %p.km ថ្លៃទំនិញ
               %p.uppercase Total Amount
         %tbody
           - @invoice.line_items.select(&:sales_item?).each_with_index do |item, index|
@@ -138,16 +138,19 @@
         %br
         Account Number: 000240588
   .row.signatures
-    .col-xs-6.text-left
-      .customer-signature
-        %p.km ហត្ថលេខា និង ឈ្មោះអ្នកទិញ
-        %p Customer's Signature & Name
-      .dotdot
-        %p .............................................
+    .col-xs-6.text-center
+      %p ____________________________
+      %p.km ហត្ថលេខា និង ឈ្មោះអ្នកលក់
+      %p Rotati Authorized Signature
+    .col-xs-6.text-center
+      %p ____________________________
+      %p.km ហត្ថលេខា និង ឈ្មោះអ្នកទិញ
+      %p Customer's Signature & Name
+  .row.footer.text-center
+    Page
+    %span.page 
+    of
+    %span.topage
 
-    .col-xs-6.text-right
-      .seller-signature
-        %p.km ហត្ថលេខា និង ឈ្មោះអ្នកលក់
-        %p Seller's Signature & Name
-      .dotdot
-        %p .............................................
+
+
