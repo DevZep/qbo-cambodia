@@ -13,11 +13,36 @@ class InvoiceService < BaseService
   end
 
   def all
-    @invoices
+    invoices = []
+    @items = @invoices
+    @items.map do |item|
+      if item.doc_number.start_with?('DNRTT','RTT')
+        invoice = Qbo::Invoice.new(item)
+        invoice.customer = customers.find { |customer| customer.id == invoice.customer_id }
+        invoice.customer_translation = customer_translations.find { |ct| ct.qbo_customer_id == invoice.customer_id.to_i }
+        invoices << invoice
+      end
+    end
+    invoices
+  end
+
+  def need_attention
+    invoices = []
+    @items = @invoices
+    @items.map do |item|
+      if !item.doc_number.start_with?('DNRTT','RTT')
+        invoice = Qbo::Invoice.new(item)
+        invoice.customer = customers.find { |customer| customer.id == invoice.customer_id }
+        invoice.customer_translation = customer_translations.find { |ct| ct.qbo_customer_id == invoice.customer_id.to_i }
+        invoices << invoice
+      end
+    end
+    invoices
   end
 
   def find_by_doc_ids(doc_ids)
-    query = "SELECT * FROM Invoice WHERE DocNumber IN (#{doc_ids})".gsub(/"/,"'").gsub('[', '').gsub(']', '')
+    query = "SELECT * FROM Invoice WHERE DocNumber LIKE '%#{doc_ids}'  ".gsub(/"/,"").gsub('[', '').gsub(']', '')
+    
     @items = service.query(query).entries
     @items.map do |item|
       invoice = Qbo::Invoice.new(item)

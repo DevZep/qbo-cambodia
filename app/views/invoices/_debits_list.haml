@@ -1,5 +1,4 @@
 .container-fluid
-  = render 'translation_modal'
   = render 'invoice_header', credential: credential
   .panel.panel-default
     .panel-heading
@@ -9,13 +8,11 @@
         %thead
           %tr
             %th ID
-            %th Receipt
             %th Customer
             %th Total Amount
             %th Due Date
-            %th Action    
         %tbody
-          = render partial: 'invoice', collection: invoices
+          = render partial: 'debits', collection: debits
       .pageinate.text-center
-        = paginate invoices
-    
+        = paginate debits
+     

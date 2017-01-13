@@ -1,0 +1,24 @@
+.container-fluid
+  = render 'translation_modal'
+  = render 'invoice_header', credential: credential
+  .panel.panel-default
+    .panel-heading
+      = render 'invoice_navigator', credential: credential, invoices_no: @invoice_no, debit_no: @debit_no
+    .panel-body
+      - if all.present?
+        %table.table
+          %thead
+            %tr
+              %th ID
+              %th Receipt
+              %th Customer
+              %th Total Amount
+              %th Due Date
+              %th Action
+          %tbody
+            = render partial: 'all', collection: all
+        .pageinate.text-center
+          = paginate all
+      - else
+        %h4.text-center.text-danger
+          ="No invoice or debit with ID #{params[:id]} can be found"
