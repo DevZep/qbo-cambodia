@@ -1,0 +1,9 @@
+%tr{ class: 'alert-danger clickable-row', data: { translation_url: create_customer_translation_path(need_attentions.customer_ref.value), customer_name: need_attentions.customer_name, billing_address: need_attentions.full_billing_address, invoice_id: need_attentions.doc_number, translation: { name: need_attentions.customer_translation.try(:name), billing_address: need_attentions.customer_translation.try(:billing_address) }  } }
+  
+  %th{ scope: 'row'}= need_attentions.doc_number
+  
+  %td= need_attentions.customer_name
+  
+  %td= "#{need_attentions.currency.symbol} #{need_attentions.total}"
+  
+  %td= need_attentions.due_date.to_formatted_s(:custom_format)

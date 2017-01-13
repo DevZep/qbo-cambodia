@@ -9,7 +9,7 @@ module ApplicationHelper
   end
 
   def invoice_link(invoice, credential)
-    if invoice.translated?
+    if invoice.translated? 
       link_to invoice.doc_number, company_invoice_path(credential, invoice.doc_number, format: :pdf), target: '_blank'
     else
       link_to(
@@ -82,13 +82,55 @@ module ApplicationHelper
     content_tag :span, 'Requires Translating ', class: 'text-danger'
   end
 
-  def nextid(prefix,doc_id)
-    if doc_id.present?
-      num = doc_id.gsub(prefix,'').to_i
-      num += 1
-      nextid = "#{prefix}#{num}"
+  def nextid(doc_id)
+    num = get_number(doc_id).to_i
+    num += 1
+    nextid = prefix_RTT?(doc_id) ? "RTT-#{rjust(num)}" : "DNRTT-#{rjust(num)}"
+  end
+
+  def rjust(doc_id)
+    doc_id.to_s.rjust(9,'0')
+  end
+
+  def wrong_id_sequence?(doc_id)
+    number = get_number(doc_id)
+    prefix = get_string(doc_id)
+
+    prefix.start_with?('RTT','DNRTT')
+      number.length != 9
+
+  end
+
+  def prefix_RTT?(doc_id)
+    if doc_id.instance_of?(String)
+      doc_id.start_with?('RTT')
     else
-      nextid = "#{prefix}1"
+      doc_id.doc_number.start_with?('RTT')
     end
+  end
+
+  def prefix_DNRTT?(doc_id)
+    if doc_id.instance_of?(String)
+      doc_id.start_with?('DNRTT')
+    else
+      doc_id.doc_number.start_with?('DNRTT')
+    end
+  end
+
+  def get_number(doc_id)
+    if doc_id.instance_of?(String)
+      doc_id.gsub(/[^\d]/, '')
+    else
+      doc_id.doc_number.gsub(/[^\d]/, '')
+    end
+  end
+
+  def get_string(doc_id)
+    if doc_id.instance_of?(String)
+      doc_id.split('-')[0]
+    else
+      doc_id.doc_number.split('-')[0]
+    end
+
   end
 end

@@ -7,7 +7,7 @@ class BaseService
     @service        = service_class.new(access_token: auth, realm_id: qbo_credential.company_id)
   end
 
-  def all
+  def get_all_invoices
     raise NotImplementedError
   end
 

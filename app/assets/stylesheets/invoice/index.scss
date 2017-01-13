@@ -1,9 +1,14 @@
 #invoices-index,
 #invoices-invoice,
-#invoices-debit {
+#invoices-debit,
+#invoices-need_attention {
   
   a.title-margin {
     margin: 5px;
+  }
+
+  .form-group{
+    margin-top: 15px;
   }
 
   .panel-heading {
@@ -11,7 +16,16 @@
     padding-bottom: 0;
 
     .row {
-      #invoice, #search, #debit{
+
+      a.title-margin {
+        margin: 0;
+      }
+
+      #all, #need_attention{
+        height: 89px;
+      }
+
+      #all,#invoice, #search, #debit, #need_attention{
         padding-bottom: 10px;
         padding-top: 10px;
       }

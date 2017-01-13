@@ -1,0 +1,13 @@
+.row
+  .col-xs-4
+    = link_to company_invoices_path(credential), class: 'title-margin'do
+      %h4 
+        =credential.company_name
+  .col-xs-8.text-right#search
+    = form_tag company_invoices_path(credential), method: 'get', class: 'navbar-form navbar-right' do
+      .form-group
+        .row
+          .col-xs-8
+            = text_field_tag :id, nil, class: 'form-control', placeholder: 'Search by Id', required: true
+          .col-xs-4
+            = submit_tag 'Search', class: 'btn btn-default'

@@ -1,21 +1,19 @@
 .container-fluid
-  = render 'translation_modal'
   = render 'invoice_header', credential: credential
   .panel.panel-default
     .panel-heading
       = render 'invoice_navigator', credential: credential, invoices_no: @invoice_no, debit_no: @debit_no
     .panel-body
+      %h4.text-center{style: 'color:#a94442'}
+        = "These invoices require their ID to follow the correct pattern. Please edit these items in QBO selecting either the next Invoice ID or the next Debit Note ID as required."
       %table.table
         %thead
           %tr
             %th ID
-            %th Receipt
             %th Customer
             %th Total Amount
             %th Due Date
-            %th Action    
         %tbody
-          = render partial: 'invoice', collection: invoices
+          = render partial: 'need_attentions', collection: need_attentions
       .pageinate.text-center
-        = paginate invoices
-    
+        = paginate need_attentions
