@@ -4,7 +4,7 @@ class InvoicesController < ApplicationController
 
   include Kaminari
 
-  layout false, only: :show
+  # layout false, only: :show
 
   before_action :set_qbo_credential
   before_action :set_invoices
@@ -14,17 +14,32 @@ class InvoicesController < ApplicationController
   end
 
   def show
-    @invoice = @all.first
+    invoice_service = ::InvoiceService.new(@credential)
+    get_all_invoices = invoice_service.get_all_invoices
+    @invoice = invoice_service.find_show_receipt_by_doc_ids(params[:id]).first
+
 
     respond_to do |format|
       format.html
       format.pdf do
         render(
           pdf: "#{@invoice.doc_number}-#{@credential.company_name.parameterize}-rotati-ltd",
-          template: 'invoices/show.html.haml',
           margin:  {
+            right: 0,
             left: 0,
-            right: 0
+            top: 5
+          },
+          template: 'invoices/show.html.haml',
+          layout: 'pdf',
+          header: {
+            html: { 
+              template: 'invoices/_pdf_header.haml',
+            } 
+            },
+          footer: {
+            html: { 
+              template: 'invoices/_pdf_footer.haml',
+            }
           }
         )
       end
@@ -32,8 +47,11 @@ class InvoicesController < ApplicationController
   end
 
   def receipt
-    @invoice = @all.first
-    
+    invoice_service = ::InvoiceService.new(@credential)
+    get_all_invoices = invoice_service.get_all_invoices
+
+    @invoice = invoice_service.find_show_receipt_by_doc_ids(params[:id]).first
+
     respond_to do |format|
       format.html
       format.pdf do
