@@ -1,13 +1,13 @@
-%tr{ class: wrong_id_sequence?(debits) ? "alert-danger clickable-row" : "clickable-row", data: { translation_url: create_customer_translation_path(debits.customer_ref.value), customer_name: debits.customer_name, billing_address: debits.full_billing_address, invoice_id: debits.doc_number, translation: { name: debits.customer_translation.try(:name), billing_address: debits.customer_translation.try(:billing_address) }  } }
+%tr{ class: wrong_id_sequence?(debits,@invoice_no,@debit_no) ? "alert-danger clickable-row" : "clickable-row", data: { translation_url: create_customer_translation_path(debits.customer_ref.value), customer_name: debits.customer_name, billing_address: debits.full_billing_address, invoice_id: debits.doc_number, translation: { name: debits.customer_translation.try(:name), billing_address: debits.customer_translation.try(:billing_address) }  } }
   
-  - unless wrong_id_sequence?(debits)
+  - unless wrong_id_sequence?(debits,@invoice_no,@debit_no)
     %th{ scope: 'row'}= invoice_link(debits, @credential)
   - else
     %th= debits.doc_number
   
   %td
     = edit_translation(debits, @credential)
-    - if wrong_id_sequence?(debits)
+    - if wrong_id_sequence?(debits,@invoice_no,@debit_no)
       %p
         ="This invoice is not using the correct ID format or sequence. Please "
         = link_to "edit the ID in QBO", "https://sandbox.qbo.intuit.com/app/invoice?txnId=#{debits.id}", target: '_blank'

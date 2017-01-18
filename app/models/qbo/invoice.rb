@@ -37,6 +37,7 @@ class Qbo::Invoice < Qbo::Base
 
   def sub_total
     @sub_total ||= line_items.find(&:sub_total_item?)
+ 
   end
 
   def customer_id

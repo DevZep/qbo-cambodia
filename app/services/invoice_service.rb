@@ -1,8 +1,11 @@
 class InvoiceService < BaseService
 
+  $query_items = 'ID,Line, CustomerRef, DocNumber, CurrencyRef, TotalAmt, TxnDate, DueDate'.gsub(/'/,"") 
+
   def get_all_invoices
     @invoices = []
-    @items = service.query('SELECT * FROM Invoice ORDERBY MetaData.CreateTime DESC').entries
+    @items = service.query("SELECT #{$query_items} FROM Invoice ORDERBY MetaData.CreateTime DESC").entries
+
     @items.map do |item|
       invoice = Qbo::Invoice.new(item)
       invoice.customer = customers.find { |customer| customer.id == invoice.customer_id }
@@ -41,7 +44,18 @@ class InvoiceService < BaseService
   end
 
   def find_by_doc_ids(doc_ids)
-    query = "SELECT * FROM Invoice WHERE DocNumber LIKE '%#{doc_ids}'  ".gsub(/"/,"").gsub('[', '').gsub(']', '')
+    query = "SELECT #{$query_items} FROM Invoice WHERE DocNumber Like '%#{doc_ids}'  ".gsub(/"/,"").gsub('[', '').gsub(']', '')
+    @items = service.query(query).entries
+    @items.map do |item|
+      invoice = Qbo::Invoice.new(item)
+      invoice.customer = customers.find { |customer| customer.id == invoice.customer_id }
+      invoice.customer_translation = customer_translations.find { |ct| ct.qbo_customer_id == invoice.customer_id.to_i }
+      invoice
+    end
+  end
+
+  def find_show_receipt_by_doc_ids(doc_ids)
+    query = "SELECT #{$query_items} FROM Invoice WHERE DocNumber = '#{doc_ids}'".gsub(/"/,"").gsub('[', '').gsub(']', '')
     
     @items = service.query(query).entries
     @items.map do |item|
