@@ -9,7 +9,7 @@ module ApplicationHelper
   end
 
   def invoice_link(invoice, credential)
-    if invoice.translated? 
+    if invoice.translated? || prefix_DNRTT?(invoice)
       link_to invoice.doc_number, company_invoice_path(credential, invoice.doc_number, format: :pdf), target: '_blank'
     else
       link_to(
@@ -92,13 +92,13 @@ module ApplicationHelper
     doc_id.to_s.rjust(9,'0')
   end
 
-  def wrong_id_sequence?(doc_id)
+  def wrong_id_sequence?(doc_id,invoice_no,debit_no)
     number = get_number(doc_id)
     prefix = get_string(doc_id)
 
     prefix.start_with?('RTT','DNRTT')
       number.length != 9
-
+        invalid_next_id?(doc_id,invoice_no,debit_no)
   end
 
   def prefix_RTT?(doc_id)
@@ -131,6 +131,16 @@ module ApplicationHelper
     else
       doc_id.doc_number.split('-')[0]
     end
+  end
 
+  def invalid_next_id?(doc_id,invoice_no,debit_no)
+    number = doc_id.doc_number.split('-')[1].to_i
+    if prefix_RTT?(doc_id)
+      invoice = nextid(invoice_no).split('-')[1].to_i
+      invoice < number
+    else
+      debit = nextid(debit_no).split('-')[1].to_i
+      debit < number
+    end
   end
 end
