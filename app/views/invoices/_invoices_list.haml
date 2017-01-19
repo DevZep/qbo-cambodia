@@ -15,7 +15,7 @@
             %th Due Date
             %th Action    
         %tbody
-          = render partial: 'invoice', collection: invoices
+          = render 'invoice', invoices: invoices
       .pageinate.text-center
         = paginate invoices
     

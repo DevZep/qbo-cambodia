@@ -92,13 +92,34 @@ module ApplicationHelper
     doc_id.to_s.rjust(9,'0')
   end
 
-  def wrong_id_sequence?(doc_id,invoice_no,debit_no)
-    number = get_number(doc_id)
-    prefix = get_string(doc_id)
+  def wrong_id_sequence?(all_items, i)
+    valid_order = []
+    sequence = true
+    valid = true
 
-    prefix.start_with?('RTT','DNRTT')
-      number.length != 9
-        invalid_next_id?(doc_id,invoice_no,debit_no)
+    (1..all_items.length).to_a.reverse.each do |index|
+      id_format = true
+      number = all_items[index-1].doc_number.split("-")[1]
+      current_doc = all_items[index-1].doc_number.split("-")[1].to_i
+      next_doc    = all_items[index-2].doc_number.split("-")[1].to_i
+      
+      if number.length != 9
+        id_format = false
+      end
+
+      if index > 1
+        if sequence == false
+          valid = sequence && id_format
+        elsif current_doc + 1 != next_doc
+          valid = sequence && id_format
+          sequence = false
+        end
+      else
+        valid = sequence && id_format
+      end
+      valid_order << !valid
+    end
+    valid_order.reverse[i]
   end
 
   def prefix_RTT?(doc_id)
@@ -133,14 +154,17 @@ module ApplicationHelper
     end
   end
 
-  def invalid_next_id?(doc_id,invoice_no,debit_no)
-    number = doc_id.doc_number.split('-')[1].to_i
-    if prefix_RTT?(doc_id)
-      invoice = nextid(invoice_no).split('-')[1].to_i
-      invoice < number
-    else
-      debit = nextid(debit_no).split('-')[1].to_i
-      debit < number
-    end
-  end
+  # def render_pages(all)
+  
+  #   valid = true
+  #   (1...all.length).to_a.reverse.each do |index|
+  #     current_doc = all[index].doc_number.split("-")[1].to_i
+  #     next_doc    = all[index-1].doc_number.split("-")[1].to_i
+      
+  #     unless current_doc + 1 == next_doc
+  #       valid = false
+  #     end
+  #     concat(render partial: 'invoices/all',locals:{all_items: all[index], valid: valid} )
+  #   end
+  # end
 end
