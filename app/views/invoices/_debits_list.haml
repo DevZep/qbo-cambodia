@@ -12,7 +12,7 @@
             %th Total Amount
             %th Due Date
         %tbody
-          = render partial: 'debits', collection: debits
+          = render 'debits', debits: debits
       .pageinate.text-center
         = paginate debits
      
