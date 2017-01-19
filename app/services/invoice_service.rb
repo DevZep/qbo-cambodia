@@ -13,6 +13,7 @@ class InvoiceService < BaseService
       @invoices << invoice
     end
     @invoices
+
   end
 
   def all
@@ -44,7 +45,7 @@ class InvoiceService < BaseService
   end
 
   def find_by_doc_ids(doc_ids)
-    query = "SELECT #{$query_items} FROM Invoice WHERE DocNumber Like '%#{doc_ids}'  ".gsub(/"/,"").gsub('[', '').gsub(']', '')
+    query = "SELECT #{$query_items} FROM Invoice WHERE DocNumber Like '%#{doc_ids}' ".gsub(/"/,"").gsub('[', '').gsub(']', '')
     @items = service.query(query).entries
     @items.map do |item|
       invoice = Qbo::Invoice.new(item)
@@ -78,6 +79,7 @@ class InvoiceService < BaseService
       end
     end
     invoices
+
   end
 
   def all_invoice

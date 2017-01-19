@@ -103,6 +103,7 @@ class InvoicesController < ApplicationController
     #show both next available ID
     @invoice_no = doc_number_present(invoice_service.all_invoice())
     @debit_no = doc_number_present(invoice_service.all_debit())
+
   end
 
   private
@@ -115,7 +116,7 @@ class InvoicesController < ApplicationController
     invoice_service = ::InvoiceService.new(@credential)
     get_all_invoices = invoice_service.get_all_invoices
 
-    @all = if params[:id].present?
+    @all_invoice = if params[:id].present?
       paginate = invoice_service.find_by_doc_ids([params[:id]])
       Kaminari.paginate_array(paginate).page(params[:page]).per(10)
 
@@ -123,13 +124,34 @@ class InvoicesController < ApplicationController
       paginate = invoice_service.all
       Kaminari.paginate_array(paginate).page(params[:page]).per(10)
     end
-
     #show both next available ID
     @invoice_no = doc_number_present(invoice_service.all_invoice())
     @debit_no = doc_number_present(invoice_service.all_debit())
+
+    @all = @all_invoice.group_by {|invoice| invoice.doc_number.split("-")[0]}
   end
 
   def doc_number_present(values)
-    values.present? ? values.last.doc_number : "0".rjust(9,'0')
+   
+    if values.present?
+
+      value = ''
+      (0...values.length).to_a.reverse.each do |index|
+        if index > 0
+          current_doc = values[index].doc_number.split("-")[1].to_i
+          next_doc    = values[index-1].doc_number.split("-")[1].to_i
+          if current_doc + 1 == next_doc
+            value = values[index].doc_number
+          else
+            return value = values[index].doc_number
+          end
+        else
+          value = values[index].doc_number
+        end
+      end
+      value
+    else 
+      value = "0".rjust(9,'0')
+    end
   end
 end

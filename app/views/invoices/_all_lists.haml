@@ -3,9 +3,9 @@
   = render 'invoice_header', credential: credential
   .panel.panel-default
     .panel-heading
-      = render 'invoice_navigator', credential: credential, invoices_no: @invoice_no, debit_no: @debit_no
+      = render 'invoice_navigator', credential: credential, invoices_no: invoices_no, debit_no: debit_no
     .panel-body
-      - if all.present?
+      - if @all_invoice.present?
         %table.table
           %thead
             %tr
@@ -16,9 +16,10 @@
               %th Due Date
               %th Action
           %tbody
-            = render partial: 'all', collection: all
+            = render 'all', all_items: all["DNRTT"]
+            = render 'all', all_items: all["RTT"]
         .pageinate.text-center
-          = paginate all
+          = paginate @all_invoice
       - else
         %h4.text-center.text-danger
           ="No invoice or debit with ID #{params[:id]} can be found"
