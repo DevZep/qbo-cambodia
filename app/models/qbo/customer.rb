@@ -13,9 +13,9 @@ class Qbo::Customer < Qbo::Base
       billing_address.line4,
       billing_address.line5,
       billing_address.city,
-      [billing_address.country_sub_division_code, billing_address.postal_code].compact.join(' '),
+      [billing_address.country_sub_division_code, billing_address.postal_code].compact.reject(&:empty?).join(', '),
       billing_address.country    
-    ].compact.join(', ')
+    ].compact.reject(&:empty?).join(', ')
   end
 
   private
