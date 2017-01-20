@@ -3,7 +3,7 @@ class InvoicesController < ApplicationController
 
   include Kaminari
 
-  # layout false, only: :show
+  layout false, only: :show
 
   before_action :set_qbo_credential
   before_action :set_invoices
@@ -73,7 +73,6 @@ class InvoicesController < ApplicationController
     paginate = invoice_service.need_attention
     @need_attentions = Kaminari.paginate_array(paginate).page(params[:page]).per(10)
 
-    #show both next available ID
     @invoice_no = doc_number_present(invoice_service.all_invoice())
     @debit_no = doc_number_present(invoice_service.all_debit())
 
@@ -86,7 +85,6 @@ class InvoicesController < ApplicationController
     paginate = invoice_service.all_debit
     @debits = Kaminari.paginate_array(paginate).page(params[:page]).per(10)
 
-    #show both next available ID
     @invoice_no = doc_number_present(invoice_service.all_invoice())
     @debit_no = doc_number_present(invoice_service.all_debit())
     
@@ -99,7 +97,6 @@ class InvoicesController < ApplicationController
     paginate = invoice_service.all_invoice
     @invoices = Kaminari.paginate_array(paginate).page(params[:page]).per(10)
 
-    #show both next available ID
     @invoice_no = doc_number_present(invoice_service.all_invoice())
     @debit_no = doc_number_present(invoice_service.all_debit())
 
@@ -123,7 +120,7 @@ class InvoicesController < ApplicationController
       paginate = invoice_service.all
       Kaminari.paginate_array(paginate).page(params[:page]).per(10)
     end
-    #show both next available ID
+    
     @invoice_no = doc_number_present(invoice_service.all_invoice())
     @debit_no = doc_number_present(invoice_service.all_debit())
 
@@ -136,15 +133,13 @@ class InvoicesController < ApplicationController
 
       value = ''
       (0...values.length).to_a.reverse.each do |index|
-        if index > 0
+        if index > 0 
           current_doc = values[index].doc_number.split("-")[1].to_i
           next_doc    = values[index-1].doc_number.split("-")[1].to_i
-          if current_doc + 1 == next_doc
-            value = values[index].doc_number
-          else
+          unless current_doc + 1 == next_doc
             return value = values[index].doc_number
           end
-        else
+        else 
           value = values[index].doc_number
         end
       end
