@@ -94,34 +94,53 @@ module ApplicationHelper
     doc_id.to_s.rjust(9,'0')
   end
 
-  def wrong_id_sequence?(all_items, i)
-    valid_order = []
-    sequence = true
-    valid = true
+  def valid_id_sequence?(all_items, prefix, doc_id)
+    array = []
 
-    (1..all_items.length).to_a.reverse.each do |index|
-      id_format = true
-      number = all_items[index-1].doc_number.split("-")[1]
-      current_doc = all_items[index-1].doc_number.split("-")[1].to_i
-      next_doc    = all_items[index-2].doc_number.split("-")[1].to_i
+    all_items.pluck('doc_number').map { |item| array << item.gsub(prefix,'').to_i }
+
+    all_items.each do |item|
+
+      number = doc_id.split("-")[1]
+      next_num = doc_id.split("-")[1].to_i+1
+      previous_num = doc_id.split("-")[1].to_i-1
+
+      if number.length == 9
       
-      if number.length != 9
-        id_format = false
-      end
-
-      if index > 1
-        if sequence == false
-          valid = sequence && id_format
-        elsif current_doc + 1 != next_doc
-          valid = sequence && id_format
-          sequence = false
+        if array.include?(next_num) || array.include?(previous_num)
+          return true
+        else
+          return false
         end
-      else
-        valid = sequence && id_format
+        
       end
-      valid_order << !valid
     end
-    valid_order.reverse[i]
+   
+    # binding.pry
+
+    # (1..all_items.length).to_a.reverse.each do |index|
+    #   id_format = true
+    #   number = all_items[index-1].doc_number.split("-")[1]
+    #   current_doc = all_items[index-1].doc_number.split("-")[1].to_i
+    #   next_doc    = all_items[index-2].doc_number.split("-")[1].to_i
+      
+    #   if number.length != 9
+    #     id_format = false
+    #   end
+
+    #   if index > 1
+    #     if sequence == false
+    #       valid = sequence && id_format
+    #     elsif current_doc + 1 != next_doc
+    #       valid = sequence && id_format
+    #       sequence = false
+    #     end
+    #   else
+    #     valid = sequence && id_format
+    #   end
+    #   valid_order << !valid
+    # end
+    # valid_order.reverse[i]
   end
 
   def prefix_RTT?(doc_id)

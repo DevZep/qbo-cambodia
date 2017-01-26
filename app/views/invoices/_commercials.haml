@@ -1,14 +1,14 @@
 - commercials.each_with_index do |commercial,index|
-  %tr{ class: wrong_id_sequence?(commercials,index) ? "alert-danger clickable-row" : "clickable-row", data: { translation_url: create_customer_translation_path(commercial.customer_ref.value), customer_name: commercial.customer_name, billing_address: commercial.full_billing_address, invoice_id: commercial.doc_number, translation: { name: commercial.customer_translation.try(:name), billing_address: commercial.customer_translation.try(:billing_address) }  } }
+  %tr{ class: valid_id_sequence?(commercials,'CIRTT-',commercial.doc_number) ? "clickable-row" : "alert-danger clickable-row", data: { translation_url: create_customer_translation_path(commercial.customer_ref.value), customer_name: commercial.customer_name, billing_address: commercial.full_billing_address, invoice_id: commercial.doc_number, translation: { name: commercial.customer_translation.try(:name), billing_address: commercial.customer_translation.try(:billing_address) }  } }
     
-    - unless wrong_id_sequence?(commercials,index)
+    - if valid_id_sequence?(commercials,'CIRTT-',commercial.doc_number)
       %th{ scope: 'row'}= invoice_link(commercials[index], @credential)
     - else
       %th= commercial.doc_number
     
     %td
       = edit_translation(commercials[index], @credential)
-      - if wrong_id_sequence?(commercials,index)
+      - unless valid_id_sequence?(commercials,'CIRTT-',commercial.doc_number)
         %p
           ="This invoice is not using the correct ID format or sequence. Please "
           = link_to "edit the ID in QBO", "https://sandbox.qbo.intuit.com/app/invoice?txnId=#{commercials[index].id}", target: '_blank'
