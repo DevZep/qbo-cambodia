@@ -1,12 +1,12 @@
 - all_items.each_with_index do |item,index|
-  %tr{ class: wrong_id_sequence?(all_items, index) ? "alert-danger clickable-row" : "clickable-row", data: { translation_url: create_customer_translation_path(item.customer_ref.value), customer_name: item.customer_name, billing_address: item.full_billing_address, invoice_id: item.doc_number, translation: { name: item.customer_translation.try(:name), billing_address: item.customer_translation.try(:billing_address) }  } }
+  %tr{ class: valid_id_sequence?(all_items,"#{item.doc_number.split('-')[0]}-",item.doc_number) ? "clickable-row" : "alert-danger clickable-row", data: { translation_url: create_customer_translation_path(item.customer_ref.value), customer_name: item.customer_name, billing_address: item.full_billing_address, invoice_id: item.doc_number, translation: { name: item.customer_translation.try(:name), billing_address: item.customer_translation.try(:billing_address) }  } }
 
-    - unless wrong_id_sequence?(all_items, index)
+    - if valid_id_sequence?(all_items,"#{item.doc_number.split('-')[0]}-",item.doc_number)
       %th{ scope: 'row'}= invoice_link(all_items[index], @credential)
     - else
       %th= item.doc_number
 
-    - unless wrong_id_sequence?(all_items, index)
+    - if valid_id_sequence?(all_items,"#{item.doc_number.split('-')[0]}-",item.doc_number)
       -if prefix_RTT?(all_items[index])
         %th= link_to all_items[index].doc_number.gsub('RTT-',''), invoices_invoices_receipt_path(@credential, all_items[index].doc_number, format: :pdf), target: '_blank'
       - else
@@ -16,7 +16,7 @@
     
     %td
       = edit_translation(all_items[index], @credential)
-      - if wrong_id_sequence?(all_items, index)
+      - unless valid_id_sequence?(all_items,"#{item.doc_number.split('-')[0]}-",item.doc_number)
         %p
           ="This invoice is not using the correct ID format or sequence. Please "
           = link_to "edit the ID in QBO", "https://sandbox.qbo.intuit.com/app/invoice?txnId=#{all_items[index].id}", target: '_blank'
@@ -26,7 +26,7 @@
     
     %td= item.due_date.to_formatted_s(:custom_format)
      
-    - unless wrong_id_sequence?(all_items, index)
+    - if valid_id_sequence?(all_items,"#{item.doc_number.split('-')[0]}-",item.doc_number)
       -if prefix_RTT?(item)
         %td= edit_name(all_items[index], @credential)
       - else
