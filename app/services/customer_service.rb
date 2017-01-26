@@ -8,6 +8,12 @@ class CustomerService < BaseService
     end
   end
 
+  def find_by_id(id)
+    query = "SELECT * FROM Customer WHERE ID = '#{id}'".gsub(/"/,"'").gsub('[', '').gsub(']', '')
+    @items = service.query(query).entries.first
+    Qbo::Customer.new(@items)
+  end
+
   private
 
   def service_class

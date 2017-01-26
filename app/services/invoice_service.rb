@@ -20,7 +20,7 @@ class InvoiceService < BaseService
     invoices = []
     @items = @invoices
     @items.map do |item|
-      if item.doc_number.start_with?('DNRTT','RTT')
+      if item.doc_number.start_with?('DNRTT','RTT','CIRTT')
         invoice = Qbo::Invoice.new(item)
         invoice.customer = customers.find { |customer| customer.id == invoice.customer_id }
         invoice.customer_translation = customer_translations.find { |ct| ct.qbo_customer_id == invoice.customer_id.to_i }
@@ -34,7 +34,7 @@ class InvoiceService < BaseService
     invoices = []
     @items = @invoices
     @items.map do |item|
-      if !item.doc_number.start_with?('DNRTT','RTT')
+      if !item.doc_number.start_with?('DNRTT','RTT','CIRTT')
         invoice = Qbo::Invoice.new(item)
         invoice.customer = customers.find { |customer| customer.id == invoice.customer_id }
         invoice.customer_translation = customer_translations.find { |ct| ct.qbo_customer_id == invoice.customer_id.to_i }
@@ -87,6 +87,20 @@ class InvoiceService < BaseService
     @items = @invoices
     @items.map do |item|
       if item.doc_number.start_with?('RTT')
+        invoice = Qbo::Invoice.new(item)
+        invoice.customer = customers.find { |customer| customer.id == invoice.customer_id }
+        invoice.customer_translation = customer_translations.find { |ct| ct.qbo_customer_id == invoice.customer_id.to_i }
+        invoices << invoice
+      end
+    end
+    invoices
+  end
+
+  def all_commercial
+    invoices = []
+    @items = @invoices
+    @items.map do |item|
+      if item.doc_number.start_with?('CIRTT')
         invoice = Qbo::Invoice.new(item)
         invoice.customer = customers.find { |customer| customer.id == invoice.customer_id }
         invoice.customer_translation = customer_translations.find { |ct| ct.qbo_customer_id == invoice.customer_id.to_i }

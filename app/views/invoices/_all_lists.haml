@@ -3,7 +3,7 @@
   = render 'invoice_header', credential: credential
   .panel.panel-default
     .panel-heading
-      = render 'invoice_navigator', credential: credential, invoices_no: invoices_no, debit_no: debit_no
+      = render 'invoice_navigator', credential: credential, invoices_no: invoices_no, debit_no: debit_no, commercial_no: commercial_no
     .panel-body
       - if @all_invoice.present?
         %table.table

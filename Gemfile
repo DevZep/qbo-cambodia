@@ -38,11 +38,15 @@ group :development, :test do
   gem 'pry-rails'
   gem 'byebug', platform: :mri
   gem 'rspec-rails', '~> 3.5'
-
+  gem 'capybara', '~> 2.11.0'
   gem 'capistrano', '~> 3.6'
   gem 'capistrano-rails', '~> 1.2'
   gem 'capistrano-passenger'
   gem 'capistrano-rvm'
+  gem 'vcr', '~> 3.0', '>= 3.0.3'
+  gem 'shoulda-matchers'
+  gem 'database_cleaner',   '~> 1.0'
+  gem 'poltergeist',        '~> 1.9.0'
 end
 
 group :development do

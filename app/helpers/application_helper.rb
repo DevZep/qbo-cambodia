@@ -9,7 +9,7 @@ module ApplicationHelper
   end
 
   def invoice_link(invoice, credential)
-    if invoice.translated? || prefix_DNRTT?(invoice)
+    if invoice.translated? || prefix_DNRTT?(invoice) || prefix_CIRTT?(invoice)
       link_to invoice.doc_number, company_invoice_path(credential, invoice.doc_number, format: :pdf), target: '_blank'
     else
       link_to(
@@ -25,17 +25,17 @@ module ApplicationHelper
   end
 
   def edit_translation(invoice, credential)
-    if invoice.doc_number.present? && invoice.doc_number.start_with?('DNRTT')
+    if prefix_DNRTT?(invoice) || prefix_CIRTT?(invoice)
       content_tag :div do
-        english_name(invoice)
+        english_name(invoice,credential)
       end
     elsif invoice.translated?
       content_tag :div do
-        english_name(invoice) + khmer_name(invoice)
+        english_name(invoice,credential) + khmer_name(invoice)
       end
     else
       content_tag :div do
-        english_name(invoice) + require_translation
+        english_name(invoice,credential) + require_translation
       end
     end.html_safe
   end
@@ -61,8 +61,10 @@ module ApplicationHelper
 
   private
 
-  def english_name(invoice)
-    content_tag :p, invoice.customer_name
+  def english_name(invoice,credential)
+    content_tag :p do
+      link_to invoice.customer_name, customer_translation_path(credential,invoice.customer.id)
+    end
   end
 
   def khmer_name(invoice)
@@ -82,10 +84,10 @@ module ApplicationHelper
     content_tag :span, 'Requires Translating ', class: 'text-danger'
   end
 
-  def nextid(doc_id)
+  def nextid(doc_id,prefix)
     num = get_number(doc_id).to_i
     num += 1
-    nextid = prefix_RTT?(doc_id) ? "RTT-#{rjust(num)}" : "DNRTT-#{rjust(num)}"
+    "#{prefix}-#{rjust(num)}"
   end
 
   def rjust(doc_id)
@@ -130,6 +132,14 @@ module ApplicationHelper
     end
   end
 
+  def prefix_CIRTT?(doc_id)
+    if doc_id.instance_of?(String)
+      doc_id.start_with?('CIRTT')
+    else
+      doc_id.doc_number.start_with?('CIRTT')
+    end
+  end
+
   def prefix_DNRTT?(doc_id)
     if doc_id.instance_of?(String)
       doc_id.start_with?('DNRTT')
@@ -154,17 +164,4 @@ module ApplicationHelper
     end
   end
 
-  # def render_pages(all)
-  
-  #   valid = true
-  #   (1...all.length).to_a.reverse.each do |index|
-  #     current_doc = all[index].doc_number.split("-")[1].to_i
-  #     next_doc    = all[index-1].doc_number.split("-")[1].to_i
-      
-  #     unless current_doc + 1 == next_doc
-  #       valid = false
-  #     end
-  #     concat(render partial: 'invoices/all',locals:{all_items: all[index], valid: valid} )
-  #   end
-  # end
 end
