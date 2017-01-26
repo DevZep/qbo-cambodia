@@ -19,3 +19,5 @@ class Views.ApplicationView
       $('#all').addClass('alert-info')
     else if body == 'invoices-need_attention'
       $('#need_attention').addClass('alert-info')
+    else if body == 'invoices-commercial'
+      $('#commercial').addClass('alert-info')

@@ -2,7 +2,7 @@
   = render 'invoice_header', credential: credential
   .panel.panel-default
     .panel-heading
-      = render 'invoice_navigator', credential: credential, invoices_no: @invoice_no, debit_no: @debit_no, commercial_no: commercial_no
+      = render 'invoice_navigator', credential: credential, invoices_no: @invoice_no, debit_no: @debit_no, commercial_no: @commercial_no
     .panel-body
       %table.table
         %thead
@@ -12,7 +12,7 @@
             %th Total Amount
             %th Due Date
         %tbody
-          = render 'debits', debits: debits
+          = render 'commercials', commercials: commercials
       .pageinate.text-center
-        = paginate debits
+        = paginate commercials
      

@@ -7,13 +7,19 @@
       %h4 Invoices
     %p 
       Next ID:
-      =nextid(invoice)
+      =nextid(invoice,'RTT')
   .col-xs-2.text-center#debit
     = link_to invoices_debits_path_url(company) do
       %h4 Debit Notes
     %p 
       Next ID:
-      =nextid(debit)
+      =nextid(debit,'DNRTT')
+  .col-xs-2.text-center#commercial
+    = link_to invoices_commercials_path(company) do
+      %h4 Commercial Invoices
+    %p 
+      Next ID:
+      =nextid(commercial,'CIRTT')
   .col-xs-2.text-center#need_attention
     = link_to invoices_need_attentions_path(company), class: 'title-margin'do
       %h4 Need Attention    
