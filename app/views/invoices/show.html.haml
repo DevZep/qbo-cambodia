@@ -1,12 +1,6 @@
-/ !!!
-/ %html
-/   %head
-/     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}
-/     %meta{:charset => "utf-8"}
-/     = render 'font.html.erb'
-/     = wicked_pdf_stylesheet_link_tag 'invoice.pdf'
-/   %body{id:"#{css_class}",onload: "number_pages()"}
 - if @invoice.doc_number.present? && @invoice.doc_number.start_with?('DNRTT')
   = render 'debit_note', collection: @invoice
 - elsif @invoice.doc_number.present? && @invoice.doc_number.start_with?('RTT')
   = render 'invoice_note', collection: @invoice
+- else
+  = render 'commercial_note', collection: @invoice

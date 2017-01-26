@@ -75,7 +75,7 @@ class InvoicesController < ApplicationController
 
     @invoice_no = doc_number_present(invoice_service.all_invoice())
     @debit_no = doc_number_present(invoice_service.all_debit())
-
+    @commercial_no = doc_number_present(invoice_service.all_commercial())
   end
 
   def debit
@@ -87,6 +87,7 @@ class InvoicesController < ApplicationController
 
     @invoice_no = doc_number_present(invoice_service.all_invoice())
     @debit_no = doc_number_present(invoice_service.all_debit())
+    @commercial_no = doc_number_present(invoice_service.all_commercial())
     
   end
 
@@ -99,7 +100,20 @@ class InvoicesController < ApplicationController
 
     @invoice_no = doc_number_present(invoice_service.all_invoice())
     @debit_no = doc_number_present(invoice_service.all_debit())
+    @commercial_no = doc_number_present(invoice_service.all_commercial())
+  end
 
+  def commercial
+    
+    invoice_service = ::InvoiceService.new(@credential)
+    get_all_invoices = invoice_service.get_all_invoices
+
+    paginate = invoice_service.all_commercial
+    @commercials = Kaminari.paginate_array(paginate).page(params[:page]).per(10)
+
+    @invoice_no = doc_number_present(invoice_service.all_invoice())
+    @debit_no = doc_number_present(invoice_service.all_debit())
+    @commercial_no = doc_number_present(invoice_service.all_commercial())
   end
 
   private
@@ -123,14 +137,13 @@ class InvoicesController < ApplicationController
     
     @invoice_no = doc_number_present(invoice_service.all_invoice())
     @debit_no = doc_number_present(invoice_service.all_debit())
+    @commercial_no = doc_number_present(invoice_service.all_commercial())
 
     @all = @all_invoice.group_by {|invoice| invoice.doc_number.split("-")[0]}
   end
 
   def doc_number_present(values)
-   
     if values.present?
-
       value = ''
       (0...values.length).to_a.reverse.each do |index|
         if index > 0 

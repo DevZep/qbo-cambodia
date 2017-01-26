@@ -1,0 +1,26 @@
+.container
+  %h1= "#{@customer.company_name}'s Detail"
+  .row
+    - if @customer_translation.present? 
+      .col-xs-2 
+        %h3 Translation
+      .col-xs-10
+        %h3= ": #{@customer_translation.name}"
+  .row
+    .col-xs-2
+      %h3 Address
+    .col-xs-10
+      %h3= ": #{@customer.full_billing_address}"
+      %h3 
+        &nbsp;&nbsp;
+        = @customer_translation.billing_address
+  .row
+    .col-xs-2
+      %h3 Phone
+    .col-xs-10
+      %h3= ": #{@customer.primary_phone.free_form_number}"
+  .row
+    .col-xs-2
+      %h3 Email
+    .col-xs-10
+      %h3= ": #{@customer.primary_email_address.address}"

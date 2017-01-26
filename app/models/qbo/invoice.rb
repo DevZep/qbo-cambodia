@@ -65,15 +65,23 @@ class Qbo::Invoice < Qbo::Base
   end
 
   def title
-    debit_note? ? 'DEBIT NOTE' : 'TAX INVOICE'
+    debit_note? ? 'DEBIT NOTE' : invoice_note? ? 'TAX INVOICE' : 'COMMERICAL INVOICE'
   end
 
   def title_kh
-    debit_note? ? 'ការទូទាត់សងវិញ': 'វិក្ក័យបត្រអាករ'
+    debit_note? ? 'ការទូទាត់សងវិញ': invoice_note? ? 'វិក្ក័យបត្រអាករ' : 'វិក្ក័យបត្រធម្មតា'
   end
 
   def debit_note?
     doc_number.present? && doc_number.start_with?('DNRTT')
+  end
+
+  def invoice_note?
+    doc_number.present? && doc_number.start_with?('RTT')
+  end
+
+  def commercial_note?
+    doc_number.present? && doc_number.start_with?('CIRTT')
   end
 
 end

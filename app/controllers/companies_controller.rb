@@ -3,8 +3,8 @@ class CompaniesController < ApplicationController
   before_action :companies
   before_action :debit, only: :show
   before_action :invoice, only: :show
+  
   def index
-    
   end
 
   def show
@@ -16,6 +16,7 @@ class CompaniesController < ApplicationController
       @companies = current_user.qbo_credentials
       @debits = []
       @invoices = []
+      @commercial = []
       @companies.each do |item|
 
         invoice_service = InvoiceService.new(item)
@@ -23,6 +24,7 @@ class CompaniesController < ApplicationController
         #show both next available id
         @debits << doc_number_present(invoice_service.all_debit)
         @invoices << doc_number_present(invoice_service.all_invoice)
+        @commercial << doc_number_present(invoice_service.all_commercial)
       end
     end
 
@@ -37,6 +39,7 @@ class CompaniesController < ApplicationController
       #show both next available id
       @invoice = doc_number_present(invoice_service.all_invoice)
       @debit = doc_number_present(invoice_service.all_debit)
+      @commercial << doc_number_present(invoice_service.all_commercial)
     end
 
     def invoice
@@ -46,9 +49,27 @@ class CompaniesController < ApplicationController
       #show both next available id
       @debit = doc_number_present(invoice_service.all_debit)
       @invoice = doc_number_present(invoice_service.all_invoice)
+      @commercial << doc_number_present(invoice_service.all_commercial)
     end
 
     def doc_number_present(values)
-      values.present? ? values.last.doc_number : '0'.rjust(9,'0')
+
+      if values.present?
+        value = ''
+        (0...values.length).to_a.reverse.each do |index|
+          if index > 0 
+            current_doc = values[index].doc_number.split("-")[1].to_i
+            next_doc    = values[index-1].doc_number.split("-")[1].to_i
+            unless current_doc + 1 == next_doc
+              return value = values[index].doc_number
+            end
+          else 
+            value = values[index].doc_number
+          end
+        end
+        value
+      else 
+        value = "0".rjust(9,'0')
+      end
     end
 end
