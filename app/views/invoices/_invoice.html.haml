@@ -1,19 +1,19 @@
 - invoices.each_with_index do |invoice,index|
-  %tr{ class: wrong_id_sequence?(invoices,'RTT-') ? "alert-danger clickable-row" : "clickable-row", data: { translation_url: create_customer_translation_path(invoice.customer_ref.value), customer_name: invoice.customer_name, billing_address: invoice.full_billing_address, invoice_id: invoice.doc_number, translation: { name: invoice.customer_translation.try(:name), billing_address: invoice.customer_translation.try(:billing_address) }  } }
+  %tr{ class: valid_id_sequence?(invoices,'RTT-',invoice.doc_number) ? "clickable-row" : "alert-danger clickable-row", data: { translation_url: create_customer_translation_path(invoice.customer_ref.value), customer_name: invoice.customer_name, billing_address: invoice.full_billing_address, invoice_id: invoice.doc_number, translation: { name: invoice.customer_translation.try(:name), billing_address: invoice.customer_translation.try(:billing_address) }  } }
     
-    - unless wrong_id_sequence?(invoices,'RTT-')
+    - if valid_id_sequence?(invoices,'RTT-',invoice.doc_number)
       %th{ scope: 'row'}= invoice_link(invoices[index], @credential)
     - else
       %th= invoice.doc_number
 
-    - unless wrong_id_sequence?(invoices,'RTT-')
+    - if valid_id_sequence?(invoices,'RTT-',invoice.doc_number)
       %th= link_to invoices[index].doc_number.gsub('RTT-',''), invoices_invoices_receipt_path(@credential, invoices[index].doc_number, format: :pdf), target: '_blank'
     - else
       %th= invoice.doc_number.gsub('RTT-','')
     
     %td
       = edit_translation(invoices[index], @credential)
-      - if wrong_id_sequence?(invoices,'RTT-')
+      - unless valid_id_sequence?(invoices,'RTT-',invoice.doc_number)
         %p
           ="This invoice is not using the correct ID format or sequence. Please "
           = link_to "edit the ID in QBO", "https://sandbox.qbo.intuit.com/app/invoice?txnId=#{invoice.id}", target: '_blank'
@@ -22,7 +22,7 @@
     
     %td= invoice.due_date.to_formatted_s(:custom_format)
      
-    - unless wrong_id_sequence?(invoices,'RTT-')
+    - if valid_id_sequence?(invoices,'RTT-',invoice.doc_number)
       %td= edit_name(invoices[index], @credential)
     - else
       %td

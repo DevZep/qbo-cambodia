@@ -94,29 +94,29 @@ module ApplicationHelper
     doc_id.to_s.rjust(9,'0')
   end
 
-  def wrong_id_sequence?(all_items, prefix)
-    # valid_order = []
-    # sequence = true
-    # valid = true
-    # array = []
+  def valid_id_sequence?(all_items, prefix, doc_id)
+    array = []
 
-    # all_items.pluck('doc_number').map { |item| array << item.gsub(prefix,'').to_i }
+    all_items.pluck('doc_number').map { |item| array << item.gsub(prefix,'').to_i }
 
-    # all_items.each_with_index do |index| 
+    all_items.each do |item|
 
-    #   number = all_items[index-1].doc_number.split("-")[1]
+      number = doc_id.split("-")[1]
+      next_num = doc_id.split("-")[1].to_i+1
+      previous_num = doc_id.split("-")[1].to_i-1
 
-    #   unless number.length == 9
-    #     id_format = false
-    #   end
+      if number.length == 9
       
-    #   min = array.min.to_i
-    #   max = array.max.to_i
-
-
-
-    # end
-
+        if array.include?(next_num) || array.include?(previous_num)
+          return true
+        else
+          return false
+        end
+        
+      end
+    end
+   
+    # binding.pry
 
     # (1..all_items.length).to_a.reverse.each do |index|
     #   id_format = true
