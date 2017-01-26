@@ -106,13 +106,13 @@ module ApplicationHelper
       previous_num = doc_id.split("-")[1].to_i-1
 
       if number.length == 9
-      
-        if array.include?(next_num) || array.include?(previous_num)
+        if array.size == 1
+          return true
+        elsif array.include?(next_num) || array.include?(previous_num)
           return true
         else
           return false
         end
-        
       end
     end
    

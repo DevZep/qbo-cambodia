@@ -1,11 +1,11 @@
 .row
   .col-xs-4
     = wicked_pdf_image_tag 'logo.png', height: 90
-  .col-xs-8.col-xs-push-1.title-padding
-    %h1.km
+  .col-xs-8.col-xs-pull-1.title-padding
+    %h2.km.text-center
       %b
         %u=@invoice.title_kh
-    %h2.en
+    %h2.en.text-center
       %b= @invoice.title
 %hr{style: "border-bottom: 1px solid black;"}
 .row
