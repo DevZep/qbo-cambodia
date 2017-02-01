@@ -1,15 +1,8 @@
 class CompaniesController < ApplicationController
   before_action :set_qbo_credential, only: :show
   before_action :companies
-<<<<<<< HEAD
-  before_action :debit, only: :show
-  before_action :invoice, only: :show
-  before_action :commercial, only: :show
-
-=======
   before_action :show_next_id, only: :show
-  
->>>>>>> master
+
   
   def index
     
