@@ -3,8 +3,11 @@ class CompaniesController < ApplicationController
   before_action :companies
   before_action :debit, only: :show
   before_action :invoice, only: :show
+  before_action :commercial, only: :show
+
   
   def index
+    
   end
 
   def show
@@ -39,7 +42,7 @@ class CompaniesController < ApplicationController
       #show both next available id
       @invoice = doc_number_present(invoice_service.all_invoice)
       @debit = doc_number_present(invoice_service.all_debit)
-      @commercial << doc_number_present(invoice_service.all_commercial)
+      @commercial = doc_number_present(invoice_service.all_commercial)
     end
 
     def invoice
@@ -49,7 +52,17 @@ class CompaniesController < ApplicationController
       #show both next available id
       @debit = doc_number_present(invoice_service.all_debit)
       @invoice = doc_number_present(invoice_service.all_invoice)
-      @commercial << doc_number_present(invoice_service.all_commercial)
+      @commercial = doc_number_present(invoice_service.all_commercial)
+    end
+
+    def commercial
+      invoice_service = ::InvoiceService.new(@credential)
+      get_all_invoice = invoice_service.get_all_invoices
+
+      #show both next available id
+      @debit = doc_number_present(invoice_service.all_debit)
+      @invoice = doc_number_present(invoice_service.all_invoice)
+      @commercial = doc_number_present(invoice_service.all_commercial)
     end
 
     def doc_number_present(values)

@@ -37,8 +37,8 @@
                 %p= "Add: #{@invoice.full_billing_address}"
                 - if @invoice.customer_tel
                   %p= "Tel: #{@invoice.customer_tel}"
-                - if @invoice.customer.resale_num.present?
-                  %p= "VAT: #{@invoice.customer.resale_num}"
+                - if @invoice.customer.alternate_phone.present?
+                  %p= "VAT: #{@invoice.customer.alternate_phone.free_form_number}"
 
       .col-xs-4.text-right
         .invoice-number
