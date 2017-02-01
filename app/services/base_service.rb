@@ -6,7 +6,7 @@ class BaseService
       auth            = OAuth::AccessToken.new(QB_OAUTH_CONSUMER, qbo_credential.access_token, qbo_credential.access_secret)
       @qbo_credential = qbo_credential
       @service        = service_class.new(access_token: auth, realm_id: qbo_credential.company_id)
-    rescue
+    rescue Quickbooks::AuthorizationFailure => e
       redirect_to "root_path"
     end
   end
