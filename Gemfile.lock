@@ -494,7 +494,6 @@ DEPENDENCIES
   mail_interceptor
   pg (~> 0.18)
   poltergeist (~> 1.9.0)
-  pry
   pry-rails
   puma (~> 3.0)
   quickbooks-ruby
