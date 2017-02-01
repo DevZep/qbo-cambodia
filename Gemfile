@@ -31,6 +31,7 @@ gem 'mail_interceptor'
 gem 'kaminari'
 
 group :production do
+  binding.pry
   gem 'asset_sync', '~> 1.3.0'
 end
 
