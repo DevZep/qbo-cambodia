@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
 
   before_action :redirect_devise_action
   before_action :authenticate_user!
-  before_action :redirect_Quickbooks_AuthorizationFailure
+  
 
   def css_class
     "#{controller_name}-#{action_name}"
@@ -35,14 +35,6 @@ class ApplicationController < ActionController::Base
 
   def redirect_devise_action
     redirect_to root_path and return if controller_name == 'sessions' && action_name == 'new'
-  end
-
-  def redirect_Quickbooks_AuthorizationFailure
-    begin  
-      redirect_to "aaaa"
-    rescue Quickbooks::AuthorizationFailure => e  
-      redirect_to "/"
-    end
   end
 
   def modified_action_name

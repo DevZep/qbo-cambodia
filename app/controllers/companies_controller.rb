@@ -1,10 +1,15 @@
 class CompaniesController < ApplicationController
   before_action :set_qbo_credential, only: :show
   before_action :companies
+<<<<<<< HEAD
   before_action :debit, only: :show
   before_action :invoice, only: :show
   before_action :commercial, only: :show
 
+=======
+  before_action :show_next_id, only: :show
+  
+>>>>>>> master
   
   def index
     
@@ -35,33 +40,13 @@ class CompaniesController < ApplicationController
       @credential = current_user.qbo_credentials.find(params[:id])
     end
 
-    def debit
+    def show_next_id
       invoice_service = ::InvoiceService.new(@credential)
       get_all_invoice = invoice_service.get_all_invoices
 
       #show both next available id
       @invoice = doc_number_present(invoice_service.all_invoice)
       @debit = doc_number_present(invoice_service.all_debit)
-      @commercial = doc_number_present(invoice_service.all_commercial)
-    end
-
-    def invoice
-      invoice_service = ::InvoiceService.new(@credential)
-      get_all_invoice = invoice_service.get_all_invoices
-
-      #show both next available id
-      @debit = doc_number_present(invoice_service.all_debit)
-      @invoice = doc_number_present(invoice_service.all_invoice)
-      @commercial = doc_number_present(invoice_service.all_commercial)
-    end
-
-    def commercial
-      invoice_service = ::InvoiceService.new(@credential)
-      get_all_invoice = invoice_service.get_all_invoices
-
-      #show both next available id
-      @debit = doc_number_present(invoice_service.all_debit)
-      @invoice = doc_number_present(invoice_service.all_invoice)
       @commercial = doc_number_present(invoice_service.all_commercial)
     end
 

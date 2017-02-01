@@ -42,8 +42,8 @@
       %p.strong Name : Rotati Canada LTD
       %p Add : 2948 Meyers Road South, Baltimore, Ontario, K0K 1C0, Canada
       %p Tel : +1-416-309-8909
-      - if @invoice.customer.resale_num.present?
-        %p= "VAT: #{@invoice.customer.resale_num}"
+      - if @invoice.customer.alternate_phone.present?
+        %p= "VAT: #{@invoice.customer.alternate_phone.free_form_number}"
       %p 
         Email:
         = mail_to "donna@rotati.com"
