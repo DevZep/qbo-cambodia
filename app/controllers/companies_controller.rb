@@ -21,7 +21,13 @@ class CompaniesController < ApplicationController
       @companies.each do |item|
 
         invoice_service = InvoiceService.new(item)
-        get_all_invoice = invoice_service.get_all_invoices
+        begin
+          get_all_invoice = invoice_service.get_all_invoices
+        rescue Quickbooks::AuthorizationFailure => e
+          if e == Quickbooks::AuthorizationFailure
+            redirect_to root_path, alert: "Please Re-Authenticate"
+          end
+        end
         #show both next available id
         @debits << doc_number_present(invoice_service.all_debit)
         @invoices << doc_number_present(invoice_service.all_invoice)
