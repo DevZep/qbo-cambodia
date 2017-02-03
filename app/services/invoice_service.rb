@@ -4,8 +4,7 @@ class InvoiceService < BaseService
 
   def get_all_invoices
     @invoices = []
-    @items = service.query("SELECT #{$query_items} FROM Invoice ORDERBY MetaData.CreateTime DESC").entries
-
+    @items = service.query("SELECT #{$query_items} FROM Invoice ORDER BY DocNumber DESC").entries
     @items.map do |item|
       invoice = Qbo::Invoice.new(item)
       invoice.customer = customers.find { |customer| customer.id == invoice.customer_id }

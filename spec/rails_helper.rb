@@ -8,6 +8,7 @@ require 'support/factory_girl'
 require 'capybara/rspec'
 require 'shoulda/matchers'
 require 'capybara/poltergeist'
+require 'vcr_config'
 
 ActiveRecord::Migration.maintain_test_schema!
 
