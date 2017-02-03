@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 class InvoicesController < ApplicationController
-
-
   include Kaminari
 
   layout false, only: :show
@@ -17,7 +15,6 @@ class InvoicesController < ApplicationController
     invoice_service = ::InvoiceService.new(@credential)
     get_all_invoices = invoice_service.get_all_invoices
     @invoice = invoice_service.find_show_receipt_by_doc_ids(params[:id]).first
-
 
     respond_to do |format|
       format.html
@@ -74,9 +71,7 @@ class InvoicesController < ApplicationController
     paginate = invoice_service.need_attention
     @need_attentions = Kaminari.paginate_array(paginate).page(params[:page]).per(10)
 
-    @invoice_no = doc_number_present(invoice_service.all_invoice())
-    @debit_no = doc_number_present(invoice_service.all_debit())
-    @commercial_no = doc_number_present(invoice_service.all_commercial())
+    show_nextid(invoice_service)
   end
 
   def debit
@@ -86,10 +81,7 @@ class InvoicesController < ApplicationController
     paginate = invoice_service.all_debit
     @debits = Kaminari.paginate_array(paginate).page(params[:page]).per(10)
 
-    @invoice_no = doc_number_present(invoice_service.all_invoice())
-    @debit_no = doc_number_present(invoice_service.all_debit())
-    @commercial_no = doc_number_present(invoice_service.all_commercial())
-    
+    show_nextid(invoice_service)
   end
 
   def invoice
@@ -99,28 +91,29 @@ class InvoicesController < ApplicationController
     paginate = invoice_service.all_invoice
     @invoices = Kaminari.paginate_array(paginate).page(params[:page]).per(10)
 
-    @invoice_no = doc_number_present(invoice_service.all_invoice())
-    @debit_no = doc_number_present(invoice_service.all_debit())
-    @commercial_no = doc_number_present(invoice_service.all_commercial())
+    show_nextid(invoice_service)
   end
 
-  def commercial
-    
+  def commercial 
     invoice_service = ::InvoiceService.new(@credential)
     get_all_invoices = invoice_service.get_all_invoices
 
     paginate = invoice_service.all_commercial
     @commercials = Kaminari.paginate_array(paginate).page(params[:page]).per(10)
 
-    @invoice_no = doc_number_present(invoice_service.all_invoice())
-    @debit_no = doc_number_present(invoice_service.all_debit())
-    @commercial_no = doc_number_present(invoice_service.all_commercial())
+    show_nextid(invoice_service)
   end
 
   private
 
   def set_qbo_credential
     @credential = current_user.qbo_credentials.find(params[:company_id])
+  end
+
+  def show_nextid(service)
+    @invoice_no = doc_number_present(service.all_invoice(),"RTT-")
+    @debit_no = doc_number_present(service.all_debit(),"DNRTT-")
+    @commercial_no = doc_number_present(service.all_commercial(),"CIRTT-")
   end
 
   def set_invoices
@@ -130,35 +123,32 @@ class InvoicesController < ApplicationController
     @all_invoice = if params[:id].present?
       paginate = invoice_service.find_by_doc_ids([params[:id]])
       Kaminari.paginate_array(paginate).page(params[:page]).per(10)
-
     else
       paginate = invoice_service.all
       Kaminari.paginate_array(paginate).page(params[:page]).per(10)
     end
-    
-    @invoice_no = doc_number_present(invoice_service.all_invoice())
-    @debit_no = doc_number_present(invoice_service.all_debit())
-    @commercial_no = doc_number_present(invoice_service.all_commercial())
 
     @all = @all_invoice.group_by {|invoice| invoice.doc_number.split("-")[0]}
   end
 
-  def doc_number_present(values)
+  def doc_number_present(values,prefix)
     if values.present?
       value = ''
-      (0...values.length).to_a.reverse.each do |index|
-        if index > 0 
-          current_doc = values[index].doc_number.split("-")[1].to_i
-          next_doc    = values[index-1].doc_number.split("-")[1].to_i
-          unless current_doc + 1 == next_doc
-            return value = values[index].doc_number
-          end
-        else 
-          value = values[index].doc_number
+      array = []
+      values.pluck('doc_number').map { |item| array << item.gsub(prefix,'').to_i }
+
+      array.each do |item|
+        if array.include?(array.max-1)
+          value = "prefix-#{array.max.to_s.rjust(9,'0')}"
+        else
+          next_num = item + 1
+          previous_num = item - 1
+          next if array.include?(next_num)
+          value = "prefix-#{item.to_s.rjust(9,'0')}"
         end
       end
       value
-    else 
+    else
       value = "0".rjust(9,'0')
     end
   end
