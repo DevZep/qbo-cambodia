@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
 
   before_action :redirect_devise_action
   before_action :authenticate_user!
+  
 
   def css_class
     "#{controller_name}-#{action_name}"

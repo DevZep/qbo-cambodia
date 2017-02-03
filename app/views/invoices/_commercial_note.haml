@@ -28,7 +28,7 @@
         %p= ": #{@invoice.doc_number}"
     .row
       .col-xs-4
-        %p.km កាលបរិច្ឆេទ 
+        %p.km កាលបរិច្ឆេទ  
       .col-xs-8
         %p= ": #{@invoice.txn_date_formated_km}"
     .row  
@@ -39,14 +39,13 @@
 .row
   .col-xs-8
     .rotati-border-box
-      %p.strong Name : Rotati Canada LTD
-      %p Add : 2948 Meyers Road South, Baltimore, Ontario, K0K 1C0, Canada
-      %p Tel : +1-416-309-8909
-      - if @invoice.customer.resale_num.present?
-        %p= "VAT: #{@invoice.customer.resale_num}"
-      %p 
-        Email:
-        = mail_to "donna@rotati.com"
+      %p.strong= "Name: #{@invoice.customer_name}"
+      %p= "Add: #{@invoice.full_billing_address}"
+      - if @invoice.customer_tel
+        %p= "Tel: #{@invoice.customer_tel}"
+      - if @invoice.customer.alternate_phone.present?
+        %p= "VAT: #{@invoice.customer.alternate_phone.free_form_number}"
+      %p= "Email: #{@invoice.customer.primary_email_address.address}"
 .row
   .col-md-12
     %table.table
@@ -107,7 +106,7 @@
 .row.signatures
   .col-xs-6.text-center
     %p ____________________________
-    %p.km  ឈ្មោះ និង ហត្ថលេខាពីរ៉ូតាទី
+    %p.km  ឈ្មោះ និង ហត្ថលេខាពីក្រុមហ៊ុនរ៉ូតាទី
     %p Rotati Authorized Name & Signature
   .col-xs-6.text-center
     %p ____________________________

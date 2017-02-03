@@ -1,10 +1,11 @@
 class CompaniesController < ApplicationController
   before_action :set_qbo_credential, only: :show
   before_action :companies
-  before_action :debit, only: :show
-  before_action :invoice, only: :show
+  before_action :show_next_id, only: :show
+
   
   def index
+    
   end
 
   def show
@@ -20,11 +21,17 @@ class CompaniesController < ApplicationController
       @companies.each do |item|
 
         invoice_service = InvoiceService.new(item)
-        get_all_invoice = invoice_service.get_all_invoices
+        begin
+          get_all_invoice = invoice_service.get_all_invoices
+        rescue Quickbooks::AuthorizationFailure => e
+          if e == Quickbooks::AuthorizationFailure
+            redirect_to root_path, alert: "Please Re-Authenticate"
+          end
+        end
         #show both next available id
-        @debits << doc_number_present(invoice_service.all_debit)
-        @invoices << doc_number_present(invoice_service.all_invoice)
-        @commercial << doc_number_present(invoice_service.all_commercial)
+        @debits << doc_number_present(invoice_service.all_debit,"DNRTT-")
+        @invoices << doc_number_present(invoice_service.all_invoice,"RTT-")
+        @commercial << doc_number_present(invoice_service.all_commercial,"CIRTT-")
       end
     end
 
@@ -32,43 +39,34 @@ class CompaniesController < ApplicationController
       @credential = current_user.qbo_credentials.find(params[:id])
     end
 
-    def debit
+    def show_next_id
       invoice_service = ::InvoiceService.new(@credential)
       get_all_invoice = invoice_service.get_all_invoices
 
       #show both next available id
-      @invoice = doc_number_present(invoice_service.all_invoice)
-      @debit = doc_number_present(invoice_service.all_debit)
-      @commercial << doc_number_present(invoice_service.all_commercial)
+      @invoice = doc_number_present(invoice_service.all_invoice,"RTT-")
+      @debit = doc_number_present(invoice_service.all_debit,"DNRTT-")
+      @commercial = doc_number_present(invoice_service.all_commercial,"CIRTT-")
     end
 
-    def invoice
-      invoice_service = ::InvoiceService.new(@credential)
-      get_all_invoice = invoice_service.get_all_invoices
-
-      #show both next available id
-      @debit = doc_number_present(invoice_service.all_debit)
-      @invoice = doc_number_present(invoice_service.all_invoice)
-      @commercial << doc_number_present(invoice_service.all_commercial)
-    end
-
-    def doc_number_present(values)
-
+    def doc_number_present(values,prefix)
       if values.present?
         value = ''
-        (0...values.length).to_a.reverse.each do |index|
-          if index > 0 
-            current_doc = values[index].doc_number.split("-")[1].to_i
-            next_doc    = values[index-1].doc_number.split("-")[1].to_i
-            unless current_doc + 1 == next_doc
-              return value = values[index].doc_number
-            end
-          else 
-            value = values[index].doc_number
+        array = []
+        values.pluck('doc_number').map { |item| array << item.gsub(prefix,'').to_i }
+
+        array.each do |item|
+          if array.include?(array.max-1)
+            value = "prefix-#{array.max.to_s.rjust(9,'0')}"
+          else
+            next_num = item + 1
+            previous_num = item - 1
+            next if array.include?(next_num)
+            value = "prefix-#{item.to_s.rjust(9,'0')}"
           end
         end
         value
-      else 
+      else
         value = "0".rjust(9,'0')
       end
     end

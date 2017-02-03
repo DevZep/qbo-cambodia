@@ -44,6 +44,7 @@ group :development, :test do
   gem 'capistrano-passenger'
   gem 'capistrano-rvm'
   gem 'vcr', '~> 3.0', '>= 3.0.3'
+  gem 'fakeweb', '~> 1.3.0'
   gem 'shoulda-matchers'
   gem 'database_cleaner',   '~> 1.0'
   gem 'poltergeist',        '~> 1.9.0'
