@@ -16,8 +16,7 @@
               %th Due Date
               %th Action
           %tbody
-            = render 'all', all_items: all["DNRTT"]
-            = render 'all', all_items: all["RTT"]
+            = render 'all', all_items: all
         .pageinate.text-center
           = paginate @all_invoice
       - else

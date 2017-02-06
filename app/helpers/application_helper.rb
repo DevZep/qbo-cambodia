@@ -94,31 +94,6 @@ module ApplicationHelper
     doc_id.to_s.rjust(9,'0')
   end
 
-  def valid_id_sequence?(all_items, prefix, doc_id)
-    array = []
-
-    all_items.pluck('doc_number').map { |item| array << item.gsub(prefix,'').to_i }
-
-    all_items.each do |item|
-
-      number = doc_id.split("-")[1]
-      next_num = doc_id.split("-")[1].to_i+1
-      previous_num = doc_id.split("-")[1].to_i-1
-
-      if number.length == 9
-        if array.size == 1 || doc_id.gsub(prefix,'').to_i == array.min
-          return true
-        elsif array.include?(next_num) || array.include?(previous_num)
-          return true
-        else
-          return false
-        end
-      else
-        return false
-      end
-    end
-  end
-
   def prefix_RTT?(doc_id)
     if doc_id.instance_of?(String)
       doc_id.start_with?('RTT')
