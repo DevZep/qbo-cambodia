@@ -127,8 +127,8 @@ class InvoicesController < ApplicationController
       paginate = invoice_service.all
       Kaminari.paginate_array(paginate).page(params[:page]).per(10)
     end
-
     @all = @all_invoice.group_by {|invoice| invoice.doc_number.split("-")[0]}
+    show_nextid(invoice_service)
   end
 
   def doc_number_present(values,prefix)
@@ -138,14 +138,10 @@ class InvoicesController < ApplicationController
       values.pluck('doc_number').map { |item| array << item.gsub(prefix,'').to_i }
 
       array.each do |item|
-        if array.include?(array.max-1)
-          value = "prefix-#{array.max.to_s.rjust(9,'0')}"
-        else
-          next_num = item + 1
-          previous_num = item - 1
-          next if array.include?(next_num)
-          value = "prefix-#{item.to_s.rjust(9,'0')}"
-        end
+        next_num = item + 1
+        previous_num = item - 1
+        next if array.include?(next_num)
+        value = "prefix-#{item.to_s.rjust(9,'0')}"
       end
       value
     else
