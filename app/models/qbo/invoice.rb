@@ -56,6 +56,10 @@ class Qbo::Invoice < Qbo::Base
     @customer_translation
   end
 
+  def valid
+    @valid
+  end
+
   def translated?
     customer_translation.present?
   end
