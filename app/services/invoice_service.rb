@@ -3,7 +3,6 @@ class InvoiceService < BaseService
   $query_items = 'ID,Line, CustomerRef, DocNumber, CurrencyRef, TotalAmt, TxnDate, DueDate'.gsub(/'/,"") 
 
   def get_all_invoices
-    service = Quickbooks::Service::Invoice.new
     @invoices = service.query("SELECT #{$query_items} FROM Invoice ORDER BY DocNumber DESC", per_page: 1000).entries
   end
 
