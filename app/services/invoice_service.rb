@@ -3,7 +3,14 @@ class InvoiceService < BaseService
   $query_items = 'ID,Line, CustomerRef, DocNumber, CurrencyRef, TotalAmt, TxnDate, DueDate'.gsub(/'/,"") 
 
   def get_all_invoices
-    @invoices = service.query("SELECT #{$query_items} FROM Invoice ORDER BY DocNumber DESC", per_page: 1000).entries
+    @items = service.query("SELECT #{$query_items} FROM Invoice ORDER BY DocNumber DESC", per_page: 1000).entries
+    @items.map do |item|
+      invoice = Qbo::Invoice.new(item)
+      invoice.customer = customers.find { |customer| customer.id == invoice.customer_id }
+      invoice.customer_translation = customer_translations.find { |ct| ct.qbo_customer_id == invoice.customer_id.to_i }
+      invoices << invoice
+    end
+    invoices
   end
 
   def all
