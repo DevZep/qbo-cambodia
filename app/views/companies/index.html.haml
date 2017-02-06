@@ -11,7 +11,13 @@
         = image_tag 'C2QB_green_btn_med_default.png', onclick: 'intuit.ipp.anywhere.controller.onConnectToIntuitClicked();', class: 'qboimage'
     %hr
     = render partial: 'company'
-  - else
+  - elsif auth.present?
+    .text-center
+      %h1.margin= "Please re-authenticate with QBO by clicking the button below"
+      %br
+      %br
+      = image_tag 'C2QB_green_btn_lg_default.png', onclick: 'intuit.ipp.anywhere.controller.onConnectToIntuitClicked();', id: 'qboimg', data: { mouseover_src: image_url('C2QB_green_btn_lg_hover.png'), origin_src: image_url('C2QB_green_btn_lg_default.png') }
+  -else
     .text-center
       %h1.margin= "Please Connect to QuickBooks by clicking the button below"
       %br
