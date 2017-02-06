@@ -3,7 +3,7 @@
 / configure the Intuit object: 'grantUrl' is a URL in your application which kicks off the flow, see below
 = render 'quickbook_script'
 .container
-  - if defined? auth
+  - if !defined?(auth).nil?
     .text-center
       %h1.margin= "Please re-authenticate with QBO by clicking the button below"
       %br
