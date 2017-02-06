@@ -20,7 +20,7 @@ class CompaniesController < ApplicationController
       @commercial = []
       @companies.each do |item|
 
-        invoice_service = InvoiceService.new(item)
+        invoice_service = ::InvoiceService.new(item)
         begin
           get_all_invoice = invoice_service.get_all_invoices
         rescue Quickbooks::AuthorizationFailure => e

@@ -4,7 +4,6 @@ class InvoiceService < BaseService
 
   def get_all_invoices
     @invoices = service.query("SELECT #{$query_items} FROM Invoice ORDER BY DocNumber DESC", per_page: 1000).entries
-    @invoices.nill? ? [] : @invoices
   end
 
   def all
