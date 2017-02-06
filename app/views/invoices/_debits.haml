@@ -1,14 +1,14 @@
 - debits.each_with_index do |debit,index|
-  %tr{ class: valid_id_sequence?(debits,"DNRTT-",debit.doc_number) ? "clickable-row" : "alert-danger clickable-row", data: { translation_url: create_customer_translation_path(debit.customer_ref.value), customer_name: debit.customer_name, billing_address: debit.full_billing_address, invoice_id: debit.doc_number, translation: { name: debit.customer_translation.try(:name), billing_address: debit.customer_translation.try(:billing_address) }  } }
+  %tr{ class: debit.valid ? "clickable-row" : "alert-danger clickable-row", data: { translation_url: create_customer_translation_path(debit.customer_ref.value), customer_name: debit.customer_name, billing_address: debit.full_billing_address, invoice_id: debit.doc_number, translation: { name: debit.customer_translation.try(:name), billing_address: debit.customer_translation.try(:billing_address) }  } }
     
-    - if valid_id_sequence?(debits,"DNRTT-",debit.doc_number)
+    - if debit.valid
       %th{ scope: 'row'}= invoice_link(debits[index], @credential)
     - else
       %th= debit.doc_number
     
     %td
       = edit_translation(debits[index], @credential)
-      - unless valid_id_sequence?(debits,"DNRTT-",debit.doc_number)
+      - unless debit.valid
         %p
           ="This invoice is not using the correct ID format or sequence. Please "
           = link_to "edit the ID in QBO", "https://sandbox.qbo.intuit.com/app/invoice?txnId=#{debits[index].id}", target: '_blank'

@@ -1,5 +1,5 @@
 class Qbo::Invoice < Qbo::Base
-  attr_writer :customer, :customer_translation
+  attr_writer :customer, :customer_translation, :valid
 
   def customer_name
     customer.full_name
@@ -45,19 +45,15 @@ class Qbo::Invoice < Qbo::Base
   end
 
   def customer
-    # return @customer if @customer.present?
-    #
-    # customer_service = CustomerService.new(qbo_credential)
-    # customer_service.find_by_ids(customer_ids)
-    #
-    # @customer = Qbo::Customer.new(customer_ref.value, credential)
-
     @customer
+  end
+
+  def valid
+    @valid
   end
 
   def customer_translation
     @customer_translation
-    # @customer_translation ||= Translation::Customer.find_by(qbo_customer_id: customer_ref.value)
   end
 
   def translated?
