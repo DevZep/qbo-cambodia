@@ -25,7 +25,7 @@ class CompaniesController < ApplicationController
           get_all_invoice = invoice_service.get_all_invoices
         rescue Quickbooks::AuthorizationFailure => e
           if e == Quickbooks::AuthorizationFailure
-            redirect_to root_path, notice: "Fail"
+            get_all_invoices = []
           end
         end
         #show both next available id
