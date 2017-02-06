@@ -127,7 +127,6 @@ class InvoicesController < ApplicationController
       paginate = invoice_service.all
       Kaminari.paginate_array(paginate).page(params[:page]).per(10)
     end
-
     @all = @all_invoice.group_by {|invoice| invoice.doc_number.split("-")[0]}
     show_nextid(invoice_service)
   end
