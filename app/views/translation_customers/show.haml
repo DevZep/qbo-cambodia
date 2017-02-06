@@ -7,20 +7,23 @@
       .col-xs-10
         %h3= ": #{@customer_translation.name}"
   .row
+    - if @customer.full_billing_address.present?
     .col-xs-2
-      %h3 Address
-    .col-xs-10
-      %h3= ": #{@customer.full_billing_address}"
-      %h3 
-        &nbsp;&nbsp;
-        = @customer_translation.billing_address
+        %h3 Address
+      .col-xs-10
+        %h3= ": #{@customer.full_billing_address}"
+        %h3 
+          &nbsp;&nbsp;
+          = @customer_translation.billing_address
   .row
-    .col-xs-2
-      %h3 Phone
-    .col-xs-10
-      %h3= ": #{@customer.primary_phone.free_form_number}"
+    - if @customer.primary_phone.free_form_number.present?
+      .col-xs-2
+        %h3 Phone
+      .col-xs-10
+        %h3= ": #{@customer.primary_phone.free_form_number}"
   .row
-    .col-xs-2
-      %h3 Email
-    .col-xs-10
-      %h3= ": #{@customer.primary_email_address.address}"
+    -if @customer.primary_email_address.address.present?
+      .col-xs-2
+        %h3 Email
+      .col-xs-10
+        %h3= ": #{@customer.primary_email_address.address}"
