@@ -19,7 +19,6 @@ class TranslationCustomersController < ApplicationController
     @customer_translation = Translation::Customer.find(params[:id])
 
     customer_service = ::CustomerService.new(@qbo_credential)
-    @customer = customer_service.find_by_id(params[:id])
   end
 
   private
