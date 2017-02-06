@@ -12,6 +12,10 @@ class CompaniesController < ApplicationController
     @company = current_user.qbo_credentials.find(params[:id])
   end
 
+  def reauth
+    
+  end
+
   private
     def companies
       @companies = current_user.qbo_credentials
@@ -25,7 +29,7 @@ class CompaniesController < ApplicationController
           get_all_invoice = invoice_service.get_all_invoices
         rescue Quickbooks::AuthorizationFailure => e
           if e == Quickbooks::AuthorizationFailure
-            redirect_to root_path, auth: "Fail"
+            redirect_to action: reauth
           end
         end
         #show both next available id

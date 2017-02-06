@@ -2,15 +2,8 @@
 %script{ src: 'https://js.appcenter.intuit.com/Content/IA/intuit.ipp.anywhere-1.3.3.js', type: 'text/javascript' }
 / configure the Intuit object: 'grantUrl' is a URL in your application which kicks off the flow, see below
 = render 'quickbook_script'
-.container
-  - if !defined?(auth).nil?
-    .text-center
-      %h1.margin= "Please re-authenticate with QBO by clicking the button below"
-      %br
-      %br
-      = image_tag 'C2QB_green_btn_lg_default.png', onclick: 'intuit.ipp.anywhere.controller.onConnectToIntuitClicked();', id: 'qboimg', data: { mouseover_src: image_url('C2QB_green_btn_lg_hover.png'), origin_src: image_url('C2QB_green_btn_lg_default.png') }
-    
-  - elsif @companies.present?
+.container   
+  - if @companies.present?
     .row
       .col-xs-7
         %h2 Companies
