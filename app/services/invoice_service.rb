@@ -3,8 +3,9 @@ class InvoiceService < BaseService
   $query_items = 'ID,Line, CustomerRef, DocNumber, CurrencyRef, TotalAmt, TxnDate, DueDate'.gsub(/'/,"") 
 
   def get_all_invoices
+
     @invoices = []
-    @items = service.query("SELECT #{$query_items} FROM Invoice ORDER BY DocNumber DESC").entries
+    @items = service.query("SELECT #{$query_items} FROM Invoice ORDER BY DocNumber DESC", per_page: 1000).entries
     @items.map do |item|
       invoice = Qbo::Invoice.new(item)
       invoice.customer = customers.find { |customer| customer.id == invoice.customer_id }
@@ -23,6 +24,7 @@ class InvoiceService < BaseService
         invoice = Qbo::Invoice.new(item)
         invoice.customer = customers.find { |customer| customer.id == invoice.customer_id }
         invoice.customer_translation = customer_translations.find { |ct| ct.qbo_customer_id == invoice.customer_id.to_i }
+        invoice.valid = valid_id_sequence?(@items,item.doc_number)
         invoices << invoice
       end
     end
@@ -74,6 +76,7 @@ class InvoiceService < BaseService
         invoice = Qbo::Invoice.new(item)
         invoice.customer = customers.find { |customer| customer.id == invoice.customer_id }
         invoice.customer_translation = customer_translations.find { |ct| ct.qbo_customer_id == invoice.customer_id.to_i }
+        invoice.valid = valid_id_sequence?(@items,item.doc_number)
         invoices << invoice
       end
     end
@@ -89,6 +92,7 @@ class InvoiceService < BaseService
         invoice = Qbo::Invoice.new(item)
         invoice.customer = customers.find { |customer| customer.id == invoice.customer_id }
         invoice.customer_translation = customer_translations.find { |ct| ct.qbo_customer_id == invoice.customer_id.to_i }
+        invoice.valid = valid_id_sequence?(@items,item.doc_number)
         invoices << invoice
       end
     end
@@ -103,6 +107,7 @@ class InvoiceService < BaseService
         invoice = Qbo::Invoice.new(item)
         invoice.customer = customers.find { |customer| customer.id == invoice.customer_id }
         invoice.customer_translation = customer_translations.find { |ct| ct.qbo_customer_id == invoice.customer_id.to_i }
+        invoice.valid = valid_id_sequence?(@items,item.doc_number)
         invoices << invoice
       end
     end
@@ -110,6 +115,39 @@ class InvoiceService < BaseService
   end
 
   private
+
+  def valid_id_sequence?(all_items,doc_id)
+    all_doc_nums = []
+    valid_num = []
+
+    number = doc_id.split("-")[1]
+
+    all_invoice = invoices_by_type(all_items,doc_id)
+
+    all_invoice.reverse.pluck('doc_number').map { |item| all_doc_nums << item.split('-')[1].to_i }
+    
+    all_doc_nums.each_with_index do |item,index|
+      valid_num << all_doc_nums[index]
+      break if index != all_doc_nums.size && all_doc_nums[index]+1 != all_doc_nums[index+1]
+    end
+
+    if number.length == 9
+      fix_num = number.to_i
+      if valid_num.include?(fix_num)
+        return true
+      else
+        return false
+      end
+    else
+      return false
+    end
+  end
+
+  def invoices_by_type(all_items,doc_id)
+    prefix = doc_id.split("-")[0]
+    invoices = all_items.group_by {|invoice| invoice.doc_number.split("-")[0]}
+    invoices[prefix]
+  end
 
   def customers
     return @customers if @customers.present?

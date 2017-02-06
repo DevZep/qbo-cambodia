@@ -2,7 +2,7 @@
   = render 'invoice_header', credential: credential
   .panel.panel-default
     .panel-heading
-      = render 'invoice_navigator', credential: credential, invoices_no: @invoice_no, debit_no: @debit_no
+      = render 'invoice_navigator', credential: credential, invoices_no: @invoice_no, debit_no: @debit_no, commercial_no: @commercial_no
     .panel-body
       %h4.text-center{style: 'color:#a94442'}
         = "These invoices require their ID to follow the correct pattern. Please edit these items in QBO selecting either the next Invoice ID or the next Debit Note ID as required."
