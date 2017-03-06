@@ -80,7 +80,7 @@ p {
   border: 1px solid;
   position: relative;
   margin-bottom: -1px;
-
+  width: 100%;
   td {
     border: 1px solid;
     border-top: none;
@@ -103,7 +103,7 @@ p {
     padding-bottom: 0;
   }
 
-  tbody > tr > .item > p {
+  tbody > tr > .item > pre {
     width: 250px;
     word-wrap:break-word;
   }
@@ -130,7 +130,7 @@ p {
 }
 
 table.break {
-  tbody > tr > .item > p {
+  tbody > tr > .item > pre {
     width: 318px;
     word-wrap:break-word;
   }
