@@ -103,9 +103,8 @@ p {
     padding-bottom: 0;
   }
 
-  tbody > tr > .item > pre {
-    width: 250px;
-    word-wrap:break-word;
+  tbody > tr > .item > p {
+    word-wrap: break-word;
   }
 
   tbody > tr > .item-no {
@@ -130,7 +129,7 @@ p {
 }
 
 table.break {
-  tbody > tr > .item > pre {
+  tbody > tr > .item > p {
     width: 318px;
     word-wrap:break-word;
   }
