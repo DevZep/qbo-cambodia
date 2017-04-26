@@ -15,7 +15,6 @@ class InvoicesController < ApplicationController
     invoice_service = ::InvoiceService.new(@credential)
     get_all_invoices = invoice_service.get_all_invoices
     @invoice = invoice_service.find_show_receipt_by_doc_ids(params[:id]).first
-
     respond_to do |format|
       format.html
       format.pdf do
