@@ -113,6 +113,16 @@
             %span.pull-left= @invoice.currency.symbol
             %span.pull-right= format('%.2f', @invoice.sub_total.amount)
 
+        - if @invoice.discount_amount.present?
+          %tr.uppercase
+            %td.line.item-no{ colspan: "1" }
+            %td.line.item{ colspan: "1" }
+              %p &nbsp;
+            %td.line.text-right.col-182{ colspan: "1" }="បញ្ចុះតម្លៃ Discount #{@invoice.discount_percent}"
+            %td.line.col-50{ colspan: "1" }
+              %span.pull-left= @invoice.currency.symbol
+              %span.pull-right= format('%.2f', @invoice.discount_amount)
+
         - if @invoice.txn_tax_detail.present? && @invoice.txn_tax_detail.total_tax > 0.0
           %tr.uppercase
             %td.item-no{ colspan: "1" }

@@ -45,6 +45,15 @@ module Qbo
       customer_ref.value
     end
 
+    def discount_percent
+      percent = line_items.last.discount_line_detail.discount_percent
+      percent.present? ? "(#{percent.to_i} %)" : ""
+    end
+
+    def discount_amount
+      line_items.last.amount
+    end
+
     # def customer
     #   @customer
     # end
