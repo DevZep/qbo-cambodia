@@ -18,7 +18,6 @@
           %tbody
             = render 'all', all_items: all
         .pageinate.text-center
-          / - binding.pry
           = paginate @all_invoice
       - else
         %h4.text-center.text-danger

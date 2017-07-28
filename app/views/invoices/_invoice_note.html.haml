@@ -72,15 +72,18 @@
             %p.km ល.រ
             %p No.
           %td
+            %p.km សេវាកម្ម
+            %p.uppercase PRODUCT/SERVICE
+          %td
             %p.km បរិយាយមុខទំនិញ
             %p.uppercase Description
-          %td.item-quantity.col-50
+          %td.item-quantity.col-130
             %p.km បរិមាណ
             %p.uppercase QTY
-          %td.col-130
+          %td.col-50
             %p.km តម្លៃឯកតា
             %p.uppercase Unit Price
-          %td.col-130
+          %td.col-50
             %p.km ថ្លៃទំនិញ
             %p.uppercase Total Amount
       %tbody
@@ -88,13 +91,15 @@
           %tr.break
             %td.line.item-no= index + 1
             %td.line.item
-              %pre.description= item.description
-            %td.text-center.line.item-quantity.col-50
+              %p.product= item.sales_line_item_detail.item_ref.name
+            %td.line.item
+              %p.description= item.description.html_safe()
+            %td.text-center.line.item-quantity
               = item.sales_line_item_detail.quantity.to_i
-            %td.line.col-130
+            %td.line.col-50
               %span.pull-left= @invoice.currency.symbol
               %span.pull-right= format('%.2f', item.sales_line_item_detail.unit_price)
-            %td.line.col-130
+            %td.line.col-50
               %span.pull-left= @invoice.currency.symbol
               %span.pull-right= format('%.2f', item.amount)
     %table.table.break
@@ -104,9 +109,19 @@
           %td.line.item{ colspan: "1" }
             %p &nbsp;
           %td.line.text-right.col-182{ colspan: "1" } សរុប Subtotal
-          %td.line.col-130{ colspan: "1" }
+          %td.line.col-50{ colspan: "1" }
             %span.pull-left= @invoice.currency.symbol
             %span.pull-right= format('%.2f', @invoice.sub_total.amount)
+
+        - if @invoice.discount_amount.present?
+          %tr.uppercase
+            %td.line.item-no{ colspan: "1" }
+            %td.line.item{ colspan: "1" }
+              %p &nbsp;
+            %td.line.text-right.col-182{ colspan: "1" }="បញ្ចុះតម្លៃ Discount #{@invoice.discount_percent}"
+            %td.line.col-50{ colspan: "1" }
+              %span.pull-left= @invoice.currency.symbol
+              %span.pull-right= format('%.2f', @invoice.discount_amount)
 
         - if @invoice.txn_tax_detail.present? && @invoice.txn_tax_detail.total_tax > 0.0
           %tr.uppercase
@@ -114,7 +129,7 @@
             %td.item{ colspan: "1" }
               %p &nbsp;
             %td.line.text-right.col-182{ colspan: "1" } អាករលើតម្លៃបន្ថែម VAT ( 10%)
-            %td.line.col-130{ colspan: "1" }
+            %td.line.col-50{ colspan: "1" }
               %span.pull-left= @invoice.currency.symbol
               %span.pull-right= format('%.2f', @invoice.txn_tax_detail.total_tax)
 
@@ -123,7 +138,7 @@
           %td.item{ colspan: "1" }
             %p &nbsp;
           %td.line.text-right.col-182{ colspan: "1" } សរុបរួម  Total
-          %td.line.col-130{ colspan: "1" }
+          %td.line.col-50{ colspan: "1" }
             %span.pull-left= @invoice.currency.symbol
             %span.pull-right= format('%.2f', @invoice.total_amount)
 .row.memo.bank-info
