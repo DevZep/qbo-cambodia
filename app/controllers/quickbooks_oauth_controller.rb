@@ -34,7 +34,8 @@ class QuickbooksOauthController < ApplicationController
     end
 
     credential.save
-    @success = true
+    # @success = true
+    User.find(current_user).update(last_login_company: credential.company_id)
     flash.notice = "You have successfully authenticated from QBO"
   end
 

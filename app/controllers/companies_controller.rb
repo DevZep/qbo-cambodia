@@ -5,10 +5,13 @@ class CompaniesController < ApplicationController
 
   
   def index
+    if current_user.last_login_company.present?
+      redirect_to company_path(current_user.last_login_company)
+    end
   end
 
   def show
-    @company = current_user.qbo_credentials.find(params[:id])
+    @company = current_user.qbo_credentials.find_by(company_id: params[:id])
   end
 
   private
@@ -35,7 +38,7 @@ class CompaniesController < ApplicationController
   end
 
   def set_qbo_credential
-    @credential = current_user.qbo_credentials.find(params[:id])
+    @credential = current_user.qbo_credentials.find_by(company_id: params[:id])
   end
 
   def show_next_id
