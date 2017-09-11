@@ -62,8 +62,14 @@ module ApplicationHelper
   private
 
   def english_name(invoice,credential)
+    name = invoice.customer_name
+    address = invoice.full_billing_address
+    phone = invoice.customer_tel
+    email = invoice.customer_email
+
+    customer = { 'name': name, 'address': address, 'phone': phone, 'email': email }
     content_tag :p do
-      link_to invoice.customer_name, customer_translation_path(credential,invoice.customer.id)
+      link_to invoice.customer_name, customer_translation_path(credential, invoice.customer.id, customer: customer)
     end
   end
 
