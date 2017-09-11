@@ -1,20 +1,49 @@
 inherit_from: .rubocop_todo.yml
 
 AllCops:
-  Exclude:
-    - config/**/*
-    - db/**/*
-    - spec/spec_helper.rb
-    - spec/rails_helper.rb
-  Include:
-    - app/models/*.rb
-    - app/controllers/*.rb
-    - app/workers/*.rb
-    - app/services/*.rb
-    - app/mailers/*.rb
-    - app/helpers/*.rb
-    - spec/*.rb
-    - lib/*.rb
+ TargetRubyVersion: 2.3
+ Exclude:
+  - config/**/*
+  - db/**/*
+  - spec/spec_helper.rb
+  - spec/rails_helper.rb
+ Include:
+  - app/models/*.rb
+  - app/controllers/*.rb
+  - app/workers/*.rb
+  - app/services/*.rb
+  - app/mailers/*.rb
+  - app/helpers/*.rb
+  - spec/*.rb
+  - lib/*.rb
+ DisplayCopNames: true
+ DisplayStyleGuide: true
 
+Style/RedundantBegin:
+   Enabled: false
+Lint/HandleExceptions:
+   Enabled: false
+Style/WordArray:
+ Enabled: false
+Style/SafeNavigation:
+ Enabled: false
+Style/EmptyMethod:
+ EnforcedStyle: expanded
+Security/Eval:
+ Enabled: false
+Metrics/ClassLength:
+ Enabled: false
+Metrics/ModuleLength:
+ Enabled: false
+FrozenStringLiteralComment:
+ Enabled: false
+LineLength:
+ Enabled: false
 Style/Documentation:
-  Enabled: false
+ Enabled: false
+Style/ExtraSpacing:
+ Enabled: false
+Metrics/AbcSize:
+ Enabled: false
+Metrics/MethodLength:
+ Enabled: false

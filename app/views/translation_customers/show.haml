@@ -1,5 +1,5 @@
 .container
-  %h1= "#{@customer.company_name}'s Detail"
+  %h1= "#{@customer[:name]}'s Detail"
   .row
     - if @customer_translation.present? 
       .col-xs-2 
@@ -7,23 +7,23 @@
       .col-xs-10
         %h3= ": #{@customer_translation.name}"
   .row
-    - if @customer.full_billing_address.present?
+    - if @customer[:address].present?
       .col-xs-2
         %h3 Address
       .col-xs-10
-        %h3= ": #{@customer.full_billing_address}"
+        %h3= ": #{@customer[:address]}"
         %h3 
           &nbsp;&nbsp;
           = @customer_translation.billing_address
   .row
-    - if @customer.primary_phone.free_form_number.present?
+    - if @customer[:phone].present?
       .col-xs-2
         %h3 Phone
       .col-xs-10
-        %h3= ": #{@customer.primary_phone.free_form_number}"
+        %h3= ": #{@customer[:phone]}"
   .row
-    -if @customer.primary_email_address.address.present?
+    -if @customer[:email].present?
       .col-xs-2
         %h3 Email
       .col-xs-10
-        %h3= ": #{@customer.primary_email_address.address}"
+        %h3= ": #{@customer[:email]}"

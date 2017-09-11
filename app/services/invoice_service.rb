@@ -3,7 +3,6 @@ class InvoiceService < BaseService
   $query_items = 'ID,Line, CustomerRef, DocNumber, CurrencyRef, TotalAmt, TxnDate, DueDate'.gsub(/'/,"") 
 
   def get_all_invoices
-
     @invoices = []
     @items = service.query("SELECT #{$query_items} FROM Invoice ORDER BY DocNumber DESC", per_page: 1000).entries
     @items.map do |item|
@@ -13,7 +12,6 @@ class InvoiceService < BaseService
       @invoices << invoice
     end
     @invoices
-
   end
 
   def all
@@ -71,17 +69,18 @@ class InvoiceService < BaseService
   def all_debit
     invoices = []
     @items = @invoices
-    @items.map do |item|
-      if item.doc_number.start_with?('DNRTT')
-        invoice = Qbo::Invoice.new(item)
-        invoice.customer = customers.find { |customer| customer.id == invoice.customer_id }
-        invoice.customer_translation = customer_translations.find { |ct| ct.qbo_customer_id == invoice.customer_id.to_i }
-        invoice.valid = valid_id_sequence?(@items,item.doc_number)
-        invoices << invoice
+    unless @items.nil?
+      @items.map do |item|
+        if item.doc_number.start_with?('DNRTT')
+          invoice = Qbo::Invoice.new(item)
+          invoice.customer = customers.find { |customer| customer.id == invoice.customer_id }
+          invoice.customer_translation = customer_translations.find { |ct| ct.qbo_customer_id == invoice.customer_id.to_i }
+          invoice.valid = valid_id_sequence?(@items,item.doc_number)
+          invoices << invoice
+        end
       end
+      invoices
     end
-    invoices
-
   end
 
   def all_invoice
