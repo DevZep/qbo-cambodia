@@ -1,6 +1,6 @@
 class CompaniesController < ApplicationController
   before_action :set_qbo_credential, only: :show
-  before_action :companies
+  # before_action :companies
   before_action :show_next_id, only: :show
 
   
@@ -15,27 +15,27 @@ class CompaniesController < ApplicationController
   end
 
   private
-  def companies
-    @companies = current_user.qbo_credentials
-    @debits = []
-    @invoices = []
-    @commercial = []
-    @companies.each do |item|
+  # def companies
+  #   @companies = current_user.qbo_credentials
+  #   @debits = []
+  #   @invoices = []
+  #   @commercial = []
+  #   @companies.each do |item|
 
-      invoice_service = ::InvoiceService.new(item)
-      begin
-        invoice_service.get_all_invoices
-      rescue Quickbooks::AuthorizationFailure => e
-        if e.class == Quickbooks::AuthorizationFailure
-          redirect_to root_path
-        end
-      end
-      #show next available id
-      @debits << doc_number_present(invoice_service.all_debit,"DNRTT-")
-      @invoices << doc_number_present(invoice_service.all_invoice,"RTT-")
-      @commercial << doc_number_present(invoice_service.all_commercial,"CIRTT-")
-    end
-  end
+  #     invoice_service = ::InvoiceService.new(item)
+  #     begin
+  #       invoice_service.get_all_invoices
+  #     rescue Quickbooks::AuthorizationFailure => e
+  #       if e == Quickbooks::AuthorizationFailure
+  #         redirect_to root_path
+  #       end
+  #     end
+  #     #show next available id
+  #     @debits << doc_number_present(invoice_service.all_debit,"DNRTT-")
+  #     @invoices << doc_number_present(invoice_service.all_invoice,"RTT-")
+  #     @commercial << doc_number_present(invoice_service.all_commercial,"CIRTT-")
+  #   end
+  # end
 
   def set_qbo_credential
     @credential = current_user.qbo_credentials.find_by(company_id: params[:id])
