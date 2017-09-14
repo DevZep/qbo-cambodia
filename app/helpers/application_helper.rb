@@ -35,7 +35,8 @@ module ApplicationHelper
       end
     else
       content_tag :div do
-        english_name(invoice,credential) + require_translation
+        concat content_tag :p, invoice.customer_name
+        concat content_tag :span, 'Requires Translating ', class: 'text-danger'
       end
     end.html_safe
   end
@@ -66,8 +67,9 @@ module ApplicationHelper
     address = invoice.full_billing_address
     phone = invoice.customer_tel
     email = invoice.customer_email
+    company_id = invoice.customer_translation.company_id
 
-    customer = { 'name': name, 'address': address, 'phone': phone, 'email': email }
+    customer = { 'name': name, 'address': address, 'phone': phone, 'email': email, 'company_id': company_id }
     content_tag :p do
       link_to invoice.customer_name, customer_translation_path(credential, invoice.customer.id, customer: customer)
     end
