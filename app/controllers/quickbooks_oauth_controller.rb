@@ -41,7 +41,6 @@ class QuickbooksOauthController < ApplicationController
 
   def bluedot
     credential = current_user.qbo_credential
-
     if credential
       consumer = OAuth::AccessToken.new(QB_OAUTH_CONSUMER, credential.access_token, credential.access_secret)
       response = consumer.request(:get, "https://appcenter.intuit.com/api/v1/Account/AppMenu")
