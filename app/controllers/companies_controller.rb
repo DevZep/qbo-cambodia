@@ -23,8 +23,14 @@ class CompaniesController < ApplicationController
     @companies.each do |item|
 
       invoice_service = ::InvoiceService.new(item)
-      invoice_service.get_all_invoices
-
+      begin
+        invoice_service.get_all_invoices
+      rescue Quickbooks::AuthorizationFailure => e
+        if e.class == Quickbooks::AuthorizationFailure
+          redirect_to root_path
+        end
+      end
+      #show next available id
       @debits << doc_number_present(invoice_service.all_debit,"DNRTT-")
       @invoices << doc_number_present(invoice_service.all_invoice,"RTT-")
       @commercial << doc_number_present(invoice_service.all_commercial,"CIRTT-")
