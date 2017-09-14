@@ -1,3 +1,3 @@
 %script
-  = "opener.parent.location.href='#{company_url(current_user.last_login_company)}'"
+  = "opener.parent.location.href='#{company_url(current_user.reload.last_login_company)}'"
   = "window.close()"

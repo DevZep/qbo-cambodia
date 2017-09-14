@@ -13,7 +13,7 @@ class InvoicesController < ApplicationController
 
   def show
     invoice_service = ::InvoiceService.new(@credential)
-    get_all_invoices = invoice_service.get_all_invoices
+    invoice_service.get_all_invoices
     @invoice = invoice_service.find_show_receipt_by_doc_ids(params[:id]).first
     respond_to do |format|
       format.html
@@ -44,7 +44,7 @@ class InvoicesController < ApplicationController
 
   def receipt
     invoice_service = ::InvoiceService.new(@credential)
-    get_all_invoices = invoice_service.get_all_invoices
+    invoice_service.get_all_invoices
 
     @invoice = invoice_service.find_show_receipt_by_doc_ids(params[:id]).first
 
@@ -65,7 +65,7 @@ class InvoicesController < ApplicationController
 
   def need_attention
     invoice_service = ::InvoiceService.new(@credential)
-    get_all_invoices = invoice_service.get_all_invoices
+    invoice_service.get_all_invoices
 
     paginate = invoice_service.need_attention
     @need_attentions = Kaminari.paginate_array(paginate).page(params[:page]).per(10)
@@ -75,7 +75,7 @@ class InvoicesController < ApplicationController
 
   def debit
     invoice_service = ::InvoiceService.new(@credential)
-    get_all_invoices = invoice_service.get_all_invoices
+    invoice_service.get_all_invoices
 
     paginate = invoice_service.all_debit
     @debits = Kaminari.paginate_array(paginate).page(params[:page]).per(10)
@@ -85,7 +85,7 @@ class InvoicesController < ApplicationController
 
   def invoice
     invoice_service = ::InvoiceService.new(@credential)
-    get_all_invoices = invoice_service.get_all_invoices
+    invoice_service.get_all_invoices
 
     paginate = invoice_service.all_invoice
     @invoices = Kaminari.paginate_array(paginate).page(params[:page]).per(10)
@@ -95,7 +95,7 @@ class InvoicesController < ApplicationController
 
   def commercial 
     invoice_service = ::InvoiceService.new(@credential)
-    get_all_invoices = invoice_service.get_all_invoices
+    invoice_service.get_all_invoices
 
     paginate = invoice_service.all_commercial
     @commercials = Kaminari.paginate_array(paginate).page(params[:page]).per(10)
@@ -117,7 +117,7 @@ class InvoicesController < ApplicationController
 
   def set_invoices
     invoice_service = ::InvoiceService.new(@credential)
-    get_all_invoices = invoice_service.get_all_invoices
+    invoice_service.get_all_invoices
 
     @all_invoice = if params[:id].present?
       paginate = invoice_service.find_by_doc_ids([params[:id]])

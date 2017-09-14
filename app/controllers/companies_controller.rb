@@ -23,14 +23,8 @@ class CompaniesController < ApplicationController
     @companies.each do |item|
 
       invoice_service = ::InvoiceService.new(item)
-      begin
-        get_all_invoice = invoice_service.get_all_invoices
-      rescue Quickbooks::AuthorizationFailure => e
-        if e == Quickbooks::AuthorizationFailure
-          redirect_to root_path
-        end
-      end
-      #show both next available id
+      invoice_service.get_all_invoices
+
       @debits << doc_number_present(invoice_service.all_debit,"DNRTT-")
       @invoices << doc_number_present(invoice_service.all_invoice,"RTT-")
       @commercial << doc_number_present(invoice_service.all_commercial,"CIRTT-")
@@ -43,9 +37,9 @@ class CompaniesController < ApplicationController
 
   def show_next_id
     invoice_service = ::InvoiceService.new(@credential)
-    get_all_invoice = invoice_service.get_all_invoices
+    invoice_service.get_all_invoices
 
-    #show both next available id
+    #show next available id
     @invoice = doc_number_present(invoice_service.all_invoice,"RTT-")
     @debit = doc_number_present(invoice_service.all_debit,"DNRTT-")
     @commercial = doc_number_present(invoice_service.all_commercial,"CIRTT-")
