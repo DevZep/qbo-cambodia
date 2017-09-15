@@ -1,51 +1,57 @@
 class CompaniesController < ApplicationController
   before_action :set_qbo_credential, only: :show
-  before_action :companies
+  # before_action :companies
   before_action :show_next_id, only: :show
 
   
   def index
-  end
-
-  def show
-    @company = current_user.qbo_credentials.find(params[:id])
-  end
-
-  private
-  def companies
-    @companies = current_user.qbo_credentials
-    @debits = []
-    @invoices = []
-    @commercial = []
-    @companies.each do |item|
-
-      invoice_service = ::InvoiceService.new(item)
-      begin
-        get_all_invoice = invoice_service.get_all_invoices
-      rescue Quickbooks::AuthorizationFailure => e
-        if e == Quickbooks::AuthorizationFailure
-          redirect_to root_path
-        end
-      end
-      #show both next available id
-      @debits << doc_number_present(invoice_service.all_debit,"DNRTT-")
-      @invoices << doc_number_present(invoice_service.all_invoice,"RTT-")
-      @commercial << doc_number_present(invoice_service.all_commercial,"CIRTT-")
+    if current_user.last_login_company.present? && params[:error] != 'true'
+      redirect_to company_path(current_user.last_login_company)
     end
   end
 
+  def show
+    @company = current_user.qbo_credentials.find_by(company_id: params[:id])
+  end
+
+  private
+  # def companies
+  #   @companies = current_user.qbo_credentials
+  #   @debits = []
+  #   @invoices = []
+  #   @commercial = []
+  #   @companies.each do |item|
+
+  #     invoice_service = ::InvoiceService.new(item)
+  #     begin
+  #       invoice_service.get_all_invoices
+  #     rescue Quickbooks::AuthorizationFailure => e
+  #       if e == Quickbooks::AuthorizationFailure
+  #         redirect_to root_path
+  #       end
+  #     end
+  #     #show next available id
+  #     @debits << doc_number_present(invoice_service.all_debit,"DNRTT-")
+  #     @invoices << doc_number_present(invoice_service.all_invoice,"RTT-")
+  #     @commercial << doc_number_present(invoice_service.all_commercial,"CIRTT-")
+  #   end
+  # end
+
   def set_qbo_credential
-    @credential = current_user.qbo_credentials.find(params[:id])
+    @credential = current_user.qbo_credentials.find_by(company_id: params[:id])
   end
 
   def show_next_id
-    invoice_service = ::InvoiceService.new(@credential)
-    get_all_invoice = invoice_service.get_all_invoices
+    begin
+      invoice_service = ::InvoiceService.new(@credential)
+      invoice_service.get_all_invoices
 
-    #show both next available id
-    @invoice = doc_number_present(invoice_service.all_invoice,"RTT-")
-    @debit = doc_number_present(invoice_service.all_debit,"DNRTT-")
-    @commercial = doc_number_present(invoice_service.all_commercial,"CIRTT-")
+      @invoice = doc_number_present(invoice_service.all_invoice,"RTT-")
+      @debit = doc_number_present(invoice_service.all_debit,"DNRTT-")
+      @commercial = doc_number_present(invoice_service.all_commercial,"CIRTT-")
+    rescue Exception => e
+      redirect_to action: 'index', error: true
+    end
   end
 
   def doc_number_present(values,prefix)

@@ -11,6 +11,7 @@
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  id                     :integer          not null, primary key
+#  last_login_company     :string
 #  last_sign_in_at        :datetime
 #  last_sign_in_ip        :inet
 #  remember_created_at    :datetime
@@ -25,6 +26,7 @@
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
+
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

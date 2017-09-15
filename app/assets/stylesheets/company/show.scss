@@ -23,4 +23,16 @@
     }
   }
 
+  img.qboimage{
+    width: 120px;
+    height: auto;
+    margin-top: 16px;
+  }
+
+  img.qboimage:hover,
+  img#qboimg
+  {
+    cursor: pointer;
+  }
+
 }
