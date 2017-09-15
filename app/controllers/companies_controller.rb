@@ -5,7 +5,7 @@ class CompaniesController < ApplicationController
 
   
   def index
-    if current_user.last_login_company.present?
+    if current_user.last_login_company.present? && params[:error] != 'true'
       redirect_to company_path(current_user.last_login_company)
     end
   end
@@ -42,13 +42,16 @@ class CompaniesController < ApplicationController
   end
 
   def show_next_id
-    invoice_service = ::InvoiceService.new(@credential)
-    invoice_service.get_all_invoices
+    begin
+      invoice_service = ::InvoiceService.new(@credential)
+      invoice_service.get_all_invoices
 
-    #show next available id
-    @invoice = doc_number_present(invoice_service.all_invoice,"RTT-")
-    @debit = doc_number_present(invoice_service.all_debit,"DNRTT-")
-    @commercial = doc_number_present(invoice_service.all_commercial,"CIRTT-")
+      @invoice = doc_number_present(invoice_service.all_invoice,"RTT-")
+      @debit = doc_number_present(invoice_service.all_debit,"DNRTT-")
+      @commercial = doc_number_present(invoice_service.all_commercial,"CIRTT-")
+    rescue Exception => e
+      redirect_to action: 'index', error: true
+    end
   end
 
   def doc_number_present(values,prefix)
