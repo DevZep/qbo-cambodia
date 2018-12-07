@@ -1,28 +1,36 @@
 - invoices.each_with_index do |invoice,index|
-  %tr{ class: invoice.valid ? "clickable-row" : "alert-danger clickable-row", data: { translation_url: create_customer_translation_path(invoice.customer_ref.value), customer_name: invoice.customer_name, billing_address: invoice.full_billing_address, invoice_id: invoice.doc_number, translation: { name: invoice.customer_translation.try(:name), billing_address: invoice.customer_translation.try(:billing_address) }  } }
-    
-    - if invoice.valid
-      %th{ scope: 'row'}= invoice_link(invoices[index], @credential)
-    - else
-      %th= invoice.doc_number
+  / %tr{ class: invoice.valid ? "clickable-row" : "alert-danger clickable-row", data: { translation_url: create_customer_translation_path(invoice.customer_ref.value), customer_name: invoice.customer_name, billing_address: invoice.full_billing_address, invoice_id: invoice.doc_number, translation: { name: invoice.customer_translation.try(:name), billing_address: invoice.customer_translation.try(:billing_address) }  } }
+  %tr{ class: "clickable-row", data: { translation_url: create_customer_translation_path(invoice.customer_ref.value), customer_name: invoice.customer_name, billing_address: invoice.full_billing_address, invoice_id: invoice.doc_number, translation: { name: invoice.customer_translation.try(:name), billing_address: invoice.customer_translation.try(:billing_address) }  } }
 
-    - if invoice.valid
-      %th= link_to invoices[index].doc_number.gsub('RTT-',''), invoices_invoices_receipt_path(@credential, invoices[index].doc_number, format: :pdf), target: '_blank'
-    - else
-      %th= invoice.doc_number.gsub('RTT-','')
-    
-    %td
-      = edit_translation(invoices[index], @credential)
-      - unless invoice.valid
-        %p
-          ="This invoice is not using the correct ID format or sequence. Please "
-          = link_to "edit the ID in QBO", "https://sandbox.qbo.intuit.com/app/invoice?txnId=#{invoice.id}", target: '_blank'
-    
+    %th{ scope: 'row'}= invoice_link(invoices[index], @credential)
+    %th= link_to invoices[index].doc_number.gsub('RTT-',''), invoices_invoices_receipt_path(@credential, invoices[index].doc_number, format: :pdf), target: '_blank'
+    %td= edit_translation(invoices[index], @credential)
     %td= "#{invoices[index].currency.symbol} #{invoices[index].total}"
-    
     %td= invoice.due_date.to_formatted_s(:custom_format)
+    %td= edit_name(invoices[index], @credential)
+    
+    / - if invoice.valid
+    /   %th{ scope: 'row'}= invoice_link(invoices[index], @credential)
+    / - else
+    /   %th= invoice.doc_number
+
+    / - if invoice.valid
+    /   %th= link_to invoices[index].doc_number.gsub('RTT-',''), invoices_invoices_receipt_path(@credential, invoices[index].doc_number, format: :pdf), target: '_blank'
+    / - else
+    /   %th= invoice.doc_number.gsub('RTT-','')
+    
+    / %td
+    /   = edit_translation(invoices[index], @credential)
+    /   - unless invoice.valid
+    /     %p
+    /       ="This invoice is not using the correct ID format or sequence. Please "
+    /       = link_to "edit the ID in QBO", "https://sandbox.qbo.intuit.com/app/invoice?txnId=#{invoice.id}", target: '_blank'
+    
+    / %td= "#{invoices[index].currency.symbol} #{invoices[index].total}"
+    
+    / %td= invoice.due_date.to_formatted_s(:custom_format)
      
-    - if invoice.valid
-      %td= edit_name(invoices[index], @credential)
-    - else
-      %td
+    / - if invoice.valid
+    /   %td= edit_name(invoices[index], @credential)
+    / - else
+    /   %td

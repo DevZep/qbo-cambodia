@@ -1,20 +1,26 @@
 - commercials.each_with_index do |commercial,index|
-  %tr{ class: commercial.valid ? "clickable-row" : "alert-danger clickable-row", data: { translation_url: create_customer_translation_path(commercial.customer_ref.value), customer_name: commercial.customer_name, billing_address: commercial.full_billing_address, invoice_id: commercial.doc_number, translation: { name: commercial.customer_translation.try(:name), billing_address: commercial.customer_translation.try(:billing_address) }  } }
+  / %tr{ class: commercial.valid ? "clickable-row" : "alert-danger clickable-row", data: { translation_url: create_customer_translation_path(commercial.customer_ref.value), customer_name: commercial.customer_name, billing_address: commercial.full_billing_address, invoice_id: commercial.doc_number, translation: { name: commercial.customer_translation.try(:name), billing_address: commercial.customer_translation.try(:billing_address) }  } }
+  %tr{ class: "clickable-row", data: { translation_url: create_customer_translation_path(commercial.customer_ref.value), customer_name: commercial.customer_name, billing_address: commercial.full_billing_address, invoice_id: commercial.doc_number, translation: { name: commercial.customer_translation.try(:name), billing_address: commercial.customer_translation.try(:billing_address) }  } }
     
-    - if commercial.valid
-      %th{ scope: 'row'}= invoice_link(commercials[index], @credential)
-    - else
-      %th= commercial.doc_number
-    
-    %td
-      = edit_translation(commercials[index], @credential)
-      - unless commercial.valid
-        %p
-          ="This invoice is not using the correct ID format or sequence. Please "
-          = link_to "edit the ID in QBO", "https://sandbox.qbo.intuit.com/app/invoice?txnId=#{commercials[index].id}", target: '_blank'
-    
+    %th{ scope: 'row'}= invoice_link(commercials[index], @credential)
+    %td= edit_translation(commercials[index], @credential)
     %td= "#{commercials[index].currency.symbol} #{commercials[index].total}"
-    
     %td= commercial.due_date.to_formatted_s(:custom_format)
+
+    / - if commercial.valid
+    /   %th{ scope: 'row'}= invoice_link(commercials[index], @credential)
+    / - else
+    /   %th= commercial.doc_number
+    
+    / %td
+    /   = edit_translation(commercials[index], @credential)
+    /   - unless commercial.valid
+    /     %p
+    /       ="This invoice is not using the correct ID format or sequence. Please "
+    /       = link_to "edit the ID in QBO", "https://sandbox.qbo.intuit.com/app/invoice?txnId=#{commercials[index].id}", target: '_blank'
+    
+    / %td= "#{commercials[index].currency.symbol} #{commercials[index].total}"
+    
+    / %td= commercial.due_date.to_formatted_s(:custom_format)
 
    

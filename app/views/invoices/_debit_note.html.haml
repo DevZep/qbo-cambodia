@@ -12,13 +12,13 @@
   .col-xs-8
     .rotati-border-box
       %p.strong Name : ROTATI LTD
-      %p.km ផ្ទះលេខ #​១១ ផ្លូវ​ ៤៩៦ ភូមិ​ ២​ សង្កាត់ ផ្សារដើមថ្កូវ ខ័ណ្ឌ ចំការមន ភ្នំពេញ
-      %p.contact លេខទូរស័ព្ទ (Tel) 012 223 348
-      %p #11, Street 496, Sangkat Phsar Daeum Thkov, Khan Chamkar Mon, Phnom Penh, Kingdom of Cambodia.
+      %p.km ផ្ទះលេខ #​២C ផ្លូវ​ ៤៩០ សង្កាត់ ផ្សារដើមថ្កូវ ខ័ណ្ឌ ចំការមន ភ្នំពេញ
+      %p.contact លេខទូរស័ព្ទ (Tel) +855 98/99 999 426
+      %p #2C, Street 490, Sangkat Phsar Daeum Thkov, Khan Chamkar Mon, Phnom Penh, Kingdom of Cambodia.
   .col-xs-4
     .row
       .col-xs-4
-        %p.km ការទូទាត់សងវិញ 
+        %p.km ការទូទាត់សងវិញ
       .col-xs-8
         %p= ": #{@invoice.doc_number}"
     .row
@@ -28,12 +28,12 @@
         %p= ": #{@invoice.doc_number}"
     .row
       .col-xs-4
-        %p.km កាលបរិច្ឆេទ 
+        %p.km កាលបរិច្ឆេទ
       .col-xs-8
         %p= ": #{@invoice.txn_date_formated_km}"
-    .row  
+    .row
       .col-xs-4
-        %p Date 
+        %p Date
       .col-xs-8
         %p= ": #{@invoice.txn_date_formated}"
 .row
@@ -44,7 +44,7 @@
       %p Tel : +1-416-309-8909
       - if @invoice.customer.alternate_phone.present?
         %p= "VAT: #{@invoice.customer.alternate_phone.free_form_number}"
-      %p 
+      %p
         Email:
         = mail_to "donna@rotati.com"
 .row
@@ -74,7 +74,8 @@
             %td.line.item
               %pre.description= item.description
             %td.text-center.line.item-quantity.col-50
-              = item.sales_line_item_detail.quantity.to_i
+              - item_quan = (item.sales_line_item_detail.quantity % 1) != 0 ? item.sales_line_item_detail.quantity : item.sales_line_item_detail.quantity.to_i
+              = item_quan
             %td.line.col-130
               %span.pull-left= @invoice.currency.symbol
               %span.pull-right= format('%.2f', item.sales_line_item_detail.unit_price)

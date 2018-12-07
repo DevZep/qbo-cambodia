@@ -76,7 +76,7 @@ module ApplicationHelper
   end
 
   def khmer_name(invoice)
-    content_tag :span, "#{invoice.customer_translation.name} " 
+    content_tag :span, "#{invoice.customer_translation.name} "
   end
 
   def edit_name(invoice, credential)
