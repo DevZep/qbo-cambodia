@@ -73,7 +73,8 @@
             %td.line.item
               %pre.description= item.description
             %td.text-center.line.item-quantity.col-50
-              = item.sales_line_item_detail.quantity
+              - item_quan = (item.sales_line_item_detail.quantity % 1) != 0 : item.sales_line_item_detail.quantity : item.sales_line_item_detail.quantity.to_i
+              = item_quan
             %td.line.col-130
               %span.pull-left= @invoice.currency.symbol
               %span.pull-right= format('%.2f', item.sales_line_item_detail.unit_price)
