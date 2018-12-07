@@ -18,7 +18,7 @@
   .col-xs-4
     .row
       .col-xs-4
-        %p.km ការទូទាត់សងវិញ 
+        %p.km ការទូទាត់សងវិញ
       .col-xs-8
         %p= ": #{@invoice.doc_number}"
     .row
@@ -28,12 +28,12 @@
         %p= ": #{@invoice.doc_number}"
     .row
       .col-xs-4
-        %p.km កាលបរិច្ឆេទ 
+        %p.km កាលបរិច្ឆេទ
       .col-xs-8
         %p= ": #{@invoice.txn_date_formated_km}"
-    .row  
+    .row
       .col-xs-4
-        %p Date 
+        %p Date
       .col-xs-8
         %p= ": #{@invoice.txn_date_formated}"
 .row
@@ -44,7 +44,7 @@
       %p Tel : +1-416-309-8909
       - if @invoice.customer.alternate_phone.present?
         %p= "VAT: #{@invoice.customer.alternate_phone.free_form_number}"
-      %p 
+      %p
         Email:
         = mail_to "donna@rotati.com"
 .row
@@ -74,7 +74,7 @@
             %td.line.item
               %pre.description= item.description
             %td.text-center.line.item-quantity.col-50
-              = item.sales_line_item_detail.quantity.to_i
+              = item.sales_line_item_detail.quantity
             %td.line.col-130
               %span.pull-left= @invoice.currency.symbol
               %span.pull-right= format('%.2f', item.sales_line_item_detail.unit_price)

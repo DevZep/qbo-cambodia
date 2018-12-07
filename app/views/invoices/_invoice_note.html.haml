@@ -95,7 +95,7 @@
             %td.line.item
               %p.description= item.description.html_safe()
             %td.text-center.line.item-quantity
-              = item.sales_line_item_detail.quantity.to_i
+              = item.sales_line_item_detail.quantity
             %td.line.col-50
               %span.pull-left= @invoice.currency.symbol
               %span.pull-right= format('%.2f', item.sales_line_item_detail.unit_price)
@@ -160,6 +160,3 @@
     %p ____________________________
     %p.km ហត្ថលេខា និង ឈ្មោះអតិថិជន
     %p Customer's Name & Signature
-
-
-
