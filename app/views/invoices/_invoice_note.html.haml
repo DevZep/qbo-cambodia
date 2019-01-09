@@ -46,12 +46,12 @@
             .col-xs-6.text-right.pad-left-0
               %p.km លេខរៀងវិក័យបត្រ:
             .col-xs-6.text-left.left-25.pad-right-0
-              %p.strong= " #{@invoice.doc_number}"
+              %p.strong= "#{@invoice.doc_number.gsub('RTT-','')}"
           .row
             .col-xs-6.text-right.pad-left-0
               %p Invoice No:
             .col-xs-6.text-left.left-25.pad-right-0
-              %p.strong= " #{@invoice.doc_number}"
+              %p.strong= "#{@invoice.doc_number.gsub('RTT-','')}"
         .invoicing-date
           .row
             .col-xs-6.text-right.pad-left-0
