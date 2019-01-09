@@ -14,8 +14,8 @@
       .row.payment
         .col-xs-4
           %p Mobile : 098 / 099 999 426
-          %p Email  : info@rotati.com
-          %p Website: www.rotati.com
+          %p Email  : info@rotati.tech
+          %p Website: www.rotati.tech
         .col-xs-5
         .col-xs-3
           %p="Receipt No: #{@invoice.doc_number.gsub('RTT-','')}"
@@ -57,7 +57,7 @@
               .col-xs-6.text-left
                 .form-group
                   = label_tag 'Cheque'
-        .col-xs-4    
+        .col-xs-4
           = form_tag do
             .row
               .col-xs-6.text-right
