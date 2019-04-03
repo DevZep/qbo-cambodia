@@ -1,6 +1,7 @@
 class InvoiceService < BaseService
 
-  $query_items = 'ID,Line, CustomerRef, DocNumber, CurrencyRef, TotalAmt, TxnDate, DueDate'.gsub(/'/,"") 
+  # $query_items = 'ID,Line, CustomerRef, DocNumber, CurrencyRef, HomeTotal, TotalAmt, TxnDate, DueDate'.gsub(/'/,"") 
+  $query_items = '*'
 
   def get_all_invoices
     @invoices = []

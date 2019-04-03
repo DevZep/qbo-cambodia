@@ -80,10 +80,10 @@
           %td.item-quantity.col-130
             %p.km បរិមាណ
             %p.uppercase QTY
-          %td.col-50
+          %td.col-80
             %p.km តម្លៃឯកតា
             %p.uppercase Unit Price
-          %td.col-50
+          %td.col-80
             %p.km ថ្លៃទំនិញ
             %p.uppercase Total Amount
       %tbody
@@ -97,51 +97,60 @@
             %td.text-center.line.item-quantity
               - item_quan = (item.sales_line_item_detail.quantity % 1) != 0 ? item.sales_line_item_detail.quantity : item.sales_line_item_detail.quantity.to_i
               = item_quan
-            %td.line.col-50
-              %span.pull-left= @invoice.currency.symbol
+            %td.line
+              %span.pull-left= @invoice.currency.symbol || '៛'
               %span.pull-right= format('%.2f', item.sales_line_item_detail.unit_price)
-            %td.line.col-50
-              %span.pull-left= @invoice.currency.symbol
+            %td.line
+              %span.pull-left= @invoice.currency.symbol || '៛'
               %span.pull-right= format('%.2f', item.amount)
-    %table.table.break
-      %tbody
-        %tr.uppercase
-          %td.line.item-no{ colspan: "1" }
-          %td.line.item{ colspan: "1" }
-            %p &nbsp;
-          %td.line.text-right.col-182{ colspan: "1" } សរុប Subtotal
-          %td.line.col-50{ colspan: "1" }
-            %span.pull-left= @invoice.currency.symbol
-            %span.pull-right= format('%.2f', @invoice.sub_total.amount)
+
+        %tr.break
+          %td.line.text-right{ colspan: "4" }
+            សរុប 
+            %br Subtotal
+          %td.line{ colspan: "2" }
+            %span.pull-left KHR:
+            %span.pull-right= "#{@invoice.currency.symbol || '៛'} #{format('%.2f', @invoice.sub_total.amount)}"
+            %br
+            %span.pull-left USD:
+            %span.pull-right= "$ #{format('%.2f', (@invoice.sub_total.amount * @invoice.exchange_rate).to_f)}"
 
         - if @invoice.discount?
-          %tr.uppercase
-            %td.line.item-no{ colspan: "1" }
-            %td.line.item{ colspan: "1" }
-              %p &nbsp;
-            %td.line.text-right.col-182{ colspan: "1" }="បញ្ចុះតម្លៃ Discount #{@invoice.discount_as_percent}"
-            %td.line.col-50{ colspan: "1" }
-              %span.pull-left= @invoice.currency.symbol
-              %span.pull-right= format('%.2f', @invoice.discount_as_amount)
+          %tr.break
+            %td.line.text-right{ colspan: "4" }
+              ="បញ្ចុះតម្លៃ #{@invoice.discount_as_percent}"
+              %br= "Discount #{@invoice.discount_as_percent}"
+
+            %td.line{ colspan: "2" }
+              %span.pull-left KHR:
+              %span.pull-right= "#{@invoice.currency.symbol || '៛'} #{format('%.2f', @invoice.discount_as_amount)}"
+              %br
+              %span.pull-left USD:
+              %span.pull-right= "$ #{format('%.2f', (@invoice.discount_as_amount * @invoice.exchange_rate).to_f)}"
 
         - if @invoice.txn_tax_detail.present? && @invoice.txn_tax_detail.total_tax > 0.0
-          %tr.uppercase
-            %td.item-no{ colspan: "1" }
-            %td.item{ colspan: "1" }
-              %p &nbsp;
-            %td.line.text-right.col-182{ colspan: "1" } អាករលើតម្លៃបន្ថែម VAT ( 10%)
-            %td.line.col-50{ colspan: "1" }
-              %span.pull-left= @invoice.currency.symbol
-              %span.pull-right= format('%.2f', @invoice.txn_tax_detail.total_tax)
+          %tr.break
+            %td.line.text-right{ colspan: "4" }
+              អាករលើតម្លៃបន្ថែម ១០%
+              %br VAT ( 10%)
+            %td.line{ colspan: "2" }
+              %span.pull-left KHR:
+              %span.pull-right= "#{@invoice.currency.symbol || '៛'} #{format('%.2f', @invoice.txn_tax_detail.total_tax)}"
+              %br
+              %span.pull-left USD:
+              %span.pull-right= "$ #{format('%.2f', (@invoice.txn_tax_detail.total_tax * @invoice.exchange_rate).to_f)}"
 
-        %tr.uppercase
-          %td.item-no{ colspan: "1" }
-          %td.item{ colspan: "1" }
-            %p &nbsp;
-          %td.line.text-right.col-182{ colspan: "1" } សរុបរួម  Total
-          %td.line.col-50{ colspan: "1" }
-            %span.pull-left= @invoice.currency.symbol
-            %span.pull-right= format('%.2f', @invoice.total_amount)
+        %tr.break
+          %td.line.text-right{ colspan: "4" }
+            សរុបរួម
+            %br Total
+          %td.line{ colspan: "2" }
+            %span.pull-left KHR:
+            %span.pull-right= "#{@invoice.currency.symbol || '៛'} #{format('%.2f', @invoice.total_amount)}"
+            %br
+            %span.pull-left USD:
+            %span.pull-right= "$ #{format('%.2f', @invoice.home_total)}"
+
 .row.memo.bank-info
   .col-xs-6.text-left
     %p
@@ -155,9 +164,10 @@
 .row.signatures
   .col-xs-6.text-center
     %p ____________________________
-    %p.km  ឈ្មោះ និង ហត្ថលេខាពីក្រុមហ៊ុនរ៉ូតាទី
-    %p Rotati Authorized Name & Signature
-  .col-xs-6.text-center
-    %p ____________________________
     %p.km ហត្ថលេខា និង ឈ្មោះអតិថិជន
     %p Customer's Name & Signature
+  .col-xs-6.text-center
+    %p ____________________________
+    %p.km  ឈ្មោះ និង ហត្ថលេខាពីក្រុមហ៊ុនរ៉ូតាទី
+    %p Rotati Authorized Name & Signature
+    
