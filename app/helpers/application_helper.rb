@@ -67,7 +67,7 @@ module ApplicationHelper
     address = invoice.full_billing_address
     phone = invoice.customer_tel
     email = invoice.customer_email
-    company_id = invoice.customer_translation.company_id
+    company_id = invoice.customer_translation.try(:company_id)
 
     customer = { 'name': name, 'address': address, 'phone': phone, 'email': email, 'company_id': company_id }
     content_tag :p do
