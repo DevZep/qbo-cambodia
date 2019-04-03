@@ -1,6 +1,7 @@
 class InvoiceService < BaseService
 
-  $query_items = 'ID,Line, CustomerRef, DocNumber, CurrencyRef, TotalAmt, TxnDate, DueDate'.gsub(/'/,"") 
+  # $query_items = 'ID,Line, CustomerRef, DocNumber, CurrencyRef, HomeTotal, TotalAmt, TxnDate, DueDate'.gsub(/'/,"") 
+  $query_items = '*'
 
   def get_all_invoices
     @invoices = []
@@ -130,7 +131,8 @@ class InvoiceService < BaseService
       break if index != all_doc_nums.size && all_doc_nums[index]+1 != all_doc_nums[index+1]
     end
 
-    if number.length == 9
+    # change number length from 9 to 6 based on 2019 law
+    if number.length == 6 || number.length == 9
       fix_num = number.to_i
       if valid_num.include?(fix_num)
         return true

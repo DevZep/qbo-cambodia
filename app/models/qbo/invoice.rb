@@ -55,7 +55,7 @@ module Qbo
     end
 
     def discount_as_amount
-      line_items.last.amount 
+      line_items.last.amount
     end
 
     # def customer

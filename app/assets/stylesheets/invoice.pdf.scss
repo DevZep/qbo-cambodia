@@ -119,8 +119,12 @@ p {
     width: 130px;
   }
 
-  tbody > tr > .col-50 {
+  tbody > tr > .col-80 {
     width: 80px;
+  }
+
+  tbody > tr > .col-160 {
+    width: 160px;
   }
 
   tbody > tr > .col-182 {
@@ -130,7 +134,7 @@ p {
 
 table.break {
   tbody > tr > .item > p {
-    width: 318px;
+    width: 353px;
     word-wrap:break-word;
   }
 }
