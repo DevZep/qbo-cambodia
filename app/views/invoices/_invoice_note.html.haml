@@ -110,10 +110,10 @@
             %br Subtotal
           %td.line{ colspan: "2" }
             %span.pull-left KHR:
-            %span.pull-right= "#{@invoice.currency.symbol || '៛'} #{format('%.2f', @invoice.sub_total.amount)}"
+            %span.pull-right= "#{@invoice.currency.symbol || '៛'} #{format('%.2f', (@invoice.sub_total.amount * @invoice.exchange_rate).to_f)}"
             %br
             %span.pull-left USD:
-            %span.pull-right= "$ #{format('%.2f', (@invoice.sub_total.amount * @invoice.exchange_rate).to_f)}"
+            %span.pull-right= "$ #{format('%.2f', @invoice.sub_total.amount)}"
 
         - if @invoice.discount?
           %tr.break
@@ -123,10 +123,10 @@
 
             %td.line{ colspan: "2" }
               %span.pull-left KHR:
-              %span.pull-right= "#{@invoice.currency.symbol || '៛'} #{format('%.2f', @invoice.discount_as_amount)}"
+              %span.pull-right= "#{@invoice.currency.symbol || '៛'} #{format('%.2f', (@invoice.discount_as_amount * @invoice.exchange_rate).to_f)}"
               %br
               %span.pull-left USD:
-              %span.pull-right= "$ #{format('%.2f', (@invoice.discount_as_amount * @invoice.exchange_rate).to_f)}"
+              %span.pull-right= "$  #{format('%.2f', @invoice.discount_as_amount)}"
 
         - if @invoice.txn_tax_detail.present? && @invoice.txn_tax_detail.total_tax > 0.0
           %tr.break
@@ -135,10 +135,10 @@
               %br VAT ( 10%)
             %td.line{ colspan: "2" }
               %span.pull-left KHR:
-              %span.pull-right= "#{@invoice.currency.symbol || '៛'} #{format('%.2f', @invoice.txn_tax_detail.total_tax)}"
+              %span.pull-right= "#{@invoice.currency.symbol || '៛'}  #{format('%.2f', (@invoice.txn_tax_detail.total_tax * @invoice.exchange_rate).to_f)}"
               %br
               %span.pull-left USD:
-              %span.pull-right= "$ #{format('%.2f', (@invoice.txn_tax_detail.total_tax * @invoice.exchange_rate).to_f)}"
+              %span.pull-right= "$ #{format('%.2f', @invoice.txn_tax_detail.total_tax)}"
 
         %tr.break
           %td.line.text-right{ colspan: "4" }
@@ -146,10 +146,10 @@
             %br Total
           %td.line{ colspan: "2" }
             %span.pull-left KHR:
-            %span.pull-right= "#{@invoice.currency.symbol || '៛'} #{format('%.2f', @invoice.total_amount)}"
+            %span.pull-right= "#{@invoice.currency.symbol || '៛'} #{format('%.2f', @invoice.home_total)}"
             %br
             %span.pull-left USD:
-            %span.pull-right= "$ #{format('%.2f', @invoice.home_total)}"
+            %span.pull-right= "$ #{format('%.2f', @invoice.total_amount)}"
 
 .row.memo.bank-info
   .col-xs-6.text-left
