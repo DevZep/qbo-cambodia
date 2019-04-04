@@ -89,10 +89,10 @@
             %br Total
           %td.line{ colspan: "1" }
             %span.pull-left KHR:
-            %span.pull-right= "#{@invoice.currency.symbol || '៛'} #{format('%.2f', @invoice.total_amount)}"
+            %span.pull-right= "#{@invoice.currency.symbol || '៛'} #{format('%.2f', @invoice.home_total)}"
             %br
             %span.pull-left USD:
-            %span.pull-right= "#{@invoice.currency.symbol || '$'} #{format('%.2f', @invoice.home_total)}"
+            %span.pull-right= "#{@invoice.currency.symbol || '$'} #{format('%.2f', @invoice.total_amount)}"
 
 .row.memo.bank-info
   .col-xs-6.text-left

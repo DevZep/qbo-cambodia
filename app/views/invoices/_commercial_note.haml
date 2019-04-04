@@ -88,10 +88,10 @@
             %br Total (VAT included)
           %td.line{ colspan: "2" }
             %span.pull-left KHR:
-            %span.pull-right= "#{@invoice.currency.symbol || '៛'} #{format('%.2f', @invoice.total_amount + @invoice.txn_tax_detail.total_tax)}"
+            %span.pull-right= "#{@invoice.currency.symbol || '៛'} #{format('%.2f', @invoice.home_total + @invoice.txn_tax_detail.total_tax)}"
             %br
             %span.pull-left USD:
-            %span.pull-right= "$ #{format('%.2f', @invoice.home_total + (@invoice.txn_tax_detail.total_tax * @invoice.exchange_rate))}"
+            %span.pull-right= "$ #{format('%.2f', @invoice.total_amount + (@invoice.txn_tax_detail.total_tax * @invoice.exchange_rate))}"
 
 .row.memo.bank-info
   .col-xs-6.text-left
