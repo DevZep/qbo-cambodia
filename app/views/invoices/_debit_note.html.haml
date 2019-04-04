@@ -77,10 +77,10 @@
               - item_quan = (item.sales_line_item_detail.quantity % 1) != 0 ? item.sales_line_item_detail.quantity : item.sales_line_item_detail.quantity.to_i
               = item_quan
             %td.line
-              %span.pull-left= "#{@invoice.currency.symbol || '៛'}"
+              %span.pull-left= @invoice.currency.symbol
               %span.pull-right= format('%.2f', item.sales_line_item_detail.unit_price)
             %td.line
-              %span.pull-left= "#{@invoice.currency.symbol || '៛'}"
+              %span.pull-left= @invoice.currency.symbol
               %span.pull-right= format('%.2f', item.amount)
 
         %tr.break
@@ -89,10 +89,10 @@
             %br Total
           %td.line{ colspan: "1" }
             %span.pull-left KHR:
-            %span.pull-right= "#{@invoice.currency.symbol || '៛'} #{format('%.2f', @invoice.home_total)}"
+            %span.pull-right= "៛ #{format('%.2f', @invoice.home_total)}"
             %br
             %span.pull-left USD:
-            %span.pull-right= "#{@invoice.currency.symbol || '$'} #{format('%.2f', @invoice.total_amount)}"
+            %span.pull-right= "$ #{format('%.2f', @invoice.total_amount)}"
 
 .row.memo.bank-info
   .col-xs-6.text-left
