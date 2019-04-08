@@ -1,6 +1,7 @@
 - all_items.values.each do |all|
   - all.each_with_index do |item,index|
     / %tr{ class: item.valid ? "clickable-row" : "alert-danger clickable-row", data: { translation_url: create_customer_translation_path(item.customer_ref.value), customer_name: item.customer_name, billing_address: item.full_billing_address, invoice_id: item.doc_number, translation: { name: item.customer_translation.try(:name), billing_address: item.customer_translation.try(:billing_address) }  } }
+    - next unless item.customer.present?
     %tr{ class: "clickable-row", data: { translation_url: create_customer_translation_path(item.customer_ref.value), customer_name: item.customer_name, billing_address: item.full_billing_address, invoice_id: item.doc_number, translation: { name: item.customer_translation.try(:name), billing_address: item.customer_translation.try(:billing_address) }  } }
 
       %th{ scope: 'row'}= invoice_link(all[index], @credential)

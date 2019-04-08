@@ -1,5 +1,6 @@
 - debits.each_with_index do |debit,index|
   / %tr{ class: debit.valid ? "clickable-row" : "alert-danger clickable-row", data: { translation_url: create_customer_translation_path(debit.customer_ref.value), customer_name: debit.customer_name, billing_address: debit.full_billing_address, invoice_id: debit.doc_number, translation: { name: debit.customer_translation.try(:name), billing_address: debit.customer_translation.try(:billing_address) }  } }
+  - next unless debit.customer.present?
   %tr{ class: "clickable-row", data: { translation_url: create_customer_translation_path(debit.customer_ref.value), customer_name: debit.customer_name, billing_address: debit.full_billing_address, invoice_id: debit.doc_number, translation: { name: debit.customer_translation.try(:name), billing_address: debit.customer_translation.try(:billing_address) }  } }
     
     %th{ scope: 'row'}= invoice_link(debits[index], @credential)
