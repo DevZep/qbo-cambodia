@@ -77,10 +77,10 @@
               = item_quan
             %td.line
               %span.pull-left= @invoice.currency.symbol
-              %span.pull-right= format('%.2f', item.sales_line_item_detail.unit_price)
+              %span.pull-right= number_to_currency(format('%.2f', item.sales_line_item_detail.unit_price), unit: '$ ')
             %td.line
               %span.pull-left= @invoice.currency.symbol
-              %span.pull-right= format('%.2f', item.amount)
+              %span.pull-right= number_to_currency(format('%.2f', item.amount), unit: '$ ')
 
         %tr.break
           %td.line.text-right{ colspan: "3" }
@@ -88,10 +88,10 @@
             %br Total (VAT included)
           %td.line{ colspan: "2" }
             %span.pull-left KHR:
-            %span.pull-right= "៛ #{format('%.2f', @invoice.home_total + @invoice.txn_tax_detail.total_tax)}"
+            %span.pull-right= number_to_currency(format('%.2f', @invoice.home_total + @invoice.txn_tax_detail.total_tax), unit: '៛ ')
             %br
             %span.pull-left USD:
-            %span.pull-right= "$ #{format('%.2f', @invoice.total_amount + (@invoice.txn_tax_detail.total_tax * @invoice.exchange_rate))}"
+            %span.pull-right= number_to_currency(format('%.2f', @invoice.total_amount + (@invoice.txn_tax_detail.total_tax * @invoice.exchange_rate)), unit: '$ ')
 
 .row.memo.bank-info
   .col-xs-6.text-left
@@ -106,7 +106,7 @@
       %br
       SWIFT Code : ABAAKHPP
       %br
-      = "Exchange Rate: 1USD = KHR: #{format('%.2f', @invoice.exchange_rate)}"
+      = "Exchange Rate: 1USD = KHR: #{number_to_currency(format('%.2f', @invoice.exchange_rate), unit: '')}"
 .row.signatures
   .col-xs-6.text-center
     %p ____________________________

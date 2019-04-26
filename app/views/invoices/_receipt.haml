@@ -32,9 +32,9 @@
         %tr
           %td Amount:
           %td
-            %span="KHR: #{format('%.2f', @invoice.home_total)}"
+            %span="KHR: #{number_to_currency(format('%.2f', @invoice.home_total), unit: '')}"
             %br
-            %span="USD: #{format('%.2f', @invoice.total_amount)}"
+            %span="USD: #{number_to_currency(format('%.2f', @invoice.total_amount), unit: '')}"
         %tr
           %td Description:
           %td="Payment for Invoice #{@invoice.doc_number}"

@@ -99,21 +99,21 @@
               = item_quan
             %td.line
               %span.pull-left= @invoice.currency.symbol
-              %span.pull-right= format('%.2f', item.sales_line_item_detail.unit_price)
+              %span.pull-right= number_to_currency(format('%.2f', item.sales_line_item_detail.unit_price), unit: '$ ')
             %td.line
               %span.pull-left= @invoice.currency.symbol
-              %span.pull-right= format('%.2f', item.amount)
+              %span.pull-right= number_to_currency(format('%.2f', item.amount), unit: '$ ')
 
         %tr.break
           %td.line.text-right{ colspan: "4" }
-            សរុប 
+            សរុប
             %br Subtotal
           %td.line{ colspan: "2" }
             %span.pull-left KHR:
-            %span.pull-right= "៛ #{format('%.2f', (@invoice.sub_total.amount * @invoice.exchange_rate).to_f)}"
+            %span.pull-right= number_to_currency(format('%.2f', (@invoice.sub_total.amount * @invoice.exchange_rate).to_f), unit: '៛ ')
             %br
             %span.pull-left USD:
-            %span.pull-right= "$ #{format('%.2f', @invoice.sub_total.amount)}"
+            %span.pull-right= number_to_currency(format('%.2f', @invoice.sub_total.amount), unit: '$ ')
 
         - if @invoice.discount?
           %tr.break
@@ -123,10 +123,10 @@
 
             %td.line{ colspan: "2" }
               %span.pull-left KHR:
-              %span.pull-right= "៛ #{format('%.2f', (@invoice.discount_as_amount * @invoice.exchange_rate).to_f)}"
+              %span.pull-right= number_to_currency(format('%.2f', (@invoice.discount_as_amount * @invoice.exchange_rate).to_f), unit: '៛ ')
               %br
               %span.pull-left USD:
-              %span.pull-right= "$ #{format('%.2f', @invoice.discount_as_amount)}"
+              %span.pull-right= number_to_currency(format('%.2f', @invoice.discount_as_amount), unit: '$ ')
 
         - if @invoice.txn_tax_detail.present? && @invoice.txn_tax_detail.total_tax > 0.0
           %tr.break
@@ -135,10 +135,10 @@
               %br VAT ( 10%)
             %td.line{ colspan: "2" }
               %span.pull-left KHR:
-              %span.pull-right= "៛ #{format('%.2f', (@invoice.txn_tax_detail.total_tax * @invoice.exchange_rate).to_f)}"
+              %span.pull-right= number_to_currency(format('%.2f', (@invoice.txn_tax_detail.total_tax * @invoice.exchange_rate).to_f), unit: '៛ ')
               %br
               %span.pull-left USD:
-              %span.pull-right= "$ #{format('%.2f', @invoice.txn_tax_detail.total_tax)}"
+              %span.pull-right= number_to_currency(format('%.2f', @invoice.txn_tax_detail.total_tax), unit: '$ ')
 
         %tr.break
           %td.line.text-right{ colspan: "4" }
@@ -146,10 +146,10 @@
             %br Total
           %td.line{ colspan: "2" }
             %span.pull-left KHR:
-            %span.pull-right= "៛ #{format('%.2f', @invoice.home_total)}"
+            %span.pull-right= number_to_currency(format('%.2f', @invoice.home_total), unit: '៛ ')
             %br
             %span.pull-left USD:
-            %span.pull-right= "$ #{format('%.2f', @invoice.total_amount)}"
+            %span.pull-right= number_to_currency(format('%.2f', @invoice.total_amount), unit: '$ ')
 
 .row.memo.bank-info
   .col-xs-6.text-left
@@ -162,7 +162,7 @@
       %br
       Account Number: 000240588
       %br
-      = "Exchange Rate: 1USD = KHR: #{format('%.2f', @invoice.exchange_rate)}"
+      = "Exchange Rate: 1USD = KHR: #{number_to_currency(format('%.2f', @invoice.exchange_rate), unit: '')}"
 .row.signatures
   .col-xs-6.text-center
     %p ____________________________
@@ -172,4 +172,3 @@
     %p ____________________________
     %p.km  ឈ្មោះ និង ហត្ថលេខាពីក្រុមហ៊ុនរ៉ូតាទី
     %p Rotati Authorized Name & Signature
-    
