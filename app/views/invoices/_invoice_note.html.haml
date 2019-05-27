@@ -105,10 +105,10 @@
               %span.pull-right= number_to_currency(format('%.2f', item.amount), unit: '')
 
         %tr.break
-          %td.line.text-right{ colspan: "4" }
+          %td.line.text-right{ colspan: "3" }
             សរុប
             %br Subtotal
-          %td.line{ colspan: "2" }
+          %td.line{ colspan: "3" }
             %span.pull-left KHR:
             %span.pull-right= number_to_currency(format('%.2f', (@invoice.sub_total.amount * @invoice.exchange_rate).to_f), unit: '៛ ')
             %br
@@ -117,11 +117,11 @@
 
         - if @invoice.discount?
           %tr.break
-            %td.line.text-right{ colspan: "4" }
+            %td.line.text-right{ colspan: "3" }
               ="បញ្ចុះតម្លៃ #{@invoice.discount_as_percent}"
               %br= "Discount #{@invoice.discount_as_percent}"
 
-            %td.line{ colspan: "2" }
+            %td.line{ colspan: "3" }
               %span.pull-left KHR:
               %span.pull-right= number_to_currency(format('%.2f', (@invoice.discount_as_amount * @invoice.exchange_rate).to_f), unit: '៛ ')
               %br
@@ -130,10 +130,10 @@
 
         - if @invoice.txn_tax_detail.present? && @invoice.txn_tax_detail.total_tax > 0.0
           %tr.break
-            %td.line.text-right{ colspan: "4" }
+            %td.line.text-right{ colspan: "3" }
               អាករលើតម្លៃបន្ថែម ១០%
               %br VAT ( 10%)
-            %td.line{ colspan: "2" }
+            %td.line{ colspan: "3" }
               %span.pull-left KHR:
               %span.pull-right= number_to_currency(format('%.2f', (@invoice.txn_tax_detail.total_tax * @invoice.exchange_rate).to_f), unit: '៛ ')
               %br
@@ -141,10 +141,10 @@
               %span.pull-right= number_to_currency(format('%.2f', @invoice.txn_tax_detail.total_tax), unit: '$ ')
 
         %tr.break
-          %td.line.text-right{ colspan: "4" }
+          %td.line.text-right{ colspan: "3" }
             សរុបរួម
             %br Total
-          %td.line{ colspan: "2" }
+          %td.line{ colspan: "3" }
             %span.pull-left KHR:
             %span.pull-right= number_to_currency(format('%.2f', @invoice.home_total), unit: '៛ ')
             %br
