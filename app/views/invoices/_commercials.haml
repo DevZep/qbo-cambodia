@@ -1,5 +1,6 @@
 - commercials.each_with_index do |commercial,index|
   / %tr{ class: commercial.valid ? "clickable-row" : "alert-danger clickable-row", data: { translation_url: create_customer_translation_path(commercial.customer_ref.value), customer_name: commercial.customer_name, billing_address: commercial.full_billing_address, invoice_id: commercial.doc_number, translation: { name: commercial.customer_translation.try(:name), billing_address: commercial.customer_translation.try(:billing_address) }  } }
+  - next unless commercial.customer.present?
   %tr{ class: "clickable-row", data: { translation_url: create_customer_translation_path(commercial.customer_ref.value), customer_name: commercial.customer_name, billing_address: commercial.full_billing_address, invoice_id: commercial.doc_number, translation: { name: commercial.customer_translation.try(:name), billing_address: commercial.customer_translation.try(:billing_address) }  } }
     
     %th{ scope: 'row'}= invoice_link(commercials[index], @credential)

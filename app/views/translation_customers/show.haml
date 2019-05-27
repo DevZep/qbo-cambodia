@@ -1,8 +1,8 @@
 .container
   %h1= "#{@customer[:name]}'s Detail"
   .row
-    - if @customer_translation.present? 
-      .col-xs-2 
+    - if @customer_translation.present?
+      .col-xs-2
         %h3 Translation
       .col-xs-10
         %h3= ": #{@customer_translation.name}"
@@ -12,7 +12,7 @@
         %h3 Address
       .col-xs-10
         %h3= ": #{@customer[:address]}"
-        %h3 
+        %h3
           &nbsp;&nbsp;
           = @customer_translation.billing_address
   .row

@@ -25,18 +25,20 @@
         .col-xs-12.text-center
           %h3 PAYMENT RECEIPT
       %br
-      .row.payment
-        .col-xs-4
-          %p
-            %b Received From:
-          %p
-            %b Amount:
-          %p
-            %b Description:
-        .col-xs-8
-          %p="#{@invoice.customer_name}"
-          %p="#{@invoice.currency.symbol} #{format('%.2f', @invoice.total_amount)}"
-          %p="Payment for Invoice #{@invoice.doc_number}"
+      %table.table.borderless
+        %tr
+          %td Received From:
+          %td="#{@invoice.customer_name}"
+        %tr
+          %td Amount:
+          %td
+            %span="KHR: #{number_to_currency(format('%.2f', @invoice.home_total), unit: '')}"
+            %br
+            %span="USD: #{number_to_currency(format('%.2f', @invoice.total_amount), unit: '')}"
+        %tr
+          %td Description:
+          %td="Payment for Invoice #{@invoice.doc_number}"
+
       %br
       .row
         .col-xs-4

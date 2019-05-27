@@ -77,11 +77,11 @@
               - item_quan = (item.sales_line_item_detail.quantity % 1) != 0 ? item.sales_line_item_detail.quantity : item.sales_line_item_detail.quantity.to_i
               = item_quan
             %td.line
-              %span.pull-left= "#{@invoice.currency.symbol || '៛'}"
-              %span.pull-right= format('%.2f', item.sales_line_item_detail.unit_price)
+              %span.pull-left= @invoice.currency.symbol
+              %span.pull-right= number_to_currency(format('%.2f', item.sales_line_item_detail.unit_price), unit: '')
             %td.line
-              %span.pull-left= "#{@invoice.currency.symbol || '៛'}"
-              %span.pull-right= format('%.2f', item.amount)
+              %span.pull-left= @invoice.currency.symbol
+              %span.pull-right= number_to_currency(format('%.2f', item.amount), unit: '')
 
         %tr.break
           %td.line.text-right{ colspan: "4" }
@@ -89,10 +89,10 @@
             %br Total
           %td.line{ colspan: "1" }
             %span.pull-left KHR:
-            %span.pull-right= "#{@invoice.currency.symbol || '៛'} #{format('%.2f', @invoice.total_amount)}"
+            %span.pull-right= number_to_currency(format('%.2f', @invoice.home_total), unit: '៛ ')
             %br
             %span.pull-left USD:
-            %span.pull-right= "#{@invoice.currency.symbol || '$'} #{format('%.2f', @invoice.home_total)}"
+            %span.pull-right= number_to_currency(format('%.2f', @invoice.total_amount), unit: '$ ')
 
 .row.memo.bank-info
   .col-xs-6.text-left
@@ -106,6 +106,8 @@
       Account Number: 000240588
       %br
       SWIFT Code : ABAAKHPP
+      %br
+      = "Exchange Rate: 1USD = KHR: #{number_to_currency(format('%.2f', @invoice.exchange_rate), unit: '')}"
 .row.signatures
   .col-xs-6.text-center
     %p ____________________________
