@@ -93,7 +93,7 @@
             %td.line.item
               %p.product= item.sales_line_item_detail.item_ref.name
             %td.line.item
-              %p.description= item.description.html_safe()
+              %p.description= item.description.gsub("\n", '</br>').html_safe()
             %td.text-center.line.item-quantity
               - item_quan = (item.sales_line_item_detail.quantity % 1) != 0 ? item.sales_line_item_detail.quantity : item.sales_line_item_detail.quantity.to_i
               = item_quan

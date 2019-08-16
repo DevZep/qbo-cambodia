@@ -1,6 +1,6 @@
 class InvoiceService < BaseService
 
-  # $query_items = 'ID,Line, CustomerRef, DocNumber, CurrencyRef, HomeTotal, TotalAmt, TxnDate, DueDate'.gsub(/'/,"") 
+  # $query_items = 'ID,Line, CustomerRef, DocNumber, CurrencyRef, HomeTotal, TotalAmt, TxnDate, DueDate'.gsub(/'/,"")
   $query_items = '*'
 
   def get_all_invoices
@@ -23,7 +23,9 @@ class InvoiceService < BaseService
         invoice = Qbo::Invoice.new(item)
         invoice.customer = customers.find { |customer| customer.id == invoice.customer_id }
         invoice.customer_translation = customer_translations.find { |ct| ct.qbo_customer_id == invoice.customer_id.to_i }
-        invoice.valid = valid_id_sequence?(@items,item.doc_number)
+        # disable valid_id for now. Remove it when all the invoice id is correct in qbo online
+        # invoice.valid = valid_id_sequence?(@items,item.doc_number)
+        invoice.valid =  true
         invoices << invoice
       end
     end
@@ -57,7 +59,7 @@ class InvoiceService < BaseService
 
   def find_show_receipt_by_doc_ids(doc_ids)
     query = "SELECT #{$query_items} FROM Invoice WHERE DocNumber = '#{doc_ids}'".gsub(/"/,"").gsub('[', '').gsub(']', '')
-    
+
     @items = service.query(query).entries
     @items.map do |item|
       invoice = Qbo::Invoice.new(item)
@@ -76,7 +78,9 @@ class InvoiceService < BaseService
           invoice = Qbo::Invoice.new(item)
           invoice.customer = customers.find { |customer| customer.id == invoice.customer_id }
           invoice.customer_translation = customer_translations.find { |ct| ct.qbo_customer_id == invoice.customer_id.to_i }
-          invoice.valid = valid_id_sequence?(@items,item.doc_number)
+          # disable valid_id for now. Remove it when all the invoice id is correct in qbo online
+          # invoice.valid = valid_id_sequence?(@items,item.doc_number)
+          invoice.valid =  true
           invoices << invoice
         end
       end
@@ -92,7 +96,9 @@ class InvoiceService < BaseService
         invoice = Qbo::Invoice.new(item)
         invoice.customer = customers.find { |customer| customer.id == invoice.customer_id }
         invoice.customer_translation = customer_translations.find { |ct| ct.qbo_customer_id == invoice.customer_id.to_i }
-        invoice.valid = valid_id_sequence?(@items,item.doc_number)
+        # disable valid_id for now. Remove it when all the invoice id is correct in qbo online
+        # invoice.valid = valid_id_sequence?(@items,item.doc_number)
+        invoice.valid =  true
         invoices << invoice
       end
     end
@@ -107,7 +113,9 @@ class InvoiceService < BaseService
         invoice = Qbo::Invoice.new(item)
         invoice.customer = customers.find { |customer| customer.id == invoice.customer_id }
         invoice.customer_translation = customer_translations.find { |ct| ct.qbo_customer_id == invoice.customer_id.to_i }
-        invoice.valid = valid_id_sequence?(@items,item.doc_number)
+        # disable valid_id for now. Remove it when all the invoice id is correct in qbo online
+        # invoice.valid = valid_id_sequence?(@items,item.doc_number)
+        invoice.valid =  true
         invoices << invoice
       end
     end
@@ -125,7 +133,7 @@ class InvoiceService < BaseService
     all_invoice = invoices_by_type(all_items,doc_id)
 
     all_invoice.reverse.pluck('doc_number').map { |item| all_doc_nums << item.split('-')[1].to_i }
-    
+
     all_doc_nums.each_with_index do |item,index|
       valid_num << all_doc_nums[index]
       break if index != all_doc_nums.size && all_doc_nums[index]+1 != all_doc_nums[index+1]
