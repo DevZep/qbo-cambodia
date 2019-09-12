@@ -23,9 +23,7 @@ class InvoiceService < BaseService
         invoice = Qbo::Invoice.new(item)
         invoice.customer = customers.find { |customer| customer.id == invoice.customer_id }
         invoice.customer_translation = customer_translations.find { |ct| ct.qbo_customer_id == invoice.customer_id.to_i }
-        # disable valid_id for now. Remove it when all the invoice id is correct in qbo online
-        # invoice.valid = valid_id_sequence?(@items,item.doc_number)
-        invoice.valid =  true
+        invoice.valid = valid_id_sequence?(@items,item.doc_number)
         invoices << invoice
       end
     end
@@ -78,9 +76,7 @@ class InvoiceService < BaseService
           invoice = Qbo::Invoice.new(item)
           invoice.customer = customers.find { |customer| customer.id == invoice.customer_id }
           invoice.customer_translation = customer_translations.find { |ct| ct.qbo_customer_id == invoice.customer_id.to_i }
-          # disable valid_id for now. Remove it when all the invoice id is correct in qbo online
-          # invoice.valid = valid_id_sequence?(@items,item.doc_number)
-          invoice.valid =  true
+          invoice.valid = valid_id_sequence?(@items,item.doc_number)
           invoices << invoice
         end
       end
@@ -96,9 +92,7 @@ class InvoiceService < BaseService
         invoice = Qbo::Invoice.new(item)
         invoice.customer = customers.find { |customer| customer.id == invoice.customer_id }
         invoice.customer_translation = customer_translations.find { |ct| ct.qbo_customer_id == invoice.customer_id.to_i }
-        # disable valid_id for now. Remove it when all the invoice id is correct in qbo online
-        # invoice.valid = valid_id_sequence?(@items,item.doc_number)
-        invoice.valid =  true
+        invoice.valid = valid_id_sequence?(@items,item.doc_number)
         invoices << invoice
       end
     end
@@ -113,9 +107,7 @@ class InvoiceService < BaseService
         invoice = Qbo::Invoice.new(item)
         invoice.customer = customers.find { |customer| customer.id == invoice.customer_id }
         invoice.customer_translation = customer_translations.find { |ct| ct.qbo_customer_id == invoice.customer_id.to_i }
-        # disable valid_id for now. Remove it when all the invoice id is correct in qbo online
-        # invoice.valid = valid_id_sequence?(@items,item.doc_number)
-        invoice.valid =  true
+        invoice.valid = valid_id_sequence?(@items,item.doc_number)
         invoices << invoice
       end
     end
