@@ -33,10 +33,10 @@ h4 {
 }
 
 p {
-  font-size: 13px;
+  font-size: 11px;
 
   &.km {
-    font-size: 14px;
+    font-size: 12px;
   }
 }
 
@@ -85,6 +85,7 @@ p {
     border: 1px solid;
     border-top: none;
     border-bottom: none;
+    font-size: 11px;
   }
 
   tbody > tr > td {
@@ -149,7 +150,7 @@ table.break {
 }
 
 .items, .title {
-  margin: 20px 0;
+  margin: 5px 0;
 }
 
 .dotdot {
