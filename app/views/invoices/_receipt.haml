@@ -37,7 +37,7 @@
             %span="USD: #{number_to_currency(format('%.2f', @invoice.total_amount), unit: '')}"
         %tr
           %td Description:
-          %td="Payment for Invoice #{@invoice.doc_number}"
+          %td="Payment for Invoice #{@invoice.doc_number.gsub('RTT-','')}"
 
       %br
       .row
