@@ -3,7 +3,6 @@ class CompaniesController < ApplicationController
   # before_action :companies
   before_action :show_next_id, only: :show
 
-  
   def index
     if current_user.last_login_company.present? && params[:error] != 'true'
       redirect_to company_path(current_user.last_login_company)

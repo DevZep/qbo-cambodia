@@ -23,6 +23,7 @@ gem 'currencies', require: 'iso4217'
 gem 'devise', '~> 4.0'
 gem 'factory_girl_rails', '~> 4.0'
 gem 'activerecord-session_store'
+gem 'intuit-oauth'
 gem 'quickbooks-ruby'
 
 gem 'wicked_pdf', '~> 1.1.0'

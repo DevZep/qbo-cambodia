@@ -21,11 +21,11 @@
 class QboCredential < ApplicationRecord
   belongs_to :user
 
-  validates :access_secret,
-            :access_token,
-            :company_id,
-            :reconnect_token_at,
-            :token_expires_at, presence: true
+  validates :company_id,
+            :oauth2_access_token,
+            :oauth2_refresh_token,
+            :oauth2_access_token_expires_at,
+            :oauth2_refresh_token_expires_at, presence: true
 
   validates :user, presence: true
 end
