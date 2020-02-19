@@ -20,4 +20,4 @@ QBO Cambodia is developed by [Rotati Consulting (Cambodia)](http://www.rotati.te
 
 ### License
 
-OSCaR Web Application is released under [AGPL](http://www.gnu.org/licenses/agpl-3.0-standalone.html)
+QBO Cambodia is released under [AGPL](http://www.gnu.org/licenses/agpl-3.0-standalone.html)
