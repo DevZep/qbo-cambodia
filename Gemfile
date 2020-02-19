@@ -20,7 +20,7 @@ gem 'haml-rails', '~> 0.9'
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'currencies', require: 'iso4217'
 
-gem 'devise', '~> 4.0'
+gem 'devise', '~> 4.7'
 gem 'factory_girl_rails', '~> 4.0'
 gem 'activerecord-session_store'
 gem 'intuit-oauth'
