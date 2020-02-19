@@ -2,9 +2,11 @@ class BaseService
   attr_reader :service, :qbo_credential
 
   def initialize(qbo_credential)
-    auth            = OAuth::AccessToken.new(QB_OAUTH_CONSUMER, qbo_credential.access_token, qbo_credential.access_secret)
     @qbo_credential = qbo_credential
-    @service        = service_class.new(access_token: auth, realm_id: qbo_credential.company_id)
+    @qbo_credential.refresh_tokens
+
+    access_token    = OAuth2::AccessToken.new(QB_OAUTH2, qbo_credential.oauth2_access_token, refresh_token: qbo_credential.oauth2_refresh_token)
+    @service        = service_class.new(access_token: access_token, realm_id: qbo_credential.company_id)
   end
 
   def get_all_invoices

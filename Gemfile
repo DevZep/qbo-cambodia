@@ -23,6 +23,7 @@ gem 'currencies', require: 'iso4217'
 gem 'devise', '~> 4.0'
 gem 'factory_girl_rails', '~> 4.0'
 gem 'activerecord-session_store'
+gem 'intuit-oauth'
 gem 'quickbooks-ruby'
 
 gem 'wicked_pdf', '~> 1.1.0'
@@ -51,7 +52,7 @@ group :development, :test do
 end
 
 group :development do
-  gem 'annotate', github: 'ctran/annotate_models'
+  gem 'annotate'
   gem 'web-console'
   gem 'listen', '~> 3.0.5'
   gem 'spring'

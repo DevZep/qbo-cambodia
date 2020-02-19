@@ -1,6 +1,5 @@
-::QB_OAUTH_CONSUMER = OAuth::Consumer.new(ENV['QBO_OAUTH_CONSUMER_KEY'], ENV['QBO_OAUTH_CONSUMER_SECRET'], {
-    site: 'https://oauth.intuit.com',
-    request_token_path: '/oauth/v1/get_request_token',
-    authorize_url: 'https://appcenter.intuit.com/Connect/Begin',
-    access_token_path: '/oauth/v1/get_access_token'
+::QB_OAUTH2 = OAuth2::Client.new(ENV['QBO_CLIENT_ID'], ENV['QBO_CLIENT_SECRET'], {
+  site: "https://appcenter.intuit.com/connect/oauth2",
+  authorize_url: "https://appcenter.intuit.com/connect/oauth2",
+  token_url: "https://oauth.platform.intuit.com/oauth2/v1/tokens/bearer"
 })
