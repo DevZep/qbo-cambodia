@@ -1,4 +1,4 @@
-# QBO Cambodia
+# QBO Cambodia (now part of DevZep!)
 
 QBO Cambodia connects to any QBO account and can generate invoice in Cambodian Taxation approved Khmer format.
 
