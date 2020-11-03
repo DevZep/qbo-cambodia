@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 gem 'pg', '~> 0.18'
-gem 'puma', '~> 3.0'
+gem 'puma', '~> 3.12'
 gem 'rubocop', '~> 0.47.1', require: false
 gem 'appsignal',        '~> 1.1.9'
 gem 'rack-mini-profiler', require: false
